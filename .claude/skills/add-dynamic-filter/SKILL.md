@@ -51,10 +51,10 @@ def buffer_filter(args, rollout_id, buffer: list[list[Sample]], num_samples: int
 
 `rollout_id` is often `None` when the buffer invokes the filter.
 
-Rollout sample filter (mutates `Sample.remove_sample` on the train batch):
+Rollout sample filter (mutates `Sample.remove_sample` on the train batch; `samples` is `list[list[Sample]]`):
 
 ```python
-def filter_function(args, groups: list[list[Sample]]) -> None:
+def rollout_sample_filter(args, samples):
     # modify sample.remove_sample in-place where needed
 ```
 
@@ -78,7 +78,7 @@ Example wiring:
 ```bash
 --dynamic-sampling-filter-path vime.rollout.filter_hub.dynamic_sampling_filters.check_reward_nonzero_std
 --buffer-filter-path <module>.buffer_filter
---rollout-sample-filter-path <module>.filter_function
+--rollout-sample-filter-path <module>.rollout_sample_filter
 --rollout-all-samples-process-path <module>.process_all_samples
 ```
 
