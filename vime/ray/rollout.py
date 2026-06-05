@@ -121,7 +121,8 @@ class ServerGroup:
             }
             rollout_engine = RolloutRayActor.options(
                 num_cpus=num_cpus,
-                num_gpus=num_gpus,
+                num_gpus=0,
+                resources={"NPU": num_gpus},
                 scheduling_strategy=scheduling_strategy,
                 runtime_env={
                     "env_vars": env_vars,
@@ -376,7 +377,7 @@ class RolloutManager:
             self.servers = start_rollout_servers(args, pg)
 
         init_tracking(args, primary=False)
-        self.rollout_engine_lock = Lock.options(num_cpus=1, num_gpus=0).remote()
+        self.rollout_engine_lock = Lock.options(num_cpus=1, num_gpus=0, resources={"NPU": 0}).remote()
         self.rollout_id = -1
 
         self._health_monitors = []
@@ -920,7 +921,11 @@ def _start_router(args, *, has_pd_disaggregation: bool = False, force_new: bool 
         if router_port is None:
             router_port = find_available_port(random.randint(3000, 4000))
 
-    from vllm_router.router_args import RouterArgs
+    try:
+        from vllm_router.router_args import RouterArgs
+    except ImportError:
+        logger.warning("vllm_router not installed, skipping router launch")
+        return None, None, 0
 
     from vime.utils.http_utils import run_router
 
@@ -934,9 +939,6 @@ def _start_router(args, *, has_pd_disaggregation: bool = False, force_new: bool 
 
     if has_pd_disaggregation:
         router_args.vllm_pd_disaggregation = True
-        # Disable circuit breaker to prevent RDMA transfer timeouts from
-        # marking decode workers as dead. Timeouts are transient (PCIe
-        # contention under high load) and do not indicate a dead server.
         router_args.disable_circuit_breaker = True
 
     logger.info(f"Launch router with args: {router_args}")
@@ -945,7 +947,7 @@ def _start_router(args, *, has_pd_disaggregation: bool = False, force_new: bool 
         target=run_router,
         args=(router_args,),
     )
-    process.daemon = True  # Set the process as a daemon
+    process.daemon = True
     process.start()
     # Wait 3 seconds
     time.sleep(3)
@@ -1104,6 +1106,25 @@ def start_rollout_servers(args, pg) -> dict[str, RolloutServer]:
             update_weights=model_cfg.update_weights,
             prometheus_port=prom_port,
         )
+
+    # When vllm_router is not installed, fall back to the first engine URL
+    # so that /inference/v1/generate requests go directly to the engine.
+    for name, srv in servers.items():
+        if srv.router_ip is None or srv.router_port is None:
+            for group in srv.server_groups:
+                for engine in group.engines:
+                    url = ray.get(engine.get_url.remote()) if engine is not None else None
+                    if url is not None:
+                        from urllib.parse import urlparse
+                        parsed = urlparse(url)
+                        srv.router_ip = parsed.hostname
+                        srv.router_port = parsed.port
+                        if name == list(servers.keys())[0]:
+                            args.vllm_router_ip = srv.router_ip
+                            args.vllm_router_port = srv.router_port
+                        break
+                if srv.router_ip is not None:
+                    break
 
     # Expose per-model router info for custom rollout functions.
     args.vllm_model_routers = {name: (srv.router_ip, srv.router_port) for name, srv in servers.items()}

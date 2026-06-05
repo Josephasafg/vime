@@ -15,7 +15,7 @@ from megatron.core import mpu
 from ray import ObjectRef
 from ray.actor import ActorHandle
 from tqdm import tqdm
-from vllm.distributed.weight_transfer.nccl_engine import NCCLTrainerSendWeightsArgs, NCCLWeightTransferEngine
+from vllm.distributed.weight_transfer.hccl_engine import HCCLTrainerSendWeightsArgs, HCCLWeightTransferEngine
 
 from vime.utils.distributed_utils import get_gloo_group
 
@@ -224,7 +224,7 @@ class UpdateWeightFromDistributed:
                 self._update_expert_bucket_weights_from_distributed(named_tensors, pbar=pbar)
 
         if self._is_pp_src_rank:
-            torch.cuda.synchronize()
+            torch.npu.synchronize()
 
     def _sync_bridge_weights_to_rollout_engines(self) -> None:
         """
@@ -256,7 +256,7 @@ class UpdateWeightFromDistributed:
         dist.barrier(group=get_gloo_group())
 
         if self._is_pp_src_rank:
-            torch.cuda.synchronize()
+            torch.npu.synchronize()
 
     def _use_vllm_packed(self) -> bool:
         """Use vLLM packed weight transfer (one-shot metadata + trainer_send_weights)."""
@@ -265,6 +265,9 @@ class UpdateWeightFromDistributed:
         if any(".experts." in name for name, _ in named_params_and_buffers(self.args, self.model)):
             return False
         if self.quantization_config and self.quantization_config.get("quant_method") == "compressed-tensors":
+            return False
+        from vime.utils.common import is_npu
+        if is_npu():
             return False
         return True
 
@@ -360,7 +363,7 @@ class UpdateWeightFromDistributed:
         handles = []
         for i, (_name, param) in enumerate(named_tensors):
             params = [
-                torch.empty_like(param.data, device=torch.cuda.current_device())
+                torch.empty_like(param.data, device=torch.npu.current_device())
                 for _ in range(mpu.get_expert_model_parallel_world_size())
             ]
             handle = dist.all_gather(params, param.data, group=mpu.get_expert_model_parallel_group(), async_op=True)
@@ -443,24 +446,24 @@ def connect_rollout_engines_from_distributed(
             rank_offset=cumulative[i] + 1,
             world_size=world_size,
             group_name=group_name,
-            backend="nccl",
+            backend="hccl",
         )
         for i, engine in enumerate(rollout_engines)
     ]
 
-    torch.cuda.synchronize()
-    torch.cuda.empty_cache()
+    torch.npu.synchronize()
+    torch.npu.empty_cache()
 
-    device = torch.cuda.current_device()
+    device = torch.npu.current_device()
     logger.info(
-        "vLLM in-process weight transfer: addr=%s port=%d world_size=%d device=%d CVD=%s",
+        "vLLM in-process weight transfer: addr=%s port=%d world_size=%d device=%d ARVD=%s",
         master_address,
         master_port,
         world_size,
         device,
-        os.environ.get("CUDA_VISIBLE_DEVICES", ""),
+        os.environ.get("ASCEND_RT_VISIBLE_DEVICES", ""),
     )
-    model_update_groups = NCCLWeightTransferEngine.trainer_init(
+    model_update_groups = HCCLWeightTransferEngine.trainer_init(
         {
             "master_address": master_address,
             "master_port": master_port,
@@ -529,9 +532,9 @@ def update_weights_from_distributed(
         (name, (param.data if hasattr(param, "data") else param).contiguous())
         for name, param in converted_named_tensors
     )
-    NCCLWeightTransferEngine.trainer_send_weights(
+    HCCLWeightTransferEngine.trainer_send_weights(
         named_gpu_iter,
-        NCCLTrainerSendWeightsArgs(group=group, packed=packed),
+        HCCLTrainerSendWeightsArgs(group=group, packed=packed),
     )
 
     return refs

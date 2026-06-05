@@ -4,16 +4,15 @@ cloudpickle
 datasets
 httpx[http2]
 mcp[cli]
-memray  # needed for debugging (but is lightweight), we can put it to dev mode when using pyproject.toml
+memray
 numba
 omegaconf
 pillow
 pylatexenc
 pyyaml
-qwen_vl_utils # for VLM
+qwen_vl_utils
 ray[default]
-ring_flash_attn
 tensorboard
 transformers
-vllm-router>=0.1.14
+vllm-ascend
 wandb
