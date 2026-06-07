@@ -303,6 +303,7 @@ class UpdateWeightFromTensor:
         # ── 1. Pause generation and flush KV cache (rank 0 only) ────────────
         if rank == 0:
             if self._colocated_engines:
+                ray.get([engine.pause_generation.remote() for engine in self._colocated_engines])
                 ray.get([engine.release_memory_occupation.remote(level=0) for engine in self._colocated_engines])
             if self._distributed_engines:
                 ray.get([engine.pause_generation.remote() for engine in self._distributed_engines])
@@ -371,6 +372,7 @@ class UpdateWeightFromTensor:
                         for engine in self._colocated_engines
                     ]
                 )
+                ray.get([engine.continue_generation.remote() for engine in self._colocated_engines])
             if self._distributed_engines:
                 ray.get([engine.continue_generation.remote() for engine in self._distributed_engines])
         dist.barrier(group=get_gloo_group())
