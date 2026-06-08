@@ -1,4 +1,5 @@
 """Ray actor and launch helpers for vLLM OpenAI HTTP rollout.
+
 Per-Ray-actor ``server_args`` dict is built via :func:`_compute_server_args`,
 then :func:`build_vllm_cmd_and_env` turns it into ``vllm serve`` CLI + subprocess env.
 :class:`VLLMEngine` manages the runtime HTTP control plane.
@@ -507,6 +508,7 @@ def _wait_worker_process_alive(process: multiprocessing.Process, timeout_s: floa
 
 def _wait_server_healthy(base_url: str, process: multiprocessing.Process | None) -> None:
     """Wait until the vLLM server responds on ``GET /health`` (no time limit, SGLang-style).
+
     Loops until /health returns 200, or — for a managed subprocess — until it dies (fail fast via
     ``process.is_alive()``). There is no overall deadline, so a slow-but-healthy startup (a large
     MoE / DP engine loading + compiling + capturing CUDA graphs across replicas) is never
@@ -658,10 +660,12 @@ class VLLMEngine(RayActor):
 
     def _sanity_check_external_server_args(self) -> None:
         """Strictly verify an external engine's parallel config matches what we expect; raise on mismatch.
+
         Replaces the previous warn-only check, which (a) compared against the *global*
         ``rollout_num_gpus_per_engine`` — wrong for heterogeneous / multi-node groups — and
         (b) only logged a warning, so a misconfigured external engine sailed through and then
         hung the weight-sync rendezvous ~300s later with no clear error.
+
         We now compare every field in ``EXTERNAL_ENGINE_CHECK_FIELDS`` against the per-engine
         expectation in ``self._server_args`` and raise immediately on mismatch. A field that the
         engine's ``/server_info`` does not report (``actual is None``) is skipped rather than
@@ -710,6 +714,7 @@ class VLLMEngine(RayActor):
 
     def _make_request(self, endpoint: str, payload: dict | None = None) -> dict | None:
         """Control-plane POST returning parsed JSON (mirrors SGLang's ``_make_request``).
+
         The single choke point for control-plane POSTs: headless workers (node_rank>0) own no
         HTTP server, so they no-op to None; otherwise POST and parse via the shared
         ``_response_json`` (also reused by the query-param endpoints /sleep, /wake_up, ...).
@@ -721,6 +726,7 @@ class VLLMEngine(RayActor):
 
     def _post_vllm_update_weights_http(self, update_info: dict) -> dict:
         """POST ``/update_weights`` with ``{"update_info": ...}`` (vLLM RLHF control plane).
+
         Caller must invoke ``start_weight_update`` / ``finish_weight_update`` around a batch of
         ``/update_weights`` calls (see ``UpdateWeightFromTensor`` / ``UpdateWeightFromDistributed``).
         """
@@ -770,13 +776,16 @@ class VLLMEngine(RayActor):
     
     def update_weights_chunk(self, update_info: dict) -> dict:
         """POST ``/update_weights_chunk`` with a single named-tensor chunk.
+
         Mirrors the SkyRL ``RemoteInferenceClient.update_weights_chunk`` API.
         Must be called between :meth:`start_weight_update` and
         :meth:`finish_weight_update`.
+
         Unlike :meth:`update_weights`, ``update_info`` is the *inner* payload
         dict (``names``, ``dtype_names``, ``shapes``, and one of
         ``ipc_handles`` / ``ipc_handles_pickled`` for IPC, or ``packed`` for
         NCCL) — **not** wrapped in ``{"update_info": ...}``.
+
         If ``ipc_handles`` are present (raw CUDA callables produced by
         ``reduce_tensor``), they are serialised with cloudpickle + base64 so
         vLLM can deserialise them when
@@ -844,6 +853,7 @@ class VLLMEngine(RayActor):
 
     def get_weight_version(self) -> str | None:
         """Return the version recorded by the last successful weight transfer.
+
         Raises ``RuntimeError`` if no weight transfer has recorded a version
         yet — we don't fall back to a ``/v1/models`` lookup, which would
         return the model path string and never match the trainer's integer
@@ -889,6 +899,7 @@ class VLLMEngine(RayActor):
 
     def init_weight_transfer_engine(self, payload: dict) -> dict:
         """``POST /init_weight_transfer_engine`` with a caller-supplied payload (IPC path).
+
         For IPC mode the payload is ``{"init_info": {}}``; for NCCL use
         ``init_weights_update_group`` which constructs the payload from typed args.
         """
@@ -909,6 +920,7 @@ class VLLMEngine(RayActor):
 
     def finish_weight_update(self) -> dict:
         """``POST /finish_weight_update`` — signals vLLM to exit IPC weight-update mode.
+
         Purely a state-machine bookend now; ``_weight_version`` is recorded by
         ``update_weights_from_tensor`` (the IPC data-carrying RPC), matching slime's
         single-RPC version-with-data semantics.
@@ -922,6 +934,7 @@ class VLLMEngine(RayActor):
 
     def init_weights_update_group(self, master_address, master_port, rank_offset, world_size, group_name, backend):
         """Call ``POST /init_weight_transfer_engine`` with an ``init_info`` block.
+
         ``group_name`` / ``backend`` are accepted for a uniform caller signature but are not sent to vLLM.
         Always uses the vllm-native weight transfer engine; reload-on-continue fallback is no longer supported.
         """
@@ -961,6 +974,7 @@ class VLLMEngine(RayActor):
         packed: bool = True,
     ):
         """NCCL path: ``POST /update_weights`` with packed tensor metadata.
+
         Payload matches vLLM NCCL weight transfer (see upstream rlhf_http_nccl example).
         """
         del group_name
