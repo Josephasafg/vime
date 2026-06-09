@@ -1,4 +1,4 @@
-"""Unit tests for VllmConfig multi-model parsing and get_model_url."""
+"""Unit tests for VllmConfig multi-model parsing with update_weights."""
 
 import tempfile
 
@@ -14,8 +14,8 @@ def _write_yaml(data: dict) -> str:
 
 
 class TestVllmConfigUpdateWeights:
-    def test_update_weights_defaults_to_none(self):
-        """Models without explicit update_weights parse as None (resolved to True/False at runtime by VllmConfig.resolve based on hf_checkpoint match)."""
+    def test_update_weights_default_true(self):
+        """Models without explicit update_weights should default to True."""
         from vime.backends.vllm_utils.vllm_config import VllmConfig
 
         path = _write_yaml(
@@ -30,7 +30,7 @@ class TestVllmConfigUpdateWeights:
         )
         config = VllmConfig.from_yaml(path)
         assert len(config.models) == 1
-        assert config.models[0].update_weights is None
+        assert config.models[0].update_weights is True
 
     def test_update_weights_explicit_false(self):
         """Models with update_weights: false should be parsed correctly."""
@@ -99,8 +99,8 @@ class TestGetModelUrl:
                 "ref": ("10.0.0.1", 3001),
             },
         )
-        assert get_model_url(args, "actor") == "http://10.0.0.1:3000/inference/v1/generate"
-        assert get_model_url(args, "ref") == "http://10.0.0.1:3001/inference/v1/generate"
+        assert get_model_url(args, "actor") == "http://10.0.0.1:3000/generate"
+        assert get_model_url(args, "ref") == "http://10.0.0.1:3001/generate"
         assert get_model_url(args, "ref", "/v1/chat/completions") == "http://10.0.0.1:3001/v1/chat/completions"
 
     def test_get_model_url_fallback(self):
@@ -114,10 +114,10 @@ class TestGetModelUrl:
             vllm_router_port=3000,
             vllm_model_routers={"actor": ("10.0.0.1", 3000)},
         )
-        assert get_model_url(args, "unknown") == "http://10.0.0.1:3000/inference/v1/generate"
+        assert get_model_url(args, "unknown") == "http://10.0.0.1:3000/generate"
 
     def test_get_model_url_no_routers(self):
-        """get_model_url should work when model_routers is not set."""
+        """get_model_url should work when vllm_model_routers is not set."""
         from argparse import Namespace
 
         from vime.rollout.vllm_rollout import get_model_url
@@ -126,7 +126,7 @@ class TestGetModelUrl:
             vllm_router_ip="10.0.0.1",
             vllm_router_port=3000,
         )
-        assert get_model_url(args, "anything") == "http://10.0.0.1:3000/inference/v1/generate"
+        assert get_model_url(args, "anything") == "http://10.0.0.1:3000/generate"
 
 
 if __name__ == "__main__":

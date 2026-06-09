@@ -1,0 +1,9 @@
+{
+  "cmd": "authored (translation of projects/vime_gb200_training/run_in_container_gb200.sh to h200/x86 + glm4.5-106B)",
+  "git_commit": "6011ae9f7f",
+  "env_pins": {"vime_branch": "main", "platform": "h200 x86, 2 nodes x 8 GPU", "image": "TBD-recon"},
+  "ts": "2026-06-07T04:55:00Z",
+  "agent": "opus-4-8",
+  "purpose": "GLM-4.5-Air 106B-A12B colocate L3 RL harness; train TP4/PP2/CP2/EP8/ETP1, rollout TP4 fp8, DAPO-Math GRPO",
+  "recon_unknowns": ["IMAGE", "NCCL_IFACE", "NCCL_IB_HCA", "GLM_HF_CKPT", "GLM_REF_LOAD", "DAPO_DATA", "MASTER_ADDR", "NFS abcfg mount"]
+}

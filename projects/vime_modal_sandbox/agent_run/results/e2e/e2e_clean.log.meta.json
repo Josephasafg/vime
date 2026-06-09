@@ -1,0 +1,11 @@
+{
+  "artifact": "e2e_clean.log",
+  "produced_by": "agent_run/scripts/e2e_modal_sandbox.py",
+  "result": "13 passed, 0 failed (deterministic after tunnel-readiness fix)",
+  "cmd": "/home/aoshen/code/uv_envs/py312/bin/python agent_run/scripts/e2e_modal_sandbox.py",
+  "git_commit": "6011ae9f7f",
+  "env_pins": {"modal": "1.4.2", "python": "3.12", "host": "gb200-rack1-01", "image": "buildpack-deps:bookworm"},
+  "notes": "One earlier run hit a transient FAIL on the reverse dial-back; root cause = cloudflared quick-tunnel edge-warmup race (cached-image sandbox curled before the edge route registered). Fixed by _wait_tunnel_ready() polling the public URL from the head before sandbox creation. Reverse capability independently proven by the raw-modal probe (scratch/modal-reverse-probe) and the first full e2e run.",
+  "ts": "2026-06-07T02:50:00Z",
+  "agent": "opus-4-8"
+}

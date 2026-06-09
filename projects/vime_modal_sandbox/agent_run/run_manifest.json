@@ -1,0 +1,35 @@
+{
+  "schema": "vllm-agent-infra.agent_run_manifest.v1",
+  "task_slug": "vime-modal-sandbox",
+  "task_description": "Add a Modal sandbox backend for vime coding_agent_rl: implement ModalSandbox satisfying the Sandbox Protocol, add make_sandbox() factory + swap 2 E2BSandbox call sites, add ADAPTER_URL_OVERRIDE in generate.py. Reverse-network via cloudflared tunnel (empirically validated 2026-06-07). Then write extensive unit tests and run in-container e2e on real Modal. Route A.2.",
+  "initialized_at": "2026-06-07T02:30:08Z",
+  "project_root": "/home/aoshen/vime/projects/vime_modal_sandbox",
+  "agent_run_dir": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run",
+  "branch": "main",
+  "commit": "6011ae9f7f",
+  "canonical_paths": {
+    "index": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run/INDEX.md",
+    "plan": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run/plan.md",
+    "events": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run/events.jsonl",
+    "handoff": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run/handoff.json",
+    "bisect": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run/bisect.md",
+    "results": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run/results",
+    "scripts": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run/scripts",
+    "reports": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run/reports",
+    "bugs": "/home/aoshen/vime/projects/vime_modal_sandbox/agent_run/bugs"
+  },
+  "write_policy": {
+    "reusable_scripts": "agent_run/scripts/",
+    "raw_outputs_and_logs": "agent_run/results/<phase-or-run>/",
+    "summaries_audits_postmortems": "agent_run/reports/",
+    "bug_reports_and_repros": "agent_run/bugs/<bug-slug>/",
+    "debug_good_bad_anchors": "append state_anchor events; projection is agent_run/bisect.md",
+    "project_level_scripts": "symlink or wrapper only; canonical script stays under agent_run/scripts/"
+  },
+  "compact_recovery": [
+    "Read this file first.",
+    "Use agent_run_dir as the durable state root, even if CWD is a nested worktree.",
+    "Append events through scripts/agent_run.py event ... --project whenever possible.",
+    "Run scripts/agent_run.py doctor --repo-root project_root before a handoff."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "project_slug": "xnode-pd",
+  "agent_run_dir": "/home/aoshen/vime/projects/xnode-pd/agent_run",
+  "worktree": "/home/aoshen/vime/projects/xnode-pd/vime-worktree",
+  "branch": "feat/xnode-pd",
+  "base_branch": "main",
+  "goal": "Cross-node PD (prefill/decode disaggregation) on H200 x2: PP2 EP8 TP4 CP2 training, TP2 inference, 1-node prefill + 1-node decode, colocated",
+  "created": "2026-06-09"
+}

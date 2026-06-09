@@ -1,0 +1,10 @@
+{
+  "agent_run_dir": "/home/aoshen/vime/projects/issue107-translation-cleanup/agent_run",
+  "project_root": "/home/aoshen/vime/projects/issue107-translation-cleanup",
+  "worktree": "/home/aoshen/vime/projects/issue107-translation-cleanup/vime-worktree",
+  "repo": "vime",
+  "branch": "issue107-cleanup",
+  "task": "Finish sglang->vllm / slime->vime translation missed during issue #107 sync; reduce sglang/slime grep counts back to pre-#107 baseline",
+  "reference_spec": "/home/aoshen/vime/agent_run/reports/sync/SGLANG_TO_VLLM_TRANSLATION.md",
+  "created": "2026-06-08"
+}

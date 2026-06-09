@@ -2,6 +2,7 @@ import dataclasses
 import itertools
 import logging
 import multiprocessing
+import os
 import random
 import time
 from pathlib import Path
@@ -11,14 +12,10 @@ import numpy as np
 import ray
 import torch
 from ray.util.scheduling_strategies import PlacementGroupSchedulingStrategy
+from vllm.srt.constants import GPU_MEMORY_TYPE_CUDA_GRAPH, GPU_MEMORY_TYPE_KV_CACHE, GPU_MEMORY_TYPE_WEIGHTS
 
 from vime.backends.vllm_utils.vllm_config import ModelConfig, ServerGroupConfig, VllmConfig
-from vime.backends.vllm_utils.vllm_engine import VLLMEngine
-
-# Memory-type tag strings shared with the vLLM engine's sleep/wake_up API.
-GPU_MEMORY_TYPE_KV_CACHE = "kv_cache"
-GPU_MEMORY_TYPE_WEIGHTS = "weights"
-GPU_MEMORY_TYPE_CUDA_GRAPH = "cuda_graph"
+from vime.backends.vllm_utils.vllm_engine import vLLMEngine
 from vime.rollout.base_types import call_rollout_fn
 from vime.utils import logging_utils
 from vime.utils.dp_schedule import build_dp_schedule
@@ -102,7 +99,7 @@ class ServerGroup:
             rollout_num_gpus_per_engine=self.args.rollout_num_gpus_per_engine,
         )
 
-        RolloutRayActor = ray.remote(VLLMEngine)
+        RolloutRayActor = ray.remote(vLLMEngine)
 
         rollout_engines = []
         for i in range(len(self.all_engines)):
@@ -123,7 +120,20 @@ class ServerGroup:
                 placement_group_bundle_index=reordered_bundle_indices[gpu_index],
             )
 
-            env_vars = {name: "1" for name in NOSET_VISIBLE_DEVICES_ENV_VARS_LIST}
+            env_vars = {name: "1" for name in NOSET_VISIBLE_DEVICES_ENV_VARS_LIST} | {
+                key: os.environ.get(key, default_val)
+                for key, default_val in {
+                    "VLLM_JIT_DEEPGEMM_PRECOMPILE": "true",
+                    "VLLM_JIT_DEEPGEMM_FAST_WARMUP": "true",
+                    "SGL_DISABLE_TP_MEMORY_INBALANCE_CHECK": "true",
+                    "VLLM_DISABLE_TP_MEMORY_INBALANCE_CHECK": "true",
+                    "VLLM_MEMORY_SAVER_CUDA_GRAPH": "true",
+                    "VLLM_BATCH_INVARIANT_OPS_ENABLE_MM_FALLBACK_VARIANT": "true",
+                    "VLLM_ENABLE_HEALTH_ENDPOINT_GENERATION": "false",
+                    "VLLM_ENABLE_STRICT_MEM_CHECK_DURING_IDLE": "false",
+                    "VIME_ENABLE_PROFILING": "true",
+                }.items()
+            }
             rollout_engine = RolloutRayActor.options(
                 num_cpus=num_cpus,
                 num_gpus=num_gpus,
@@ -220,7 +230,6 @@ class RolloutServer:
     server_groups: list[ServerGroup]
     router_ip: str | None = None
     router_port: int | None = None
-    prometheus_port: int | None = None
     model_name: str = "default"
     update_weights: bool = True
 
@@ -394,19 +403,17 @@ class RolloutManager:
             self._ci_fault_injection_pending = self.args.ci_test  # Flag for CI fault injection
 
     def _get_metrics_router_addr(self) -> str | None:
-        """Return the full Prometheus scrape URL for the rollout router.
+        """Return the router address for scraping vLLM engine metrics.
 
-        vllm-router exposes Prometheus on a dedicated ``prometheus_port``
-        (see ``router_args.prometheus_port`` in ``_start_router``), not via
-        a path on the main router port. The metrics endpoint is the default
-        ``/metrics`` served by the metrics-exporter-prometheus crate.
-        Returns ``http://{ip}:{prom_port}/metrics``, or ``None`` if metrics
-        are disabled or no servers are running.
+        The vllm_router gateway exposes ``/engine_metrics`` on its main port,
+        which aggregates Prometheus metrics from all backend vllm servers.
+        Returns ``http://{ip}:{port}`` for the first server, or ``None`` when
+        metrics are disabled or no servers are running.
         """
         srv = self.server
-        if srv is None or srv.router_ip is None or srv.prometheus_port is None:
+        if srv is None or srv.router_ip is None:
             return None
-        return f"http://{srv.router_ip}:{srv.prometheus_port}/metrics"
+        return f"http://{srv.router_ip}:{srv.router_port}"
 
     def get_metrics_router_addr(self) -> str | None:
         """Public wrapper for remote calls from the driver process."""
@@ -918,7 +925,7 @@ def _allocate_rollout_engine_addr_and_ports_normal(
             addr_and_ports[current_rank]["port"] = get_port()
             addr_and_ports[current_rank]["nccl_port"] = get_port()
 
-            if worker_type in ("prefill", "decode"):
+            if worker_type == "prefill":
                 addr_and_ports[current_rank]["disaggregation_bootstrap_port"] = get_port()
 
         if _gpus_per_engine > args.num_gpus_per_node:
@@ -941,28 +948,25 @@ def _allocate_rollout_engine_addr_and_ports_normal(
     return addr_and_ports, node_port_cursor
 
 
-def _start_router(
-    args,
-    *,
-    has_pd_disaggregation: bool = False,
-    force_new: bool = False,
-    bind: tuple[str, int] | None = None,
-    prefill_urls: list | None = None,
-    decode_urls: list | None = None,
-) -> tuple[str, int, int]:
-    """Start the rollout HTTP gateway (vllm-router)."""
-    if bind is not None:
-        router_ip, router_port = bind
-    else:
-        if not force_new and args.vllm_router_ip is not None:
-            return args.vllm_router_ip, args.vllm_router_port, None
-        router_ip = _wrap_ipv6(get_host_info()[1])
-        if force_new or args.vllm_router_port is None:
-            router_port = find_available_port(random.randint(3000, 4000))
-        else:
-            router_port = args.vllm_router_port
+def _start_router(args, *, has_pd_disaggregation: bool = False, force_new: bool = False) -> tuple[str, int]:
+    """Start vllm_router and return (router_ip, router_port).
 
-    from vllm_router.router_args import RouterArgs
+    If ``args.vllm_router_ip`` is already set (e.g. by the user) and
+    ``force_new`` is False, skip launching and return the existing values.
+    When ``force_new`` is True (multi-model), always allocate a fresh port.
+    """
+    if not force_new and args.vllm_router_ip is not None:
+        return args.vllm_router_ip, args.vllm_router_port
+
+    router_ip = _wrap_ipv6(get_host_info()[1])
+    if force_new:
+        router_port = find_available_port(random.randint(3000, 4000))
+    else:
+        router_port = args.vllm_router_port
+        if router_port is None:
+            router_port = find_available_port(random.randint(3000, 4000))
+
+    from vllm_router.launch_router import RouterArgs
 
     from vime.utils.http_utils import run_router
 
@@ -970,28 +974,32 @@ def _start_router(
     router_args.host = router_ip
     router_args.port = router_port
     router_args.prometheus_port = find_available_port(random.randint(4000, 5000))
-    router_args.log_level = "warning"
-    router_args.request_timeout_secs = args.router_request_timeout_secs
+    router_args.log_level = "warn"
+    router_args.request_timeout_secs = args.vllm_router_request_timeout_secs
 
     if has_pd_disaggregation:
-        router_args.vllm_pd_disaggregation = True
-        # Disable circuit breaker so transient RDMA transfer timeouts (PCIe
-        # contention under load) don't mark decode workers dead.
+        router_args.pd_disaggregation = True
+        # Disable circuit breaker to prevent RDMA transfer timeouts from
+        # marking decode workers as dead. Timeouts are transient (PCIe
+        # contention under high load) and do not indicate a dead server.
         router_args.disable_circuit_breaker = True
 
-    if prefill_urls is not None:
-        router_args.prefill_urls = prefill_urls
-        router_args.decode_urls = decode_urls
+    # We will not use the health check from router.
+    router_args.disable_health_check = True
 
     logger.info(f"Launch router with args: {router_args}")
 
-    process = multiprocessing.Process(target=run_router, args=(router_args,))
-    process.daemon = True
+    process = multiprocessing.Process(
+        target=run_router,
+        args=(router_args,),
+    )
+    process.daemon = True  # Set the process as a daemon
     process.start()
+    # Wait 3 seconds
     time.sleep(3)
     assert process.is_alive()
     logger.info(f"Router launched at {router_ip}:{router_port}, Prometheus port: {router_args.prometheus_port}")
-    return router_ip, router_port, router_args.prometheus_port
+    return router_ip, router_port
 
 
 def _compute_rollout_offset(args) -> int:
@@ -1013,7 +1021,7 @@ def _compute_megatron_num_gpus(args) -> int:
 def start_rollout_servers(args, pg) -> dict[str, RolloutServer]:
     """Start rollout servers: one per model, each with its own router.
 
-    Each model defined in the vLLM config gets its own router and set
+    Each model defined in the vllm config gets its own router and set
     of server groups.  Server groups within a model may have different
     ``num_gpus_per_engine`` (e.g. for PD disaggregation where prefill
     and decode use different TP sizes).
@@ -1037,20 +1045,9 @@ def start_rollout_servers(args, pg) -> dict[str, RolloutServer]:
         model_cfg.resolve(args)
 
         has_pd = model_cfg.has_pd_disaggregation
-        use_static_pd_router = has_pd
-        if use_static_pd_router:
-            router_ip = _wrap_ipv6(get_host_info()[1])
-            router_port = find_available_port(random.randint(3000, 4000))
-            prom_port = None  # assigned when the router actually launches, after URL collection
-            engine_router_ip, engine_router_port = None, None
-        else:
-            router_ip, router_port, prom_port = _start_router(
-                args, has_pd_disaggregation=has_pd, force_new=(model_idx > 0)
-            )
-            engine_router_ip, engine_router_port = router_ip, router_port
+        router_ip, router_port = _start_router(args, has_pd_disaggregation=has_pd, force_new=(model_idx > 0))
 
-        # Write back so downstream readers (vllm_rollout, vllm_engine) see the
-        # router we just started (only relevant for first model in multi-model setups).
+        # Write back for backward compat (first model only).
         if model_idx == 0:
             args.vllm_router_ip = router_ip
             args.vllm_router_port = router_port
@@ -1104,7 +1101,7 @@ def start_rollout_servers(args, pg) -> dict[str, RolloutServer]:
             for group_cfg in model_cfg.server_groups:
                 if group_cfg.worker_type != "encoder":
                     continue
-                group = _make_group(group_cfg, engine_router_ip, engine_router_port)
+                group = _make_group(group_cfg, router_ip, router_port)
                 handles, port_cursors = group.start_engines(port_cursors)
                 if handles:
                     ray.get(handles)
@@ -1125,7 +1122,7 @@ def start_rollout_servers(args, pg) -> dict[str, RolloutServer]:
                 if encoder_urls and group_cfg.worker_type in ("prefill", "regular"):
                     overrides_extra["language_only"] = True
                     overrides_extra["encoder_urls"] = encoder_urls
-                group = _make_group(group_cfg, engine_router_ip, engine_router_port, overrides_extra=overrides_extra)
+                group = _make_group(group_cfg, router_ip, router_port, overrides_extra=overrides_extra)
                 handles, port_cursors = group.start_engines(port_cursors)
                 non_encoder_handles.extend(handles)
                 server_groups.append(group)
@@ -1136,7 +1133,7 @@ def start_rollout_servers(args, pg) -> dict[str, RolloutServer]:
             # No EPD — start all groups in one pass (original path).
             all_init_handles: list = []
             for group_cfg in model_cfg.server_groups:
-                group = _make_group(group_cfg, engine_router_ip, engine_router_port)
+                group = _make_group(group_cfg, router_ip, router_port)
                 handles, port_cursors = group.start_engines(port_cursors)
                 all_init_handles.extend(handles)
                 server_groups.append(group)
@@ -1144,36 +1141,12 @@ def start_rollout_servers(args, pg) -> dict[str, RolloutServer]:
             if all_init_handles:
                 ray.get(all_init_handles)
 
-        if use_static_pd_router:
-            prefill_urls: list[tuple] = []
-            decode_urls: list[str] = []
-            for g in server_groups:
-                for e in g.engines:
-                    if e is None:
-                        continue
-                    if g.worker_type == "prefill":
-                        url = ray.get(e.get_url.remote())
-                        if url:
-                            prefill_urls.append((url, None))
-                    elif g.worker_type == "decode":
-                        url = ray.get(e.get_url.remote())
-                        if url:
-                            decode_urls.append(url)
-            _, _, prom_port = _start_router(
-                args,
-                has_pd_disaggregation=True,
-                bind=(router_ip, router_port),
-                prefill_urls=prefill_urls,
-                decode_urls=decode_urls,
-            )
-
         servers[model_cfg.name] = RolloutServer(
             server_groups=server_groups,
             router_ip=router_ip,
             router_port=router_port,
             model_name=model_cfg.name,
             update_weights=model_cfg.update_weights,
-            prometheus_port=prom_port,
         )
 
     # Expose per-model router info for custom rollout functions.
@@ -1184,7 +1157,7 @@ def start_rollout_servers(args, pg) -> dict[str, RolloutServer]:
 
 def _resolve_vllm_config(args) -> VllmConfig:
     """Build a VllmConfig from args, choosing the right source."""
-    if getattr(args, "vllm_config", None):
+    if getattr(args, "vllm_config", None) is not None:
         config = VllmConfig.from_yaml(args.vllm_config)
         # Validate total GPUs match.
         expected = args.rollout_num_gpus
@@ -1322,7 +1295,7 @@ def _compute_zero_std_metrics(args, all_samples: list[Sample]):
 
 
 def _compute_spec_metrics(args, all_samples: list[Sample]):
-    if getattr(args, "vllm_speculative_config", None) is None:
+    if getattr(args, "vllm_speculative_algorithm", None) is None:
         return {}
     num_samples = len(all_samples)
     metrics = {}

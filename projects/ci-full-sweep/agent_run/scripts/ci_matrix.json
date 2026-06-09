@@ -1,0 +1,88 @@
+{
+  "schema": "ci-full-sweep.ci_matrix.v1",
+  "source": ".github/workflows/pr-test.yml.j2 @ ae5d6b04 (origin/main, PR #178 merged)",
+  "generated_note": "Authoritative encoding of every CI job/test. id is unique (incorporates test_args/flags). num_gpus=0 => CPU job (run in vime-latest image, no --gpus, no gpu_lock). image=null => inferactinc/public:vime-latest. optional=true => not part of the code-correctness sweep (e.g. release-candidate-image duplicate, or dynamic changed-detect).",
+  "host_mounts": {
+    "models": "/home/aoshen/models-shared -> /root/models (flat dir; models are subdirs)",
+    "datasets": "/home/aoshen/models-shared -> /root/datasets (same flat dir; datasets are sibling subdirs)",
+    "ci_original": "CI mounts /mnt/nvme0n1/vime_ci/{models,datasets} (CI staging, absent on this run path) — replaced by models-shared double-mount",
+    "runs": "/home/aoshen/vime-test-runs/ci-full-sweep/<run-ts>/<id> -> /root/runs (logs + TORCHINDUCTOR_CACHE_DIR=/root/runs/torchinductor)"
+  },
+  "env_defaults": {
+    "VIME_TEST_USE_DEEPEP": "0",
+    "VIME_TEST_USE_FP8_ROLLOUT": "0",
+    "VIME_TEST_ENABLE_EVAL": "1",
+    "VIME_TEST_ENABLE_INFINITE_RUN": "false"
+  },
+  "entries": [
+    {"id": "short_gsm8k_async", "group": "e2e-test-short", "label": "run-ci-short", "test_file": "test_qwen3.5_0.8B_gsm8k_async_short.py", "num_gpus": 4, "cpu": false, "note": "Qwen3.5-0.8B async gsm8k short"},
+    {"id": "short_gsm8k", "group": "e2e-test-short", "label": "run-ci-short", "test_file": "test_qwen3.5_0.8B_gsm8k_short.py", "num_gpus": 4, "cpu": false, "note": "Qwen3.5-0.8B gsm8k short"},
+    {"id": "short_ppo_critic", "group": "e2e-test-short", "label": "run-ci-short", "test_file": "test_qwen2.5_0.5B_ppo_critic_only_short.py", "num_gpus": 4, "cpu": false, "note": "Qwen2.5-0.5B PPO critic-only short"},
+    {"id": "short_fully_async", "group": "e2e-test-short", "label": "run-ci-short", "test_file": "test_qwen2.5_0.5B_fully_async_short.py", "num_gpus": 4, "cpu": false, "note": "Qwen2.5-0.5B fully-async short"},
+
+    {"id": "vllm_config", "group": "e2e-test-vllm-config", "label": "run-ci-vllm-config", "test_file": "test_qwen2.5_0.5B_vllm_config.py", "num_gpus": 8, "cpu": false, "note": "vLLM config matrix"},
+    {"id": "vllm_config_dist", "group": "e2e-test-vllm-config", "label": "run-ci-vllm-config", "test_file": "test_qwen2.5_0.5B_vllm_config_distributed.py", "num_gpus": 8, "cpu": false, "note": "vLLM config distributed"},
+    {"id": "vllm_mixed_offload", "group": "e2e-test-vllm-config", "label": "run-ci-vllm-config", "test_file": "test_vllm_config_mixed_offload.py", "num_gpus": 8, "cpu": false, "note": "vLLM mixed offload"},
+    {"id": "vllm_mixed_offload_ft", "group": "e2e-test-vllm-config", "label": "run-ci-vllm-config", "test_file": "test_vllm_config_mixed_offload_ft.py", "num_gpus": 8, "cpu": false, "note": "vLLM mixed offload fault-tolerant"},
+
+    {"id": "mg_glm4_9B", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_quick_start_glm4_9B.py", "num_gpus": 8, "cpu": false, "note": "GLM-4 9B quick start — VERIFY model name (models-shared has GLM-4.7-Flash / GLM-Z1-9B-0414, no plain GLM-4-9B)"},
+    {"id": "mg_glm47_30B_pd", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_glm4.7_30B_A3B_pd_mooncake.py", "num_gpus": 8, "cpu": false, "note": "GLM-4.7-30B-A3B PD mooncake"},
+    {"id": "mg_qwen3_30B_deepep_fp8", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen3_30B_A3B.py", "num_gpus": 8, "use_deepep": "1", "use_fp8_rollout": "1", "cpu": false, "note": "Qwen3-30B-A3B deepep+fp8"},
+    {"id": "mg_qwen36_35B_pd_deepep", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen3.6_35B_A3B_pd_mooncake.py", "num_gpus": 8, "use_deepep": "1", "cpu": false, "note": "Qwen3.6-35B-A3B PD mooncake deepep"},
+    {"id": "mg_qwen3_30B_r3_deepep_fp8", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen3_30B_A3B_r3.py", "num_gpus": 8, "use_deepep": "1", "use_fp8_rollout": "1", "enable_eval": "0", "cpu": false, "note": "Qwen3-30B-A3B r3 deepep+fp8 (needs triton MoE on Blackwell only; h200 fine)"},
+    {"id": "mg_qwen3_30B_r3", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen3_30B_A3B_r3.py", "num_gpus": 8, "enable_eval": "0", "cpu": false, "note": "Qwen3-30B-A3B r3 bf16"},
+    {"id": "mg_qwen3_4B_ppo", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen3_4B_ppo.py", "num_gpus": 8, "cpu": false, "note": "Qwen3-4B PPO"},
+    {"id": "mg_qwen3_4B_ppo_disagg", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen3_4B_ppo_disaggregate.py", "num_gpus": 8, "cpu": false, "note": "Qwen3-4B PPO disaggregate"},
+    {"id": "mg_qwen3_4B_ppo_critic", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen3_4B_ppo_train_critic_only.py", "num_gpus": 8, "cpu": false, "note": "Qwen3-4B PPO critic-only"},
+    {"id": "mg_qwen3_4B_streaming", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen3_4B_streaming_partial_rollout.py", "num_gpus": 8, "cpu": false, "note": "Qwen3-4B streaming partial rollout"},
+    {"id": "mg_moonlight_16B", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_moonlight_16B_A3B.py", "num_gpus": 8, "cpu": false, "note": "Moonlight-16B-A3B"},
+    {"id": "mg_moonlight_16B_r3", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_moonlight_16B_A3B_r3.py", "num_gpus": 8, "enable_eval": "0", "cpu": false, "note": "Moonlight-16B-A3B r3"},
+    {"id": "mg_debug_rollout_train", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen2.5_0.5B_debug_rollout_then_train.py", "num_gpus": 8, "cpu": false, "note": "Qwen2.5-0.5B debug rollout-then-train"},
+    {"id": "mg_opd_vllm", "group": "e2e-test-megatron", "label": "run-ci-megatron", "test_file": "test_qwen2.5_0.5B_opd_vllm.py", "num_gpus": 8, "cpu": false, "note": "Qwen2.5-0.5B OPD vLLM (PR #141)"},
+
+    {"id": "prec_parallel_check", "group": "e2e-test-precision", "label": "run-ci-precision", "test_file": "test_qwen3_0.6B_parallel_check.py", "num_gpus": 8, "cpu": false, "note": "Qwen3-0.6B parallel check — refs are x86-generated; h200 is x86 so OK (gb200-arm would FP-diff)"},
+
+    {"id": "ckpt", "group": "e2e-test-ckpt", "label": "run-ci-ckpt", "test_file": "test_qwen3_4B_ckpt.py", "num_gpus": 8, "cpu": false, "note": "Qwen3-4B checkpoint save/load"},
+    {"id": "ckpt_async", "group": "e2e-test-ckpt", "label": "run-ci-ckpt", "test_file": "test_qwen3_4B_ckpt.py", "test_args": "--async-save", "num_gpus": 8, "cpu": false, "note": "Qwen3-4B checkpoint async-save"},
+
+    {"id": "pc_megatron_arg_validation", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_megatron_argument_validation.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_value_temperature", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_value_temperature.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_rollout_validation", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_rollout_validation.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_plugin_rollout", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "plugin_contracts/test_plugin_rollout_contracts.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_plugin_runtime_hook", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "plugin_contracts/test_plugin_runtime_hook_contracts.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_plugin_path_loading", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "plugin_contracts/test_plugin_path_loading_contracts.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_plugin_generate", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "plugin_contracts/test_plugin_generate_contracts.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_rm_deepscaler", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_rm_deepscaler.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_rm_f1", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_rm_f1.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_rm_gpqa", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_rm_gpqa.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_rm_math", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_rm_math.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_rm_math_dapo", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_rm_math_dapo.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_dp_schedule", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_dp_schedule.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_cp_utils", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_cp_utils.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_metric_report", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_metric_report.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_metric_report_dist", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_metric_report_dist.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_loss_cp_invariance", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_loss_cp_invariance.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_sample", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "test_sample.py", "num_gpus": 0, "cpu": true},
+    {"id": "pc_hf_checkpoint_saver", "group": "e2e-test-plugin-contracts", "label": "run-ci-plugin-contracts", "always": true, "test_file": "utils/test_hf_checkpoint_saver.py", "num_gpus": 0, "cpu": true},
+
+    {"id": "agent_trajectory", "group": "agent-adapter-test", "label": "run-ci-agent-adapter", "always": true, "test_file": "test_agent_trajectory.py", "num_gpus": 0, "cpu": true, "extra_pip_deps": "openai openai-agents anthropic"},
+    {"id": "agent_adapters", "group": "agent-adapter-test", "label": "run-ci-agent-adapter", "always": true, "test_file": "test_agent_adapters.py", "num_gpus": 0, "cpu": true, "extra_pip_deps": "openai openai-agents anthropic"},
+    {"id": "agent_sdk_adapters", "group": "agent-adapter-test", "label": "run-ci-agent-adapter", "always": true, "test_file": "test_agent_sdk_adapters.py", "num_gpus": 0, "cpu": true, "extra_pip_deps": "openai openai-agents anthropic"},
+
+    {"id": "unit_pytest", "group": "e2e-test-unit", "label": null, "always": true, "test_file": "__pytest__:tests/unit tests/utils", "num_gpus": 1, "cpu": false, "pytest": true, "note": "pytest tests/unit tests/utils with GPU + per-test process isolation (pytest-forked) => 192/192 per ci_cpu_unit_gate_audit. NOT the CI-literal no-GPU single-invocation (which yields 28 fail = 4 device + 24 order-pollution). gpu_lock_exec --count 1; no model mount."},
+
+    {"id": "img_short_gsm8k_async", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen3.5_0.8B_gsm8k_async_short.py", "num_gpus": 4, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest", "note": "release-candidate-image duplicate subset; image absent on h200-0"},
+    {"id": "img_short_gsm8k", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen3.5_0.8B_gsm8k_short.py", "num_gpus": 4, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_glm4_9B", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_quick_start_glm4_9B.py", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_glm47_30B_pd", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_glm4.7_30B_A3B_pd_mooncake.py", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_qwen3_30B", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen3_30B_A3B.py", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_qwen36_35B_pd_deepep", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen3.6_35B_A3B_pd_mooncake.py", "num_gpus": 8, "use_deepep": "1", "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_qwen3_4B_ppo", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen3_4B_ppo.py", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_moonlight_16B", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_moonlight_16B_A3B.py", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_parallel_check", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen3_0.6B_parallel_check.py", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_ckpt", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen3_4B_ckpt.py", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_ckpt_async", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen3_4B_ckpt.py", "test_args": "--async-save", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_debug_rollout_train", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen2.5_0.5B_debug_rollout_then_train.py", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"},
+    {"id": "img_opd_vllm", "group": "e2e-test-image", "label": "run-ci-image", "image": "inferactinc/public:vime-test-latest", "test_file": "test_qwen2.5_0.5B_opd_vllm.py", "num_gpus": 8, "cpu": false, "optional": true, "needs_image": "inferactinc/public:vime-test-latest"}
+  ]
+}

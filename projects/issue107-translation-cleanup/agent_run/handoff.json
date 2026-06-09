@@ -1,0 +1,9 @@
+{
+  "last_agent": "unknown",
+  "last_session_id": null,
+  "last_ts": "2026-06-09T02:25:57Z",
+  "next_phase": 1,
+  "next_owner": "any",
+  "blockers": [],
+  "summary": "Split docs-site trims out of #199 into new PR #201 (worktree vime-worktree-docs, branch issue107-docs-trim). #199 rev..."
+}

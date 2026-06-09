@@ -1,0 +1,16 @@
+{
+  "artifact": "e2e_modal_sandbox.py",
+  "purpose": "End-to-end test of the real ModalSandbox backend against live Modal: every Sandbox-Protocol method + reverse adapter dial-back through a cloudflared tunnel.",
+  "cmd": "MODAL_TOKEN_ID=*** MODAL_TOKEN_SECRET=*** /home/aoshen/code/uv_envs/py312/bin/python agent_run/scripts/e2e_modal_sandbox.py --image buildpack-deps:bookworm",
+  "git_commit": "6011ae9f7f",
+  "baseline_source": "projects/vime_gb200_training/workspace (vime-flavored coding_agent_rl + vime/agent/sandbox.py), copied read-only into ../workspace",
+  "env_pins": {
+    "modal": "1.4.2",
+    "python": "3.12 (/home/aoshen/code/uv_envs/py312)",
+    "cloudflared": "/usr/local/bin/cloudflared",
+    "host": "gb200-rack1-01"
+  },
+  "requires": ["MODAL_TOKEN_ID", "MODAL_TOKEN_SECRET", "cloudflared on PATH", "outbound egress"],
+  "ts": "2026-06-07T02:50:00Z",
+  "agent": "opus-4-8"
+}

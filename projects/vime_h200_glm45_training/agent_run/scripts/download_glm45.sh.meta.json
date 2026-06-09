@@ -1,0 +1,1 @@
+{"cmd":"hf download zai-org/GLM-4.5-Air --local-dir /mnt/lustre/aoshen/glm45-air/GLM-4.5-Air","ts":"2026-06-07T05:20:00Z","agent":"opus-4-8","purpose":"bf16 source for torch_dist (ref-load) + fp8 (rollout) conversions","host":"gb200-rack1-01","note":"no hf_transfer; ~212GB"}

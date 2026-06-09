@@ -1,0 +1,35 @@
+{
+  "schema": "vllm-agent-infra.agent_run_manifest.v1",
+  "task_slug": "ci-full-sweep",
+  "task_description": "comprehensive CI sweep + slime A/B + bisect — pull latest vime (origin/main), run ALL CI tests on h200 with vime-latest; on any failure run the same test with the slime image as A/B to confirm a real issue; git-bisect regressions. Setup first.",
+  "initialized_at": "2026-06-08T02:10:16Z",
+  "project_root": "/home/aoshen/vime/projects/ci-full-sweep",
+  "agent_run_dir": "/home/aoshen/vime/projects/ci-full-sweep/agent_run",
+  "branch": "ci-full-sweep",
+  "commit": "ae5d6b0430",
+  "canonical_paths": {
+    "index": "/home/aoshen/vime/projects/ci-full-sweep/agent_run/INDEX.md",
+    "plan": "/home/aoshen/vime/projects/ci-full-sweep/agent_run/plan.md",
+    "events": "/home/aoshen/vime/projects/ci-full-sweep/agent_run/events.jsonl",
+    "handoff": "/home/aoshen/vime/projects/ci-full-sweep/agent_run/handoff.json",
+    "bisect": "/home/aoshen/vime/projects/ci-full-sweep/agent_run/bisect.md",
+    "results": "/home/aoshen/vime/projects/ci-full-sweep/agent_run/results",
+    "scripts": "/home/aoshen/vime/projects/ci-full-sweep/agent_run/scripts",
+    "reports": "/home/aoshen/vime/projects/ci-full-sweep/agent_run/reports",
+    "bugs": "/home/aoshen/vime/projects/ci-full-sweep/agent_run/bugs"
+  },
+  "write_policy": {
+    "reusable_scripts": "agent_run/scripts/",
+    "raw_outputs_and_logs": "agent_run/results/<phase-or-run>/",
+    "summaries_audits_postmortems": "agent_run/reports/",
+    "bug_reports_and_repros": "agent_run/bugs/<bug-slug>/",
+    "debug_good_bad_anchors": "append state_anchor events; projection is agent_run/bisect.md",
+    "project_level_scripts": "symlink or wrapper only; canonical script stays under agent_run/scripts/"
+  },
+  "compact_recovery": [
+    "Read this file first.",
+    "Use agent_run_dir as the durable state root, even if CWD is a nested worktree.",
+    "Append events through scripts/agent_run.py event ... --project whenever possible.",
+    "Run scripts/agent_run.py doctor --repo-root project_root before a handoff."
+  ]
+}
