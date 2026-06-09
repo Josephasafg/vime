@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>常见 Q&amp;A &#8212; Vime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=ad20845f" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=30c3115b"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'get_started/qa';</script>
+    <script src="../_static/js/lang-toggle.js?v=4693e039"></script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="8xH100 训练 Qwen3-4B" href="../examples/qwen3-4B.html" />
+    <link rel="prev" title="自定义指南" href="customization.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="2026 年 06 月 09 日"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="Vime - Home"/>
+    <img src="../_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="Vime - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">开始使用</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">快速使用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">使用文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">自定义指南</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">常见 Q&amp;A</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dense</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">8xH100 训练 Qwen3-4B</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MoE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">8xH100 训练 Qwen3-30B-A3B</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">高级特性</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">投机采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/reproducibility.html">可复现性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/fault-tolerance.html">容灾</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/pd-disaggregation.html">PD 分离</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/vllm-config.html">vLLM Config：高级引擎部署</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/megatron-config.html">Megatron Config：按角色覆盖训练参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/arch-support-beyond-megatron.html">在 Megatron-LM 中快速支持新模型架构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">其他用法</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/fully_async/README.html">Fully-Async Rollout Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/multi_agent/README.html">Multi-Agent RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">开发指南</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/ci.html">CI（持续集成）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/debug.html">Debug 指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/trace.html">Trace 可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/profiling.html">性能分析（Profiling）</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/blob/main/get_started/qa.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/edit/main/get_started/qa.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/issues/new?title=Issue%20on%20page%20%2Fget_started/qa.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/get_started/qa.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>常见 Q&A</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="q-a">
+<h1>常见 Q&amp;A<a class="headerlink" href="#q-a" title="链接到此标题。">#</a></h1>
+<ol class="arabic">
+<li><p><strong>训练过程中为什么会出现乱码？</strong></p>
+<p>一般来说这种情况是 megatron 没有被正确加载。请检查 <code class="docutils literal notranslate"><span class="pre">--load</span></code> 或 <code class="docutils literal notranslate"><span class="pre">--ref-load</span></code> 是否有对应的 ckpt。注意 megatron 只能加载其中有 <code class="docutils literal notranslate"><span class="pre">latest_checkpointed_iteration.txt</span></code> 的目录。</p>
+<p>如果需要指定某个特定的 iter，可以查看当前 megatron 的使用方法，一般是可以通过 <code class="docutils literal notranslate"><span class="pre">--ckpt-step</span></code> 来指定步数。</p>
+</li>
+<li><p><strong>为什么我的任务一直卡在 ray 提交的页面上？</strong></p>
+<p>请先检查你需要跑的任务是训推一体的，还是训推分离的。</p>
+<p>如果是训推一体，即训练和推理共用 GPU，请检查</p>
+<ul class="simple">
+<li><p>是否设置了 <code class="docutils literal notranslate"><span class="pre">--colocate</span></code> 参数开启训推一体；</p></li>
+<li><p>当前任务的总卡数是否大于等于 <code class="docutils literal notranslate"><span class="pre">actor_num_nodes</span> <span class="pre">*</span> <span class="pre">actor_num_gpus_per_node</span></code></p></li>
+</ul>
+<p>如果是训推分离，请检查：</p>
+<ul class="simple">
+<li><p>当前任务的总卡数是否大于等于 <code class="docutils literal notranslate"><span class="pre">actor_num_nodes</span> <span class="pre">*</span> <span class="pre">actor_num_gpus_per_node</span> <span class="pre">+</span> <span class="pre">rollout_num_gpus</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>为什么训着训着 OOM 了？<code class="docutils literal notranslate"><span class="pre">max_tokens_per_gpu</span></code> 是干什么用的？</strong></p>
+<p>OOM 往往是因为 <code class="docutils literal notranslate"><span class="pre">max_tokens_per_gpu</span></code> 设置过高了。 <code class="docutils literal notranslate"><span class="pre">max_tokens_per_gpu</span></code> 是指在训练过程中，每张 GPU 上最多可以放多少 token。如果担心 OOM 的话，可以先把这个值设成 <code class="docutils literal notranslate"><span class="pre">rollout_max_response_len</span> <span class="pre">/</span> <span class="pre">cp_size</span></code>，之后再为了提升训练效率来增大这个值。<code class="docutils literal notranslate"><span class="pre">--max-tokens-per-gpu</span></code> 只有在开启 <code class="docutils literal notranslate"><span class="pre">--use-dynamic-batch-size</span></code> 的情况下才会启用。</p>
+<p>如果 <code class="docutils literal notranslate"><span class="pre">max_tokens_per_gpu</span></code> 很小，还会 oom，可以检查一下是否单次生成的数据太长了，需要开启 cp（<code class="docutils literal notranslate"><span class="pre">--context-parallel-size</span></code>）。如果进行了自定义的数据生成，可以看一下是否在多轮生成的情况下，生成的总长度比预期的长很多。</p>
+</li>
+<li><p><strong>多机训练的时候，遇到了 transformers 库找不到某个模型的错误该怎么办？</strong></p>
+<p>这种情况一般是因为多个进程都在通过类似于 <code class="docutils literal notranslate"><span class="pre">AutoConfig.from_pretrained</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">AutoModelForCausalLM.from_pretrained</span></code> 的方式读取本地文件，出现了文件系统的写冲突。可以通过设置 <code class="docutils literal notranslate"><span class="pre">--model-name</span></code> 缓解这一问题。</p>
+</li>
+<li><p><strong>如何续训？</strong></p>
+<p>直接将 <code class="docutils literal notranslate"><span class="pre">--load</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">--save</span></code> 的目录即可。</p>
+</li>
+<li><p><strong>batch size 是如何计算的？</strong></p>
+<p>一个 rollout 会用 <code class="docutils literal notranslate"><span class="pre">rollout_batch_size</span></code> 条 prompt，每一条会采 <code class="docutils literal notranslate"><span class="pre">n_samples_per_prompt</span></code> 条，所以一个 rollout 共 <code class="docutils literal notranslate"><span class="pre">rollout_batch_size</span> <span class="pre">*</span> <span class="pre">n_samples_per_prompt</span></code> 条数据。</p>
+<p>可以用 <code class="docutils literal notranslate"><span class="pre">--num-steps-per-rollout</span></code> 来决定每一个 rollout 跑多少步。这相当于是把 <code class="docutils literal notranslate"><span class="pre">global_batch_size</span></code> 设置成 <code class="docutils literal notranslate"><span class="pre">rollout_batch_size</span> <span class="pre">*</span> <span class="pre">n_samples_per_prompt</span> <span class="pre">//</span> <span class="pre">num_steps_per_rollout</span></code>。</p>
+</li>
+<li><p><strong>vime 是否进行了 data packing / varlen 处理？</strong></p>
+<p>data packing 是指在训练过程中，将长短不一的 sample 拼接到一起，从而提升训练的利用率。vime 默认会进行这样的操作。</p>
+</li>
+<li><p><strong>vLLM 部分出现 <code class="docutils literal notranslate"><span class="pre">Max</span> <span class="pre">retries</span> <span class="pre">exceeded</span> <span class="pre">with</span> <span class="pre">url:</span> <span class="pre">/health</span> <span class="pre">(Caused</span> <span class="pre">by</span> <span class="pre">NewConnectionError)</span></code> 的问题怎么办？</strong></p>
+<p>vime 通过 <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/health</span></code> 探测 vLLM engine 是否就绪;这个错误意味着 readiness 探测从未连通。最常见的原因是单机内多个 vLLM 引擎导致的端口冲突。一个临时的缓解方案是尽可能减少单机内的 vLLM 引擎数量，例如设置 tp=8。</p>
+</li>
+<li><p><strong>grad norm 好高，训练训崩了怎么办？</strong></p>
+<p>首先请确保数据和模型是匹配的，例如说，如果数据是实现已经做好 chat template 的了，这个 chat template 是否和原模型一致。如果数据正确的话，可以参考 <a class="reference internal" href="../developer_guide/debug.html"><span class="std std-doc">debug 指南</span></a> 进行更深入的分析。</p>
+</li>
+<li><p><strong>我的 vLLM 生成时间特别特别久，gpu 功率都打满了，跑了好久好没有输出是为什么？</strong></p>
+<p>请确认一下 <code class="docutils literal notranslate"><span class="pre">--hf-checkpoint</span></code> 对应的模型是否正确设置了 stop token，如果没有，可以通过 <code class="docutils literal notranslate"><span class="pre">--rollout-stop</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">--rollout-stop-token-ids</span></code> 来进行设置。</p>
+</li>
+<li><p><strong>vLLM 出现 an illegal memory access was encountered</strong></p>
+<p>常见原因是 OOM，可以考虑缩小 <code class="docutils literal notranslate"><span class="pre">--vllm-gpu-memory-utilization</span></code>。</p>
+</li>
+<li><p><strong>出现 torch compile/inducer 的 <code class="docutils literal notranslate"><span class="pre">JSONDecodeError</span></code></strong></p>
+<p>一般是 torch compile 读写 cache 出现的问题。可以考虑在 ray 的 env_var 里加上 <code class="docutils literal notranslate"><span class="pre">&quot;TORCHINDUCTOR_FORCE_DISABLE_CACHES&quot;:</span> <span class="pre">&quot;1&quot;</span></code>。</p>
+</li>
+<li><p><strong>训练出现 grad NaN 或者 Inf 的情况</strong></p>
+<p>可以通过设置 <code class="docutils literal notranslate"><span class="pre">--no-check-for-nan-in-loss-and-grad</span></code> 来尝试跳过对应的训练步。</p>
+</li>
+</ol>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="customization.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">自定义指南</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../examples/qwen3-4B.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">8xH100 训练 Qwen3-4B</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Vime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2026, Vime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  最后更新于 2026 年 06 月 09 日.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

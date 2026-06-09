@@ -1,0 +1,700 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CI（持续集成） &#8212; Vime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=ad20845f" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=30c3115b"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'developer_guide/ci';</script>
+    <script src="../_static/js/lang-toggle.js?v=4693e039"></script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Debug 指南" href="debug.html" />
+    <link rel="prev" title="Multi-Agent RL" href="../_examples_synced/multi_agent/README.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="2026 年 06 月 09 日"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="Vime - Home"/>
+    <img src="../_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="Vime - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">开始使用</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">快速使用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/usage.html">使用文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/customization.html">自定义指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/qa.html">常见 Q&amp;A</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dense</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">8xH100 训练 Qwen3-4B</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MoE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">8xH100 训练 Qwen3-30B-A3B</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">高级特性</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">投机采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/reproducibility.html">可复现性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/fault-tolerance.html">容灾</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/pd-disaggregation.html">PD 分离</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/vllm-config.html">vLLM Config：高级引擎部署</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/megatron-config.html">Megatron Config：按角色覆盖训练参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/arch-support-beyond-megatron.html">在 Megatron-LM 中快速支持新模型架构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">其他用法</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/fully_async/README.html">Fully-Async Rollout Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/multi_agent/README.html">Multi-Agent RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">开发指南</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">CI（持续集成）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debug 指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trace.html">Trace 可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profiling.html">性能分析（Profiling）</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/blob/main/developer_guide/ci.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/edit/main/developer_guide/ci.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/issues/new?title=Issue%20on%20page%20%2Fdeveloper_guide/ci.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/developer_guide/ci.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>CI（持续集成）</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">工作原理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-labels">CI Labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#label">重点 Label 说明</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-ci-changed"><code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code> — 仅运行新增或修改的测试</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-ci-image"><code class="docutils literal notranslate"><span class="pre">run-ci-image</span></code> — 在测试镜像上运行全部测试</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-ci-megatron-megatron"><code class="docutils literal notranslate"><span class="pre">run-ci-megatron</span></code> — 核心 Megatron 测试</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">编写新测试</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow">Workflow 生成</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#customization">Customization 契约测试</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ci">
+<h1>CI（持续集成）<a class="headerlink" href="#ci" title="链接到此标题。">#</a></h1>
+<p>vime 使用 GitHub Actions 进行 CI。测试通过 <strong>PR label</strong> 触发——给 PR 添加特定 label 即可运行对应的测试套件。</p>
+<section id="id1">
+<h2>工作原理<a class="headerlink" href="#id1" title="链接到此标题。">#</a></h2>
+<p>工作流定义在 <code class="docutils literal notranslate"><span class="pre">.github/workflows/pr-test.yml</span></code>（由 <code class="docutils literal notranslate"><span class="pre">pr-test.yml.j2</span></code> 自动生成）。每个 CI 任务会：</p>
+<ol class="arabic simple">
+<li><p>在自托管 GPU runner 上通过 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> 运行；大多数测试使用 <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-latest</span></code>，镜像验证使用 <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-test-latest</span></code>。</p></li>
+<li><p>通过 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span> <span class="pre">--no-deps</span></code> 安装 vime。</p></li>
+<li><p>通过 <code class="docutils literal notranslate"><span class="pre">tests/ci/gpu_lock_exec.py</span> <span class="pre">--count</span> <span class="pre">&lt;num_gpus&gt;</span></code> 获取所需数量的 GPU。</p></li>
+<li><p>执行测试文件：<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">&lt;test_path&gt;.py</span></code> 或 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tests/&lt;test_file&gt;.py</span></code>。如果测试位于 <code class="docutils literal notranslate"><span class="pre">tests/plugin_contracts/</span></code> 这样的子目录，CI 也会自动处理。</p></li>
+</ol>
+<p>每个测试文件遵循统一的模式：<code class="docutils literal notranslate"><span class="pre">prepare()</span></code> 函数下载模型和数据集，<code class="docutils literal notranslate"><span class="pre">execute()</span></code> 函数构建命令行参数并调用 <code class="docutils literal notranslate"><span class="pre">U.execute_train(...)</span></code>。</p>
+</section>
+<section id="ci-labels">
+<h2>CI Labels<a class="headerlink" href="#ci-labels" title="链接到此标题。">#</a></h2>
+<p>给 PR 添加 label 即可触发对应的测试套件：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Label</p></th>
+<th class="head"><p>Job</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-short</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-short</span></code></p></td>
+<td><p>Qwen2.5-0.5B 轻量级冒烟测试（4 GPU），用于快速反馈。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-megatron</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-megatron</span></code></p></td>
+<td><p>核心 Megatron 训练测试，覆盖 Dense、MoE、PPO、MTP 等。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-precision</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-precision</span></code></p></td>
+<td><p>数值精度校验（并行一致性检查）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-ckpt</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-ckpt</span></code></p></td>
+<td><p>Checkpoint 保存/加载正确性（同步和异步保存）。</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-image</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-image</span></code></p></td>
+<td><p>在 <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-test-latest</span></code> 镜像上运行<strong>全部</strong>测试（用于镜像验证）。</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-changed</span></code></p></td>
+<td><p><strong>动态</strong>检测 PR 中新增或修改的测试文件，仅运行这些测试。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>所有 label 也可通过 <code class="docutils literal notranslate"><span class="pre">workflow_dispatch</span></code>（在 Actions 页面手动触发）来运行。</p>
+</section>
+<section id="label">
+<h2>重点 Label 说明<a class="headerlink" href="#label" title="链接到此标题。">#</a></h2>
+<section id="run-ci-changed">
+<h3><code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code> — 仅运行新增或修改的测试<a class="headerlink" href="#run-ci-changed" title="链接到此标题。">#</a></h3>
+<p>这是开发中最常用的 label。当你新增或修改了测试文件时，只需给 PR 添加 <code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code>，CI 会自动：</p>
+<ol class="arabic simple">
+<li><p><strong>检测</strong>相对于 <code class="docutils literal notranslate"><span class="pre">origin/main</span></code> 新增或修改的 <code class="docutils literal notranslate"><span class="pre">tests/test_*.py</span></code> 或 <code class="docutils literal notranslate"><span class="pre">tests/plugin_contracts/test_*.py</span></code> 文件（通过 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">diff</span> <span class="pre">--diff-filter=AM</span></code>）。</p></li>
+<li><p><strong>提取</strong>每个测试文件中的 <code class="docutils literal notranslate"><span class="pre">NUM_GPUS</span></code> 值。</p></li>
+<li><p><strong>构建</strong>动态 GitHub Actions matrix，并行运行每个测试。</p></li>
+</ol>
+<p>这意味着你不需要手动在 workflow 中注册新测试——只需确保测试文件顶部有 <code class="docutils literal notranslate"><span class="pre">NUM_GPUS</span> <span class="pre">=</span> <span class="pre">&lt;N&gt;</span></code> 常量，<code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code> 就会自动识别并运行。</p>
+<p><strong>示例</strong>：如果你的 PR 新增了 <code class="docutils literal notranslate"><span class="pre">tests/test_mimo_7B_mtp_only_grad.py</span></code>（其中 <code class="docutils literal notranslate"><span class="pre">NUM_GPUS</span> <span class="pre">=</span> <span class="pre">8</span></code>），添加 <code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code> label 后会自动在 8 张 GPU 上运行该测试。</p>
+</section>
+<section id="run-ci-image">
+<h3><code class="docutils literal notranslate"><span class="pre">run-ci-image</span></code> — 在测试镜像上运行全部测试<a class="headerlink" href="#run-ci-image" title="链接到此标题。">#</a></h3>
+<p>这会在 <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-test-latest</span></code> Docker 镜像上运行<strong>所有</strong>已注册的测试。适用于：</p>
+<ul class="simple">
+<li><p>验证新构建的 Docker 镜像是否可用。</p></li>
+<li><p>在合并前做全面的测试检查。</p></li>
+</ul>
+<p>由于包含所有测试，GPU 占用时间较长——日常开发请优先使用更有针对性的 label。</p>
+</section>
+<section id="run-ci-megatron-megatron">
+<h3><code class="docutils literal notranslate"><span class="pre">run-ci-megatron</span></code> — 核心 Megatron 测试<a class="headerlink" href="#run-ci-megatron-megatron" title="链接到此标题。">#</a></h3>
+<p>这是验证 Megatron 后端改动的主要 label，覆盖：</p>
+<ul class="simple">
+<li><p>Dense 模型：GLM4-9B、Qwen3-4B（PPO）</p></li>
+<li><p>MoE 模型：Qwen3-30B-A3B（DeepEP）、Qwen3.6-35B-A3B PD + Mooncake、Moonlight-16B-A3B</p></li>
+<li><p>特殊场景：MiMo-7B MTP、Qwen2.5-0.5B debug rollout-then-train</p></li>
+</ul>
+<p>所有测试使用 8 张 GPU。如果你正在修改 Megatron 训练逻辑、loss 计算或 checkpoint 转换，应该使用这个 label。</p>
+</section>
+</section>
+<section id="id2">
+<h2>编写新测试<a class="headerlink" href="#id2" title="链接到此标题。">#</a></h2>
+<ol class="arabic simple">
+<li><p>创建 <code class="docutils literal notranslate"><span class="pre">tests/test_&lt;your_test_name&gt;.py</span></code>，遵循标准模式：</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">vime.utils.external_utils.command_utils</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">U</span>
+
+<span class="n">MODEL_NAME</span> <span class="o">=</span> <span class="s2">&quot;Qwen2.5-0.5B-Instruct&quot;</span>
+<span class="n">MODEL_TYPE</span> <span class="o">=</span> <span class="s2">&quot;qwen2.5-0.5B&quot;</span>
+<span class="n">NUM_GPUS</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># 此常量会被 run-ci-changed 自动读取</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare</span><span class="p">():</span>
+    <span class="n">U</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s2">&quot;mkdir -p /root/models /root/datasets&quot;</span><span class="p">)</span>
+    <span class="n">U</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;hf download Qwen/</span><span class="si">{</span><span class="n">MODEL_NAME</span><span class="si">}</span><span class="s2"> --local-dir /root/models/</span><span class="si">{</span><span class="n">MODEL_NAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># 按需下载数据集 ...</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">():</span>
+    <span class="c1"># 构建参数字符串并调用 U.execute_train(...)</span>
+    <span class="o">...</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">prepare</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">proxy_var</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;http_proxy&quot;</span><span class="p">,</span> <span class="s2">&quot;https_proxy&quot;</span><span class="p">,</span> <span class="s2">&quot;HTTP_PROXY&quot;</span><span class="p">,</span> <span class="s2">&quot;HTTPS_PROXY&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">proxy_var</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>快速验证</strong>：直接推送测试文件，给 PR 添加 <code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code> label，测试会被自动检测并运行。</p></li>
+<li><p><strong>注册到固定 label 组</strong>：编辑 <code class="docutils literal notranslate"><span class="pre">.github/workflows/pr-test.yml.j2</span></code>，在对应 job 的 <code class="docutils literal notranslate"><span class="pre">tests</span></code> 列表中添加条目，然后重新生成：</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>.github/workflows<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python<span class="w"> </span>generate_github_workflows.py
+</pre></div>
+</div>
+<p>记得同时提交 <code class="docutils literal notranslate"><span class="pre">.j2</span></code> 和生成的 <code class="docutils literal notranslate"><span class="pre">.yml</span></code> 文件。</p>
+</section>
+<section id="workflow">
+<h2>Workflow 生成<a class="headerlink" href="#workflow" title="链接到此标题。">#</a></h2>
+<p>工作流文件 <code class="docutils literal notranslate"><span class="pre">pr-test.yml</span></code> 是从 Jinja2 模板 <code class="docutils literal notranslate"><span class="pre">pr-test.yml.j2</span></code> 自动生成的。<strong>不要直接编辑 <code class="docutils literal notranslate"><span class="pre">pr-test.yml</span></code></strong>。修改步骤：</p>
+<ol class="arabic simple">
+<li><p>编辑 <code class="docutils literal notranslate"><span class="pre">.github/workflows/pr-test.yml.j2</span></code>。</p></li>
+<li><p>运行 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">.github/workflows/generate_github_workflows.py</span></code>。</p></li>
+<li><p>同时提交两个文件。</p></li>
+</ol>
+</section>
+<section id="customization">
+<h2>Customization 契约测试<a class="headerlink" href="#customization" title="链接到此标题。">#</a></h2>
+<p>如果你要运行通过函数路径加载的 customization hook 契约测试，可以使用：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tests/plugin_contracts/test_plugin_rollout_contracts.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tests/plugin_contracts/test_plugin_generate_contracts.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tests/plugin_contracts/test_plugin_path_loading_contracts.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tests/plugin_contracts/test_plugin_runtime_hook_contracts.py
+</pre></div>
+</div>
+<p>这些测试文件也支持直接执行 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tests/plugin_contracts/&lt;file&gt;.py</span></code>。它们声明了 <code class="docutils literal notranslate"><span class="pre">NUM_GPUS</span> <span class="pre">=</span> <span class="pre">0</span></code>，因此可以被 <code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code> 自动识别，同时不会被当作 GPU 重型端到端测试。</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../_examples_synced/multi_agent/README.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Multi-Agent RL</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="debug.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Debug 指南</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">工作原理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-labels">CI Labels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#label">重点 Label 说明</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-ci-changed"><code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code> — 仅运行新增或修改的测试</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-ci-image"><code class="docutils literal notranslate"><span class="pre">run-ci-image</span></code> — 在测试镜像上运行全部测试</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-ci-megatron-megatron"><code class="docutils literal notranslate"><span class="pre">run-ci-megatron</span></code> — 核心 Megatron 测试</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">编写新测试</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow">Workflow 生成</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#customization">Customization 契约测试</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Vime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2026, Vime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  最后更新于 2026 年 06 月 09 日.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

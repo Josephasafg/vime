@@ -1,0 +1,1021 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>使用文档 &#8212; Vime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=ad20845f" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=30c3115b"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'get_started/usage';</script>
+    <script src="../_static/js/lang-toggle.js?v=4693e039"></script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="自定义指南" href="customization.html" />
+    <link rel="prev" title="快速使用" href="quick_start.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="2026 年 06 月 09 日"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="Vime - Home"/>
+    <img src="../_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="Vime - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">开始使用</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">快速使用</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">使用文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">自定义指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qa.html">常见 Q&amp;A</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dense</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">8xH100 训练 Qwen3-4B</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MoE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">8xH100 训练 Qwen3-30B-A3B</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">高级特性</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">投机采样</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/reproducibility.html">可复现性</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/fault-tolerance.html">容灾</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/pd-disaggregation.html">PD 分离</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/vllm-config.html">vLLM Config：高级引擎部署</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/megatron-config.html">Megatron Config：按角色覆盖训练参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/arch-support-beyond-megatron.html">在 Megatron-LM 中快速支持新模型架构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">其他用法</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/fully_async/README.html">Fully-Async Rollout Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/multi_agent/README.html">Multi-Agent RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">开发指南</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/ci.html">CI（持续集成）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/debug.html">Debug 指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/trace.html">Trace 可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/profiling.html">性能分析（Profiling）</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/blob/main/get_started/usage.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/edit/main/get_started/usage.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/issues/new?title=Issue%20on%20page%20%2Fget_started/usage.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/get_started/usage.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>使用文档</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vime">vime 参数简介</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">集群资源分配</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">选择训练后端</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron">加载 megatron</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">配置模型参数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">设置各种并行与重计算</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron-ckpt">加载 megatron ckpt</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vllm">加载 vLLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">数据格式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rl">RL 训练需要的超参</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grpo">GRPO 算法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ppo">PPO 算法</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron-megatron-config-path">高级 Megatron 配置（--megatron-config-path）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout">自定义 rollout 函数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">vLLM 使用方法</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">参数配置</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#router">router 使用方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vllm-config">高级引擎配置（--vllm-config）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">megatron 使用方法</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">参数配置</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">自定义参数</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>使用文档<a class="headerlink" href="#id1" title="链接到此标题。">#</a></h1>
+<section id="vime">
+<h2>vime 参数简介<a class="headerlink" href="#vime" title="链接到此标题。">#</a></h2>
+<p>在使用 vime 时，传参主要是为了如下几件事：</p>
+<ol class="arabic simple">
+<li><p>把集群中一部分 GPU 分配做训练，一部分分配做推理；</p></li>
+<li><p>训练的部分加载 megatron；</p></li>
+<li><p>推理部分加载 vLLM；</p></li>
+<li><p>配置 RL 训练需要的超参。</p></li>
+</ol>
+<p>按照这个顺序，我们需要配置这些参数：</p>
+<section id="id2">
+<h3>集群资源分配<a class="headerlink" href="#id2" title="链接到此标题。">#</a></h3>
+<p>集群资源分配主要有这样的 4 个参数：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--actor-num-nodes</span></code>：RL 的 actor 训练需要多少节点；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--actor-num-gpus-per-node</span></code>：RL 的 actor 训练的每个节点有卡；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus</span></code>：rollout （inference）一共需要多少卡；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus-per-engine</span></code>：每个 inference engine 有多少卡，这个参数会比较像 vLLM 的 <code class="docutils literal notranslate"><span class="pre">tp_size</span></code>，也就是在进行多机 serving 的时候，这个数值应该是总卡数，例如 2 机 16 卡 serving 一个模型，这里的值应该是 16。</p></li>
+</ul>
+<p>在默认的配置下，我们会根据这些参数，通过 ray 给训练部分分配 <code class="docutils literal notranslate"><span class="pre">actor_num_nodes</span> <span class="pre">*</span> <span class="pre">actor_num_gpus_per_node</span></code> 张 GPU，给推理分配 <code class="docutils literal notranslate"><span class="pre">rollout_num_gpus</span></code> 张 GPU，也就是实现了训推分离。</p>
+<p>当需要训推一体的时候，还需要配置上：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--colocate</span></code>：开启训推一体。开启后会忽略 <code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus</span></code> 让训练和推理的卡数相等。</p></li>
+</ul>
+<p>此外，vime 支持 Prefill 和 Decode 的分离部署 (PD Disaggregation)，可以通过设置 <code class="docutils literal notranslate"><span class="pre">--prefill-num-servers</span></code> 参数来指定用于 Prefill 的服务器数量。</p>
+</section>
+<section id="id3">
+<h3>选择训练后端<a class="headerlink" href="#id3" title="链接到此标题。">#</a></h3>
+<p>vime 支持多种训练后端，可以通过 <code class="docutils literal notranslate"><span class="pre">--train-backend</span></code> 参数进行选择：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">megatron</span></code>（默认）：使用 Megatron-LM 作为训练后端，支持大规模模型的高效训练。</p></li>
+</ul>
+</section>
+<section id="megatron">
+<h3>加载 megatron<a class="headerlink" href="#megatron" title="链接到此标题。">#</a></h3>
+<p>megatron 与 vLLM 或者 huggingface trainer 之类的工具不同，它不能直接读取 huggingface ckpt，而是需要用户配置好要训练的模型的参数，并且加载 megatron 自己的 ckpt。</p>
+<p>一般来说，我们需要做 3 点准备：</p>
+<ul class="simple">
+<li><p>配置模型参数</p></li>
+<li><p>配置并行以及一些优化</p></li>
+<li><p>配置需要加载的 ckpt</p></li>
+</ul>
+<p>对于一些 megatron 的自定义以及 vime 引入 megatron 的原理，请见 megatron 使用方法一节。</p>
+<section id="id4">
+<h4>配置模型参数<a class="headerlink" href="#id4" title="链接到此标题。">#</a></h4>
+<p>这里以 qwen3 4B 为例，我们需要这些参数：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">MODEL_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--num-layers<span class="w"> </span><span class="m">36</span>
+<span class="w">   </span>--hidden-size<span class="w"> </span><span class="m">2560</span>
+<span class="w">   </span>--ffn-hidden-size<span class="w"> </span><span class="m">9728</span>
+<span class="w">   </span>--swiglu
+<span class="w">   </span>--vocab-size<span class="w"> </span><span class="m">151936</span>
+<span class="w">   </span>--disable-bias-linear
+<span class="w">   </span><span class="c1"># attn head</span>
+<span class="w">   </span>--num-attention-heads<span class="w"> </span><span class="m">32</span>
+<span class="w">   </span>--group-query-attention
+<span class="w">   </span>--num-query-groups<span class="w"> </span><span class="m">8</span>
+<span class="w">   </span>--kv-channels<span class="w"> </span><span class="m">128</span>
+<span class="w">   </span>--qk-layernorm
+<span class="w">   </span><span class="c1"># norm</span>
+<span class="w">   </span>--normalization<span class="w"> </span><span class="s2">&quot;RMSNorm&quot;</span>
+<span class="w">   </span>--norm-epsilon<span class="w"> </span>1e-6
+<span class="w">   </span><span class="c1"># rope</span>
+<span class="w">   </span>--use-rotary-position-embeddings
+<span class="w">   </span>--rotary-base<span class="w"> </span><span class="m">1000000</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>我们在 <a class="reference internal" href="#../../../scripts/models"><span class="xref myst">scripts/models</span></a> 提供了常用模型的配置，可以直接复用。如果你也在使用 megatron 进行 pretrain/sft 的话，可以直接复用 pretrain/sft 中的模型配置。</p>
+<p>注意：</p>
+<ul class="simple">
+<li><p>vime 会加载 <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> 中的 megatron 的所有参数，所以可以在环境中的 megatron 里找参数以及参数的说明；</p></li>
+<li><p>vime 会使用 data packing (或称 varlen 或 thd) 进行训练，无需配置 <code class="docutils literal notranslate"><span class="pre">--seq-length</span></code> 或 <code class="docutils literal notranslate"><span class="pre">--max-positional-embedding</span></code>，这两个参数不会影响训练模型的最大 context length。</p></li>
+</ul>
+</section>
+<section id="id5">
+<h4>设置各种并行与重计算<a class="headerlink" href="#id5" title="链接到此标题。">#</a></h4>
+<p>megatron 是目前优化最为齐全的训练框架，大家使用 megatron 的一个主要目的就是追求其卓越的性能，这里简单介绍一些 megatron 的并行和重计算的配置方法。</p>
+<ul class="simple">
+<li><p>这里我们简单陈列 megatron 的并行策略，关于这些并行策略之间的 trade-off 请参考更专业的一些讨论：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--tensor-model-parallel-size</span></code>：tp</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--sequence-parallel</span></code>：megatron 的 sp 是 tp 的一种优化，推荐在使用 tp 的时候一直开启 sp。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--pipeline-model-parallel-size</span></code>: pp</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--context-parallel-size</span></code>：megatron 的 cp，也就是序列并行，一般对应 ring attention；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--expert-model-parallel-size</span></code>：moe 的 ep，每张卡上有 <code class="docutils literal notranslate"><span class="pre">num_experts</span> <span class="pre">/</span> <span class="pre">ep_size</span></code> 个 expert；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--expert-tensor-parallel-size</span></code>：megatron 支持 moe 的 expert 与其他部分采用不同的 tp_size，我们一般称为 etp。</p></li>
+</ul>
+</li>
+<li><p>对于重计算，megatron 中一般是配置如下的几个 flag：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--recompute-granularity</span></code> 这个值可以选 full 或者 selective，full 就是完全重计算，selective 会少重计算一些，不配置就是不重算；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--recompute-method</span></code>：一般用 uniform 就行；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--recompute-num-layers</span></code>：多少层分一组来做重算，一般 1 就行。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="megatron-ckpt">
+<h4>加载 megatron ckpt<a class="headerlink" href="#megatron-ckpt" title="链接到此标题。">#</a></h4>
+<p>megatron 支持多种其自定义的 ckpt 格式，这里介绍 2 种比较主流的格式，</p>
+<ul class="simple">
+<li><p>曾经比较主流的 torch 格式（对应 <code class="docutils literal notranslate"><span class="pre">--ckpt-format</span> <span class="pre">torch</span></code>）；</p></li>
+<li><p>现在推荐使用的 torch_dist 格式（对应  <code class="docutils literal notranslate"><span class="pre">--ckpt-format</span> <span class="pre">torch_dist</span></code>）</p></li>
+</ul>
+<p>torch 格式是 megatron 的老存储格式，里面的结构大约是一些 <code class="docutils literal notranslate"><span class="pre">mp_rank_xxx</span></code> 的文件夹，每个文件夹对应了在对应的并行划分下，每个 rank 存储的 ckpt。也是因为如此，在加载 torch 格式的 ckpt 的时候，需要保证 ckpt 的并行策略和训练任务的并行策略是相同的。</p>
+<p>我们推荐使用 torch_dist 格式 ckpt，因为 torch_dist 格式可以支持自动并行切分，也就是不同并行的训练任务都可以共用同一个 ckpt，会方便很多。torch_dist 这也是开源 megatron 目前的默认格式。torch_dist 格式的 ckpt 中一般是一堆 <code class="docutils literal notranslate"><span class="pre">.distcp</span></code> 文件。在使用 torch_dist 时，可以使用 <span class="xref myst">README</span> 中介绍的 ckpt 转化方法从 huggingface 转化为 torch_dist，反之亦然。</p>
+<p>在存储结构上，megatron 的 ckpt 一般是这样的结构，这里假设存储的路径为 <code class="docutils literal notranslate"><span class="pre">/ckpt/</span></code>：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--/ckpt/
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>latest_checkpointed_iteration.txt
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>iter_0000100/
+<span class="w">         </span><span class="p">|</span>--<span class="w"> </span>_0_0.distcp
+<span class="w">         </span><span class="p">|</span>--<span class="w"> </span>_0_1.distcp
+<span class="w">         </span><span class="p">|</span>--<span class="w"> </span>...
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>iter_0000200/
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>iter_0000300/
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>...
+</pre></div>
+</div>
+<p>其中 <code class="docutils literal notranslate"><span class="pre">latest_checkpointed_iteration.txt</span></code> 中记录了训练最新的训练步。在加载模型时，不能直接传入 <code class="docutils literal notranslate"><span class="pre">/ckpt/iter_xxxxxxx</span></code>，而是要传入 <code class="docutils literal notranslate"><span class="pre">/ckpt/</span></code>，并用 <code class="docutils literal notranslate"><span class="pre">--ckpt-step</span></code> 来选取对应的训练步（如果不使用 <code class="docutils literal notranslate"><span class="pre">--ckpt-step</span></code>，则会通过 <code class="docutils literal notranslate"><span class="pre">latest_checkpointed_iteration.txt</span></code> 读取对应的训练步。）</p>
+<p>在使用 vime 的时候，有 3 个参数用来加载和保存 ckpt：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--ref-load</span></code>：reference model 用的 megatron ckpt；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--load</span></code>：actor 用的 megatron ckpt，如果没有设置 <code class="docutils literal notranslate"><span class="pre">--load</span></code>，或者设置的目录不存在，目录中没有 <code class="docutils literal notranslate"><span class="pre">latest_checkpointed_iteration.txt</span></code>，都会直接从 <code class="docutils literal notranslate"><span class="pre">--ref-load</span></code> 的 ckpt 进行初始化；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--save</span></code>：actor 保存的路径。</p></li>
+</ul>
+<p>注意：</p>
+<ul class="simple">
+<li><p>不管进行何种方式存储 ckpt，即无论如何设置 <code class="docutils literal notranslate"><span class="pre">--ckpt-format</span></code>，megatron 都可以加载 torch 或 torch_dist 格式</p></li>
+</ul>
+</section>
+</section>
+<section id="vllm">
+<h3>加载 vLLM<a class="headerlink" href="#vllm" title="链接到此标题。">#</a></h3>
+<p>vLLM 的加载非常简单，只需要：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--hf-checkpoint</span></code>：初始化 vLLM 用的 huggingface ckpt；</p></li>
+</ul>
+<p>注意：</p>
+<ul class="simple">
+<li><p>在第一个训练步之前，vime 会把 megatron 里的参数同步给 vLLM，所以 <code class="docutils literal notranslate"><span class="pre">--hf-checkpoint</span></code> 中不需要有最新的训练参数，在续训的时候也不需要更换 hf ckpt；</p></li>
+<li><p>vLLM 默认会从 huggingface ckpt 中 <code class="docutils literal notranslate"><span class="pre">config.json</span></code> 读取模型的最大 context length，可以使用 <code class="docutils literal notranslate"><span class="pre">--vllm-max-model-len</span></code> 参数来对这个值进行覆盖，从而支持进行更长的推理；</p></li>
+<li><p>在训推一体的训练过程中，虽然 megatron 和 vLLM 会先后 offload，但是还是需要为对方留有一些空间，需要通过减小 <code class="docutils literal notranslate"><span class="pre">--vllm-gpu-memory-utilization</span></code> 来调整 vLLM 的显存占用总量。</p></li>
+<li><p>vime 支持透传 vllm-router 的参数，方式是在原参数名前加上 <code class="docutils literal notranslate"><span class="pre">router</span></code> 前缀。例如，vllm-router 的 <code class="docutils literal notranslate"><span class="pre">--balance-abs-threshold</span></code> 参数需要设置为 <code class="docutils literal notranslate"><span class="pre">--router-balance-abs-threshold</span></code>。由于 vllm-router 默认使用 cache-aware routing，可能会导致请求分配不均衡的问题。可以通过设置 <code class="docutils literal notranslate"><span class="pre">--router-balance-abs-threshold</span> <span class="pre">0</span></code> 来强制均衡分配，但这可能会影响多轮对话场景下 prefix cache 的命中率。</p></li>
+</ul>
+<p>对于一些 vLLM 的自定义以及 vime 引入 vLLM 的原理，请见 vLLM 使用方法一节。</p>
+</section>
+<section id="id6">
+<h3>数据格式<a class="headerlink" href="#id6" title="链接到此标题。">#</a></h3>
+<p>目前 vime 只支持加载 <code class="docutils literal notranslate"><span class="pre">.jsonl</span></code> 格式文件，即文件的每一行都是一个 json，一行数据的样例（展开后）为：</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solve the following math problem step by step. The last line of your response should be of the form Answer: \\boxed{$Answer} where $Answer is the answer to the problem.\n\nIn triangle $ABC$, $\\sin \\angle A = \\frac{4}{5}$ and $\\angle A &lt; 90^\\circ$. Let $D$ be a point outside triangle $ABC$ such that $\\angle BAD = \\angle DAC$ and $\\angle BDC = 90^\\circ$. Suppose that $AD = 1$ and that $\\frac{BD}{CD} = \\frac{3}{2}$. If $AB + AC$ can be expressed in the form $\\frac{a\\sqrt{b}}{c}$ where $a, b, c$ are pairwise relatively prime integers, find $a + b + c$.\n\nRemember to put your answer on its own line after \&quot;Answer:\&quot;.&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;step_loss_mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;34&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>对应的配置为：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>--input-key<span class="w"> </span>prompt
+<span class="w">  </span>--label-key<span class="w"> </span>label
+<span class="w">  </span>--apply-chat-template
+</pre></div>
+</div>
+<p>请注意，这里的 <code class="docutils literal notranslate"><span class="pre">step_loss_mask</span></code>（默认值为 1）字段为 SFT 阶段提供，若设置为 0，则会将该轮 <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code> 设置为 0；若设置为 1，则使用正常 <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code>。
+另外我们还提供了一个 metadata_key，默认为 <code class="docutils literal notranslate"><span class="pre">&quot;metadata&quot;</span></code>，读取后我们会把数据中的 metadata 加载进 vime，可能会对自定义数据生成或者自定义 reward model 有帮助。</p>
+</section>
+<section id="rl">
+<h3>RL 训练需要的超参<a class="headerlink" href="#rl" title="链接到此标题。">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--advantage-estimator</span></code>: 当前训练需要的 RL 算法，目前支持：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">grpo</span></code>（https://arxiv.org/abs/2402.03300）；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gspo</span></code>（https://arxiv.org/abs/2507.18071）；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reinforce_plus_plus</span></code> 与 <code class="docutils literal notranslate"><span class="pre">reinforce_plus_plus_baseline</span></code>（https://arxiv.org/abs/2501.03262）；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppo</span></code>（https://arxiv.org/abs/1707.06347）。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--calculate-per-token-loss</span></code>：vime 中默认的方案是 per sample loss，即 <code class="docutils literal notranslate"><span class="pre">mean(sum(sample_i)</span> <span class="pre">/</span> <span class="pre">len(sample_i))</span></code>，如果需要计算 per token loss，即 <code class="docutils literal notranslate"><span class="pre">sum(sum(sample_i))</span> <span class="pre">/</span> <span class="pre">sum(len(sample_i))</span></code>，可以开启 <code class="docutils literal notranslate"><span class="pre">--calculate-per-token-loss</span></code>；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--use-tis</span></code>：如果需要开启 tis（https://fengyao.notion.site/off-policy-rl），可以开启这一设置；</p></li>
+</ul>
+<section id="grpo">
+<h4>GRPO 算法<a class="headerlink" href="#grpo" title="链接到此标题。">#</a></h4>
+<p>GRPO（Group Relative Policy Optimization）是 DeepSeek-Math 中提出的一种 RL 算法，其核心思想是通过组内相对比较来计算 advantage，而不需要额外的 critic 模型。</p>
+<p>使用 GRPO 时，需要设置：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--advantage-estimator<span class="w"> </span>grpo
+</pre></div>
+</div>
+<p>GRPO 的主要特点：</p>
+<ul class="simple">
+<li><p><strong>无需 Critic 模型</strong>：GRPO 通过对同一 prompt 采样多个 response，然后在组内计算相对 reward 来估计 advantage，避免了训练和维护 critic 模型的开销；</p></li>
+<li><p><strong>资源高效</strong>：由于不需要 critic 模型，GPU 资源可以完全用于 actor 训练和推理；</p></li>
+<li><p><strong>简单易用</strong>：配置简单，只需要设置 <code class="docutils literal notranslate"><span class="pre">--advantage-estimator</span> <span class="pre">grpo</span></code> 即可。</p></li>
+</ul>
+<p>相关参数：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--n-samples-per-prompt</span></code>：每个 prompt 采样的 response 数量，用于组内比较；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--normalize-advantages</span></code>：是否对 advantage 进行归一化；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--eps-clip</span></code>：PPO 风格的 clip 范围。</p></li>
+</ul>
+</section>
+<section id="ppo">
+<h4>PPO 算法<a class="headerlink" href="#ppo" title="链接到此标题。">#</a></h4>
+<p>PPO（Proximal Policy Optimization）是经典的 RL 算法，使用 critic 模型来估计 value function，从而计算 advantage。</p>
+<p>使用 PPO 时，需要设置：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--advantage-estimator<span class="w"> </span>ppo
+</pre></div>
+</div>
+<p><strong>注意：PPO 的 Critic 和 Actor 是并列申请 GPU 的</strong>，在资源分配时需要考虑这一点。具体来说：</p>
+<ul class="simple">
+<li><p>Critic 模型会独立占用一组 GPU，与 Actor 的 GPU 资源分开；</p></li>
+<li><p>可以通过 <code class="docutils literal notranslate"><span class="pre">--critic-num-nodes</span></code> 和 <code class="docutils literal notranslate"><span class="pre">--critic-num-gpus-per-node</span></code> 来配置 critic 使用的资源；</p></li>
+<li><p>如果不配置 critic 的资源参数，默认会使用与 actor 相同的资源配置。</p></li>
+</ul>
+<p>集群资源分配示例：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Actor 使用 1 个节点，4 张 GPU</span>
+--actor-num-nodes<span class="w"> </span><span class="m">1</span>
+--actor-num-gpus-per-node<span class="w"> </span><span class="m">4</span>
+
+<span class="c1"># Critic 使用 1 个节点，4 张 GPU（与 Actor 并列）</span>
+--critic-num-nodes<span class="w"> </span><span class="m">1</span>
+--critic-num-gpus-per-node<span class="w"> </span><span class="m">4</span>
+
+<span class="c1"># Rollout 使用 8 张 GPU</span>
+--rollout-num-gpus<span class="w"> </span><span class="m">8</span>
+</pre></div>
+</div>
+<p>在上述配置下，总共需要 <code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">(actor)</span> <span class="pre">+</span> <span class="pre">4</span> <span class="pre">(critic)</span> <span class="pre">+</span> <span class="pre">8</span> <span class="pre">(rollout)</span> <span class="pre">=</span> <span class="pre">16</span></code> 张 GPU。</p>
+<p>PPO 相关参数：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--critic-load</span></code>：critic 模型的 checkpoint 路径；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--critic-save</span></code>：critic 模型的保存路径；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--critic-lr</span></code>：critic 模型的学习率；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--critic-lr-warmup-iters</span></code>：critic 模型的 warmup 步数；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--num-critic-only-steps</span></code>：训练开始时只训练 critic 的步数；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--eps-clip</span></code>：PPO clip 范围；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--value-clip</span></code>：value loss 的 clip 范围；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--kl-coef</span></code>：KL penalty 系数，用于 reward shaping。</p></li>
+</ul>
+</section>
+</section>
+<section id="megatron-megatron-config-path">
+<h3>高级 Megatron 配置（--megatron-config-path）<a class="headerlink" href="#megatron-megatron-config-path" title="链接到此标题。">#</a></h3>
+<p>对于 PPO 场景，可以使用 <code class="docutils literal notranslate"><span class="pre">--megatron-config-path</span></code> 指定一个 YAML 文件，对 actor / critic 分别覆盖 Megatron 参数。常见用途包括给 critic 设置不同的 <code class="docutils literal notranslate"><span class="pre">lr</span></code>，或者分别指定 <code class="docutils literal notranslate"><span class="pre">load</span></code> / <code class="docutils literal notranslate"><span class="pre">save</span></code> 等路径。</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">megatron</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actor</span>
+<span class="w">    </span><span class="nt">overrides</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">lr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">critic</span>
+<span class="w">    </span><span class="nt">overrides</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">lr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-5</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>注意：</strong> 当前该配置只支持 PPO；并且当前 PPO 下 actor 和 critic 的 Megatron 并行配置必须保持一致。建议把并行相关参数继续写在公共 CLI 中，只把角色差异项放在 YAML 里。详见 <a class="reference internal" href="../advanced/megatron-config.html"><span class="std std-doc">Megatron Config：按角色覆盖训练参数</span></a>。</p>
+</div></blockquote>
+</section>
+</section>
+<section id="rollout">
+<h2>自定义 rollout 函数<a class="headerlink" href="#rollout" title="链接到此标题。">#</a></h2>
+<p>vime 支持不同程度的自定义数据生成（rollout）。</p>
+<ul>
+<li><p>默认会使用 <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/vime/rollout/vllm_rollout.py">vime/rollout/vllm_rollout.py</a> 中的 <code class="docutils literal notranslate"><span class="pre">generate_rollout</span></code> 函数进行数据生成。这个文件中实现了基于 vLLM 的异步（asyncio）数据生成流程，并支持了例如 dynamic sampling，partial rollout 等功能；</p></li>
+<li><p>可以通过 <code class="docutils literal notranslate"><span class="pre">--rollout-function-path</span></code> 参数，完全替换默认的 <code class="docutils literal notranslate"><span class="pre">generate_rollout</span></code>，只需要保证 <code class="docutils literal notranslate"><span class="pre">--rollout-function-path</span></code> 传入的函数签名满足：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">generate_rollout</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">rollout_id</span><span class="p">,</span> <span class="n">data_source</span><span class="p">,</span> <span class="n">evaluation</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RolloutFnTrainOutput</span> <span class="o">|</span> <span class="n">RolloutFnEvalOutput</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        args: the whole args</span>
+<span class="sd">        rollout_id: int, the id of the rollout, used for deterministic data generation</span>
+<span class="sd">        data_source: the data source to get and store samples</span>
+<span class="sd">        evaluation: bool, whether the rollout is for evaluation or not</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        RolloutFnTrainOutput | RolloutFnEvalOutput: the output of the rollout</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+        <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+<p>其中：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code> 为整个 vime 运行使用的 args；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rollout_id</span></code> 对应的是当前是第几次数据生成，用作保证续训时的数据顺序；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_source</span></code> 是 vime 中全局唯一的数据源，可以用来获取初始 prompt，数据 id，将生成至一半的 sample 存储下来下次留作下次使用等；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">evaluation</span></code> 是否是当做 evaluation 使用。可以通过 <code class="docutils literal notranslate"><span class="pre">--eval-function-path</span></code> 单独配置 eval 的函数；</p></li>
+<li><p>返回的 <code class="docutils literal notranslate"><span class="pre">Sample</span></code> 类型见 <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/vime/utils/types.py">vime/utils/types.py</a>，在实现时，需要保证</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tokens</span></code>：prompt + response 的 token；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response_length</span></code>：response 的总长。对于多轮任务，则是除去第一轮 prompt，剩余的 token 长度；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reward</span></code>：这条数据的 reward；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>：这条数据的状态（如 <code class="docutils literal notranslate"><span class="pre">Sample.Status.COMPLETED</span></code>、<code class="docutils literal notranslate"><span class="pre">Sample.Status.TRUNCATED</span></code>、<code class="docutils literal notranslate"><span class="pre">Sample.Status.ABORTED</span></code>、<code class="docutils literal notranslate"><span class="pre">Sample.Status.FAILED</span></code>）。</p></li>
+</ul>
+<p>这几个参数被正确配置了。以及如果有工具调用或者多轮使用等场景，确保 <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code> 是正确的：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loss_mask</span></code> 应该和 <code class="docutils literal notranslate"><span class="pre">response_length</span></code> 一样长，其中需要算 loss 的 token 为 1，mask 掉的为 0</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在一些情况下，可能只需要替换数据生成的逻辑，那么使用 <code class="docutils literal notranslate"><span class="pre">--custom-generate-function-path</span></code> 进行替换即可，这个函数一个简化版实现如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">sample</span><span class="p">:</span> <span class="n">Sample</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sample</span><span class="p">:</span>
+    <span class="k">global</span> <span class="n">TOKENIZER</span>
+    <span class="k">if</span> <span class="n">TOKENIZER</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">TOKENIZER</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">hf_checkpoint</span><span class="p">,</span> <span class="n">trust_remote_code</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># send request to router</span>
+    <span class="n">prompt_token_ids</span> <span class="o">=</span> <span class="n">TOKENIZER</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">prompt</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="k">await</span> <span class="n">post</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;http://</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">vllm_router_ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">vllm_router_port</span><span class="si">}</span><span class="s2">/inference/v1/generate&quot;</span><span class="p">,</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">hf_checkpoint</span><span class="p">,</span>
+            <span class="s2">&quot;token_ids&quot;</span><span class="p">:</span> <span class="n">prompt_token_ids</span><span class="p">,</span>
+            <span class="s2">&quot;sampling_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="n">sampling_params</span><span class="p">[</span><span class="s2">&quot;max_new_tokens&quot;</span><span class="p">]},</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="n">choice</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="s2">&quot;choices&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">response_token_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">choice</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;token_ids&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[])</span>
+
+    <span class="c1"># set sample</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="n">prompt_token_ids</span> <span class="o">+</span> <span class="n">response_token_ids</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">response_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response_token_ids</span><span class="p">)</span>
+    <span class="n">finish_reason</span> <span class="o">=</span> <span class="n">choice</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;finish_reason&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;stop&quot;</span>
+    <span class="k">if</span> <span class="n">finish_reason</span> <span class="o">==</span> <span class="s2">&quot;length&quot;</span><span class="p">:</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Sample</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">TRUNCATED</span>
+    <span class="k">elif</span> <span class="n">finish_reason</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="s2">&quot;cancelled&quot;</span><span class="p">):</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Sample</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">ABORTED</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Sample</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">COMPLETED</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">TOKENIZER</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">response_token_ids</span><span class="p">)</span> <span class="k">if</span> <span class="n">response_token_ids</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">sample</span>
+</pre></div>
+</div>
+<p>更完备的版本请查看 <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/vime/rollout/vllm_rollout.py">vime/rollout/vllm_rollout.py</a>。</p>
+</li>
+<li><p>有的时候，我们还需要支持自定义的 reward model，可以通过配置 <code class="docutils literal notranslate"><span class="pre">--custom-rm-path</span></code> 来进行配置。</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>vLLM 使用方法<a class="headerlink" href="#id7" title="链接到此标题。">#</a></h2>
+<p>vime 以 server 模式运行 vLLM，通过 HTTP 与之通信。</p>
+<section id="id8">
+<h3>参数配置<a class="headerlink" href="#id8" title="链接到此标题。">#</a></h3>
+<p>vime 通过转发 vLLM 的 <code class="docutils literal notranslate"><span class="pre">EngineArgs</span></code> CLI 参数，引入了几乎所有的 vLLM 参数。在设置一个 vLLM 参数的时候，需要在参数前加上 <code class="docutils literal notranslate"><span class="pre">--vllm-</span></code> 的前缀，例如：</p>
+<ul class="simple">
+<li><p>在训推一体的训练时，往往需要限制 GPU 显存占用，传入 <code class="docutils literal notranslate"><span class="pre">--vllm-gpu-memory-utilization</span></code>；</p></li>
+<li><p>在训练中，希望 vLLM 能推理超过 huggingface checkpoint 的 <code class="docutils literal notranslate"><span class="pre">config.json</span></code> 中标识的最长 context length，需要使用 <code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code>，那么在 vime 中需要使用 <code class="docutils literal notranslate"><span class="pre">--vllm-max-model-len</span></code>；</p></li>
+<li><p>在进行多机大 ep 推理的时候，需要 <code class="docutils literal notranslate"><span class="pre">--enable-expert-parallel</span></code>、<code class="docutils literal notranslate"><span class="pre">--data-parallel-size</span></code> 等，则可以对应地传入 <code class="docutils literal notranslate"><span class="pre">--vllm-enable-expert-parallel</span></code>、<code class="docutils literal notranslate"><span class="pre">--vllm-data-parallel-size</span></code>。</p></li>
+</ul>
+<p>有部分参数和 vime 的资源调度相关，会由 vime 自行配置，例如：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--tensor-parallel-size</span></code> 在 vime 中会使用 <code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus-per-engine</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model</span></code> 在 vime 中会使用 <code class="docutils literal notranslate"><span class="pre">--hf-checkpoint</span></code></p></li>
+</ul>
+<p>vLLM 参数引入 vime 的方式可以参考 <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/vime/backends/vllm_utils/arguments.py">vime/backends/vllm_utils/arguments.py</a>。</p>
+</section>
+<section id="router">
+<h3>router 使用方法<a class="headerlink" href="#router" title="链接到此标题。">#</a></h3>
+<p>vime 会用 <a class="reference external" href="https://github.com/vllm-project/router">vllm-router</a> 来管理训练过程中的 vLLM 引擎。可以通过 <code class="docutils literal notranslate"><span class="pre">--vllm-router-ip</span></code> 与 <code class="docutils literal notranslate"><span class="pre">--vllm-router-port</span></code> 来配置 router 的地址。如果不进行配置，则会在集群中默认启动一个 router。</p>
+<p>所有的 vLLM 引擎在启动后会注册到 router。在实际进行数据生成的时候，只需要向 router 发送 http 请求，router 会进行 load balancing 操作，将请求转发给引擎。</p>
+<p>当通过 <code class="docutils literal notranslate"><span class="pre">--vllm-router-ip</span></code> 与 <code class="docutils literal notranslate"><span class="pre">--vllm-router-port</span></code> 来配置传入一个外部的 router，此时 vime 不再会在内部启动一个 router，而是会把所有的引擎都注册在这个外部 router 上。这时可以利用这个外部的 router 地址来实现更复杂的数据生成流程。注意 router 是支持 openai compatible api 的。</p>
+</section>
+<section id="vllm-config">
+<h3>高级引擎配置（--vllm-config）<a class="headerlink" href="#vllm-config" title="链接到此标题。">#</a></h3>
+<p>对于高级部署场景，可以使用 <code class="docutils literal notranslate"><span class="pre">--vllm-config</span></code> 指定一个 YAML 文件，来配置服务器组、多模型部署以及选择性权重更新。</p>
+<p><strong>多模型部署</strong>允许同时服务多个模型（例如一个接收权重更新的 actor 模型和一个冻结的 reference/reward 模型）：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">vllm</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actor</span>
+<span class="w">    </span><span class="nt">update_weights</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">          </span><span class="c1"># 接收训练的权重更新（默认）</span>
+<span class="w">    </span><span class="nt">server_groups</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">worker_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regular</span>
+<span class="w">        </span><span class="nt">num_gpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">        </span><span class="nt">num_gpus_per_engine</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ref</span>
+<span class="w">    </span><span class="nt">model_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/path/to/ref_model</span>
+<span class="w">    </span><span class="nt">update_weights</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">          </span><span class="c1"># 冻结，不更新权重</span>
+<span class="w">    </span><span class="nt">server_groups</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">worker_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regular</span>
+<span class="w">        </span><span class="nt">num_gpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">        </span><span class="nt">num_gpus_per_engine</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+</pre></div>
+</div>
+<p>每个模型都有自己独立的 router。每个模型的 router 信息可通过 <code class="docutils literal notranslate"><span class="pre">args.vllm_model_routers</span></code>（一个将模型名映射到 <code class="docutils literal notranslate"><span class="pre">(ip,</span> <span class="pre">port)</span></code> 元组的字典）访问。自定义 rollout 函数可以使用 <code class="docutils literal notranslate"><span class="pre">vime.rollout.vllm_rollout</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">get_model_url(args,</span> <span class="pre">&quot;ref&quot;)</span></code> 来将请求路由到指定模型。</p>
+<p><strong>服务器组功能：</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">worker_type</span></code>：<code class="docutils literal notranslate"><span class="pre">regular</span></code>、<code class="docutils literal notranslate"><span class="pre">prefill</span></code>、<code class="docutils literal notranslate"><span class="pre">decode</span></code> 或 <code class="docutils literal notranslate"><span class="pre">placeholder</span></code>（预留 GPU 位置但不创建引擎）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">overrides</span></code>：vLLM <code class="docutils literal notranslate"><span class="pre">EngineArgs</span></code> 字段覆盖字典，会叠加在 <code class="docutils literal notranslate"><span class="pre">--vllm-*</span></code> CLI 参数之上</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_gpus_per_engine</span></code>：每组的 TP 大小覆盖</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2>megatron 使用方法<a class="headerlink" href="#id9" title="链接到此标题。">#</a></h2>
+<p>vime 通过复用 <code class="docutils literal notranslate"><span class="pre">megatron.training</span></code> 目录下的常规函数，如 <code class="docutils literal notranslate"><span class="pre">parse_args</span></code>， <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>，<code class="docutils literal notranslate"><span class="pre">load_checkpoint</span></code>，从而实现对不同版本以及轻度魔改的 megatron 的支持。所以在使用时，需要保证 <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> 中能访问到 megatron，例如在运行时加入 <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=/root/Megatron-LM</span></code>。</p>
+<section id="id10">
+<h3>参数配置<a class="headerlink" href="#id10" title="链接到此标题。">#</a></h3>
+<p>vime 通过直接引入 <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">megatron.training.arguments</span> <span class="pre">import</span> <span class="pre">parse_args</span></code> 引入了当前环境中 megatron 的所有参数。如果当前使用的 megatron 有在 <code class="docutils literal notranslate"><span class="pre">parse_args</span></code> 之外的参数，可以通过像 <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/train.py">train.py</a> 中传入参数来进行配置，例如：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">pretrain_gpt</span><span class="w"> </span><span class="kn">import</span> <span class="n">extra_args_provider</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">extra_args_provider</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">(</span><span class="n">extra_args_provider</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>自定义参数<a class="headerlink" href="#id11" title="链接到此标题。">#</a></h3>
+<p>在一些定制版 megatron 的实现中，需要在初始化，或者训练步的前后进行特殊的操作。目前我们加入如下的插件：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--custom-megatron-init-path</span></code>：会增加一些 init 的调用；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--custom-megatron-before-log-prob-hook-path</span></code>：会在计算 log prob 之前调用；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--custom-megatron-before-train-step-hook-path</span></code>：会在每个训练步之前调用。可以考虑用这种方式混入特殊的训练 loss 之类的。</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="quick_start.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">快速使用</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="customization.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">自定义指南</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vime">vime 参数简介</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">集群资源分配</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">选择训练后端</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron">加载 megatron</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">配置模型参数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">设置各种并行与重计算</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron-ckpt">加载 megatron ckpt</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vllm">加载 vLLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">数据格式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rl">RL 训练需要的超参</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grpo">GRPO 算法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ppo">PPO 算法</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#megatron-megatron-config-path">高级 Megatron 配置（--megatron-config-path）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rollout">自定义 rollout 函数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">vLLM 使用方法</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">参数配置</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#router">router 使用方法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vllm-config">高级引擎配置（--vllm-config）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">megatron 使用方法</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">参数配置</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">自定义参数</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Vime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2026, Vime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  最后更新于 2026 年 06 月 09 日.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

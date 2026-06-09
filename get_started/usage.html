@@ -1,0 +1,1021 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Usage Guide &#8212; Vime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=ad20845f" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'get_started/usage';</script>
+    <script src="../_static/js/lang-toggle.js?v=4693e039"></script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Customization Guide" href="customization.html" />
+    <link rel="prev" title="Quick Start" href="quick_start.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="Jun 09, 2026"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="Vime - Home"/>
+    <img src="../_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="Vime - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qa.html">FAQ</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dense</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">Qwen3-4B with 8xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MoE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">Qwen3-30B-A3B with 8xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">Speculative Decoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/reproducibility.html">Reproducibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/fault-tolerance.html">Fault Tolerance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/pd-disaggregation.html">PD Disaggregation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/vllm-config.html">vLLM Config: Advanced Engine Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/megatron-config.html">Megatron Config: Role-Based Training Overrides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/arch-support-beyond-megatron.html">Supporting Model Architectures Beyond Megatron-LM</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/fully_async/README.html">Fully-Async Rollout Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/multi_agent/README.html">Multi-Agent RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/ci.html">CI (Continuous Integration)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/debug.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/trace.html">Trace Viewer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/profiling.html">Profiling</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/blob/main/get_started/usage.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/edit/main/get_started/usage.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/issues/new?title=Issue%20on%20page%20%2Fget_started/usage.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/get_started/usage.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Usage Guide</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-vime-parameters">Introduction to vime Parameters</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-resource-allocation">Cluster Resource Allocation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-training-backend">Choosing Training Backend</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-megatron">Loading Megatron</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-model-parameters">Configuring Model Parameters</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-parallelism-and-recomputation">Setting Up Parallelism and Recomputation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-megatron-checkpoints">Loading Megatron Checkpoints</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-vllm">Loading vLLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-format">Data Format</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameters-for-rl-training">Hyperparameters for RL Training</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grpo-algorithm">GRPO Algorithm</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ppo-algorithm">PPO Algorithm</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-megatron-configuration-megatron-config-path">Advanced Megatron Configuration (–megatron-config-path)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-rollout-function">Custom Rollout Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-vllm">How to Use vLLM</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-configuration">Parameter Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-the-router">How to Use the Router</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-engine-configuration-vllm-config">Advanced Engine Configuration (–vllm-config)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-megatron">How to Use Megatron</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Parameter Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-parameters">Custom Parameters</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="usage-guide">
+<h1>Usage Guide<a class="headerlink" href="#usage-guide" title="Link to this heading">#</a></h1>
+<section id="introduction-to-vime-parameters">
+<h2>Introduction to vime Parameters<a class="headerlink" href="#introduction-to-vime-parameters" title="Link to this heading">#</a></h2>
+<p>When using vime, parameters are primarily passed for the following purposes:</p>
+<ol class="arabic simple">
+<li><p>To allocate a portion of the GPUs in the cluster for training and another portion for inference.</p></li>
+<li><p>To load Megatron for the training portion.</p></li>
+<li><p>To load vLLM for the inference portion.</p></li>
+<li><p>To configure the hyperparameters required for RL training.</p></li>
+</ol>
+<p>Following this order, we need to configure these parameters:</p>
+<section id="cluster-resource-allocation">
+<h3>Cluster Resource Allocation<a class="headerlink" href="#cluster-resource-allocation" title="Link to this heading">#</a></h3>
+<p>There are four main parameters for cluster resource allocation:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--actor-num-nodes</span></code>: The number of nodes required for RL actor training.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--actor-num-gpus-per-node</span></code>: The number of GPUs per node for RL actor training.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus</span></code>: The total number of GPUs required for rollout (inference).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus-per-engine</span></code>: The number of GPUs per inference engine. This parameter is similar to vLLM’s <code class="docutils literal notranslate"><span class="pre">tp_size</span></code>. When performing multi-node serving, this value should be the total number of GPUs. For example, if serving one model with 2 nodes and 16 GPUs, this value should be 16.</p></li>
+</ul>
+<p>With the default configuration, we use these parameters to allocate <code class="docutils literal notranslate"><span class="pre">actor_num_nodes</span> <span class="pre">*</span> <span class="pre">actor_num_gpus_per_node</span></code> GPUs for training and <code class="docutils literal notranslate"><span class="pre">rollout_num_gpus</span></code> GPUs for inference via Ray, thus achieving a separation of training and inference resources.</p>
+<p>For co-located training and inference, you also need to configure:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--colocate</span></code>: Enables co-located training and inference. When enabled, it ignores <code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus</span></code> and makes the number of GPUs for training and inference equal.</p></li>
+</ul>
+<p>Additionally, vime supports Prefill and Decode disaggregation (PD Disaggregation). You can set the number of servers used for Prefill by setting the <code class="docutils literal notranslate"><span class="pre">--prefill-num-servers</span></code> argument.</p>
+</section>
+<section id="choosing-training-backend">
+<h3>Choosing Training Backend<a class="headerlink" href="#choosing-training-backend" title="Link to this heading">#</a></h3>
+<p>vime supports multiple training backends, which can be selected via the <code class="docutils literal notranslate"><span class="pre">--train-backend</span></code> parameter:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">megatron</span></code> (default): Uses Megatron-LM as the training backend, supporting efficient training of large-scale models.</p></li>
+</ul>
+</section>
+<section id="loading-megatron">
+<h3>Loading Megatron<a class="headerlink" href="#loading-megatron" title="Link to this heading">#</a></h3>
+<p>Unlike tools such as vLLM or Hugging Face Trainer, Megatron cannot directly read Hugging Face checkpoints. Instead, the user must configure the parameters for the model to be trained and load Megatron’s own checkpoint format.</p>
+<p>Generally, we need to perform three preparatory steps:</p>
+<ul class="simple">
+<li><p>Configure model parameters.</p></li>
+<li><p>Configure parallelism and other optimizations.</p></li>
+<li><p>Configure the checkpoint to be loaded.</p></li>
+</ul>
+<p>For details on some of Megatron’s customizations and the principles behind how vime incorporates Megatron, please see the “How to Use Megatron” section.</p>
+<section id="configuring-model-parameters">
+<h4>Configuring Model Parameters<a class="headerlink" href="#configuring-model-parameters" title="Link to this heading">#</a></h4>
+<p>Taking qwen3 4B as an example, we need these parameters:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">MODEL_ARGS</span><span class="o">=(</span>
+<span class="w">   </span>--num-layers<span class="w"> </span><span class="m">36</span>
+<span class="w">   </span>--hidden-size<span class="w"> </span><span class="m">2560</span>
+<span class="w">   </span>--ffn-hidden-size<span class="w"> </span><span class="m">9728</span>
+<span class="w">   </span>--swiglu
+<span class="w">   </span>--vocab-size<span class="w"> </span><span class="m">151936</span>
+<span class="w">   </span>--disable-bias-linear
+<span class="w">   </span><span class="c1"># attn head</span>
+<span class="w">   </span>--num-attention-heads<span class="w"> </span><span class="m">32</span>
+<span class="w">   </span>--group-query-attention
+<span class="w">   </span>--num-query-groups<span class="w"> </span><span class="m">8</span>
+<span class="w">   </span>--kv-channels<span class="w"> </span><span class="m">128</span>
+<span class="w">   </span>--qk-layernorm
+<span class="w">   </span><span class="c1"># norm</span>
+<span class="w">   </span>--normalization<span class="w"> </span><span class="s2">&quot;RMSNorm&quot;</span>
+<span class="w">   </span>--norm-epsilon<span class="w"> </span>1e-6
+<span class="w">   </span><span class="c1"># rope</span>
+<span class="w">   </span>--use-rotary-position-embeddings
+<span class="w">   </span>--rotary-base<span class="w"> </span><span class="m">1000000</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>We provide configurations for common models in <a class="reference internal" href="#../../../scripts/models"><span class="xref myst">scripts/models</span></a>, which you can reuse directly. If you are also using Megatron for pre-training/SFT, you can directly reuse the model configurations from your pre-training/SFT setup.</p>
+<p>Note:</p>
+<ul class="simple">
+<li><p>vime will load all parameters of Megatron found in the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>, so you can find parameters and their descriptions within the Megatron in your environment.</p></li>
+<li><p>vime uses data packing (also known as varlen or thd) for training. There is no need to configure <code class="docutils literal notranslate"><span class="pre">--seq-length</span></code> or <code class="docutils literal notranslate"><span class="pre">--max-positional-embedding</span></code>, as these parameters do not affect the maximum context length of the trained model.</p></li>
+</ul>
+</section>
+<section id="setting-up-parallelism-and-recomputation">
+<h4>Setting Up Parallelism and Recomputation<a class="headerlink" href="#setting-up-parallelism-and-recomputation" title="Link to this heading">#</a></h4>
+<p>Megatron is currently the most comprehensively optimized training framework. A major reason for using Megatron is to pursue its excellent performance. Here is a brief introduction to configuring Megatron’s parallelism and recomputation.</p>
+<ul class="simple">
+<li><p>Here we list Megatron’s parallelism strategies. For a more detailed discussion on the trade-offs between these strategies, please refer to more specialized discussions:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--tensor-model-parallel-size</span></code>: TP</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--sequence-parallel</span></code>: Megatron’s SP is an optimization for TP. It is recommended to always enable SP when using TP.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--pipeline-model-parallel-size</span></code>: PP</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--context-parallel-size</span></code>: Megatron’s CP, also known as sequence parallelism, generally corresponds to ring attention.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--expert-model-parallel-size</span></code>: EP for MoE, where each GPU has <code class="docutils literal notranslate"><span class="pre">num_experts</span> <span class="pre">/</span> <span class="pre">ep_size</span></code> experts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--expert-tensor-parallel-size</span></code>: Megatron supports using a different <code class="docutils literal notranslate"><span class="pre">tp_size</span></code> for the MoE experts than for other parts of the model, which we generally call ETP.</p></li>
+</ul>
+</li>
+<li><p>For recomputation, the following flags are commonly configured in Megatron:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--recompute-granularity</span></code>: This can be set to <code class="docutils literal notranslate"><span class="pre">full</span></code> or <code class="docutils literal notranslate"><span class="pre">selective</span></code>. <code class="docutils literal notranslate"><span class="pre">full</span></code> means complete recomputation, while <code class="docutils literal notranslate"><span class="pre">selective</span></code> recomputes less. If not configured, no recomputation is done.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--recompute-method</span></code>: <code class="docutils literal notranslate"><span class="pre">uniform</span></code> is generally sufficient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--recompute-num-layers</span></code>: The number of layers per group for recomputation. A value of 1 is usually fine.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="loading-megatron-checkpoints">
+<h4>Loading Megatron Checkpoints<a class="headerlink" href="#loading-megatron-checkpoints" title="Link to this heading">#</a></h4>
+<p>Megatron supports several of its custom checkpoint formats. Here are two of the more common ones:</p>
+<ul class="simple">
+<li><p>The once mainstream <code class="docutils literal notranslate"><span class="pre">torch</span></code> format (corresponding to <code class="docutils literal notranslate"><span class="pre">--ckpt-format</span> <span class="pre">torch</span></code>).</p></li>
+<li><p>The currently recommended <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> format (corresponding to <code class="docutils literal notranslate"><span class="pre">--ckpt-format</span> <span class="pre">torch_dist</span></code>).</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">torch</span></code> format is Megatron’s older storage format. Its structure consists of directories like <code class="docutils literal notranslate"><span class="pre">mp_rank_xxx</span></code>, where each directory corresponds to the checkpoint stored by each rank under a specific parallel partitioning. Because of this, when loading a <code class="docutils literal notranslate"><span class="pre">torch</span></code> format checkpoint, you must ensure that the checkpoint’s parallelism strategy matches that of the training task.</p>
+<p>We recommend using the <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> format because it supports automatic parallel sharding, meaning that training tasks with different parallelism settings can share the same checkpoint, which is much more convenient. <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> is also the default format in the open-source Megatron. A <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> format checkpoint typically contains a set of <code class="docutils literal notranslate"><span class="pre">.distcp</span></code> files. When using <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code>, you can convert from Hugging Face to <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> and vice versa using the checkpoint conversion method described in the <span class="xref myst">README</span>.</p>
+<p>In terms of storage structure, a Megatron checkpoint typically looks like this, assuming the storage path is <code class="docutils literal notranslate"><span class="pre">/ckpt/</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--/ckpt/
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>latest_checkpointed_iteration.txt
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>iter_0000100/
+<span class="w">         </span><span class="p">|</span>--<span class="w"> </span>_0_0.distcp
+<span class="w">         </span><span class="p">|</span>--<span class="w"> </span>_0_1.distcp
+<span class="w">         </span><span class="p">|</span>--<span class="w"> </span>...
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>iter_0000200/
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>iter_0000300/
+<span class="w">    </span><span class="p">|</span>--<span class="w"> </span>...
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">latest_checkpointed_iteration.txt</span></code> file records the latest training step. When loading a model, you should not directly pass <code class="docutils literal notranslate"><span class="pre">/ckpt/iter_xxxxxxx</span></code>, but rather pass <code class="docutils literal notranslate"><span class="pre">/ckpt/</span></code> and use <code class="docutils literal notranslate"><span class="pre">--ckpt-step</span></code> to select the corresponding training step (if <code class="docutils literal notranslate"><span class="pre">--ckpt-step</span></code> is not used, the step will be read from <code class="docutils literal notranslate"><span class="pre">latest_checkpointed_iteration.txt</span></code>).</p>
+<p>When using vime, there are three parameters for loading and saving checkpoints:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--ref-load</span></code>: The Megatron checkpoint for the reference model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--load</span></code>: The Megatron checkpoint for the actor. If <code class="docutils literal notranslate"><span class="pre">--load</span></code> is not set, or if the specified directory does not exist or does not contain <code class="docutils literal notranslate"><span class="pre">latest_checkpointed_iteration.txt</span></code>, the actor will be initialized from the <code class="docutils literal notranslate"><span class="pre">--ref-load</span></code> checkpoint.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--save</span></code>: The path where the actor’s checkpoints are saved.</p></li>
+</ul>
+<p>Note:</p>
+<ul class="simple">
+<li><p>Regardless of the checkpoint storage method (i.e., however <code class="docutils literal notranslate"><span class="pre">--ckpt-format</span></code> is set), Megatron can load both <code class="docutils literal notranslate"><span class="pre">torch</span></code> and <code class="docutils literal notranslate"><span class="pre">torch_dist</span></code> formats.</p></li>
+</ul>
+</section>
+</section>
+<section id="loading-vllm">
+<h3>Loading vLLM<a class="headerlink" href="#loading-vllm" title="Link to this heading">#</a></h3>
+<p>Loading vLLM is very simple. You only need:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--hf-checkpoint</span></code>: The Hugging Face checkpoint used to initialize vLLM.</p></li>
+</ul>
+<p>Note:</p>
+<ul class="simple">
+<li><p>Before the first training step, vime will synchronize the parameters from Megatron to vLLM. Therefore, the <code class="docutils literal notranslate"><span class="pre">--hf-checkpoint</span></code> does not need to contain the latest training parameters, and you do not need to change the HF checkpoint when resuming training.</p></li>
+<li><p>By default, vLLM reads the maximum context length from the <code class="docutils literal notranslate"><span class="pre">config.json</span></code> in the Hugging Face checkpoint. You can use the <code class="docutils literal notranslate"><span class="pre">--vllm-max-model-len</span></code> parameter to override this value to support longer inference.</p></li>
+<li><p>During co-located training and inference, although Megatron and vLLM will offload sequentially, they still need to leave some memory for each other. You need to adjust vLLM’s total VRAM usage by reducing <code class="docutils literal notranslate"><span class="pre">--vllm-gpu-memory-utilization</span></code>.</p></li>
+<li><p>vime supports passing through vllm-router parameters by adding a <code class="docutils literal notranslate"><span class="pre">router</span></code> prefix to the original parameter name. For example, vllm-router’s <code class="docutils literal notranslate"><span class="pre">--balance-abs-threshold</span></code> parameter should be set as <code class="docutils literal notranslate"><span class="pre">--router-balance-abs-threshold</span></code>. Since vllm-router uses cache-aware routing by default, it may cause uneven request distribution. You can set <code class="docutils literal notranslate"><span class="pre">--router-balance-abs-threshold</span> <span class="pre">0</span></code> to force balanced distribution, but this may affect prefix cache hit rate in multi-turn conversation scenarios.</p></li>
+</ul>
+<p>For details on some of vLLM’s customizations and the principles behind how vime incorporates vLLM, please see the “How to Use vLLM” section.</p>
+</section>
+<section id="data-format">
+<h3>Data Format<a class="headerlink" href="#data-format" title="Link to this heading">#</a></h3>
+<p>Currently, vime only supports loading files in <code class="docutils literal notranslate"><span class="pre">.jsonl</span></code> format, where each line of the file is a JSON object. An example of a single data entry (expanded) is as follows:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Solve the following math problem step by step. The last line of your response should be of the form Answer: \\boxed{$Answer} where $Answer is the answer to the problem.\n\nIn triangle $ABC$, $\\sin \\angle A = \\frac{4}{5}$ and $\\angle A &lt; 90^\\circ$. Let $D$ be a point outside triangle $ABC$ such that $\\angle BAD = \\angle DAC$ and $\\angle BDC = 90^\\circ$. Suppose that $AD = 1$ and that $\\frac{BD}{CD} = \\frac{3}{2}$. If $AB + AC$ can be expressed in the form $\\frac{a\\sqrt{b}}{c}$ where $a, b, c$ are pairwise relatively prime integers, find $a + b + c$.\n\nRemember to put your answer on its own line after \&quot;Answer:\&quot;.&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;step_loss_mask&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;34&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This corresponds to the following configuration:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">  </span>--input-key<span class="w"> </span>prompt
+<span class="w">  </span>--label-key<span class="w"> </span>label
+<span class="w">  </span>--apply-chat-template
+</pre></div>
+</div>
+<p>Please note that the <code class="docutils literal notranslate"><span class="pre">step_loss_mask</span></code> (default=1) here is for SFT phase. If it is set to 0, the turn will not contibute to the final loss; if it is set to 1, vime will use the normal <code class="docutils literal notranslate"><span class="pre">loss_mask</span></code>.
+Additionally, we provide a <code class="docutils literal notranslate"><span class="pre">metadata_key</span></code>, which defaults to <code class="docutils literal notranslate"><span class="pre">&quot;metadata&quot;</span></code>. When read, vime will load the metadata from the data, which can be helpful for custom data generation or creating custom reward models.</p>
+</section>
+<section id="hyperparameters-for-rl-training">
+<h3>Hyperparameters for RL Training<a class="headerlink" href="#hyperparameters-for-rl-training" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--advantage-estimator</span></code>: Specifies the RL algorithm for the training process. Currently supported algorithms include:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">grpo</span></code> (<a class="reference external" href="https://arxiv.org/abs/2402.03300">https://arxiv.org/abs/2402.03300</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gspo</span></code> (<a class="reference external" href="https://arxiv.org/abs/2507.18071">https://arxiv.org/abs/2507.18071</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reinforce_plus_plus</span></code> and <code class="docutils literal notranslate"><span class="pre">reinforce_plus_plus_baseline</span></code> (<a class="reference external" href="https://arxiv.org/abs/2501.03262">https://arxiv.org/abs/2501.03262</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ppo</span></code> (<a class="reference external" href="https://arxiv.org/abs/1707.06347">https://arxiv.org/abs/1707.06347</a>)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--calculate-per-token-loss</span></code>: By default, vime calculates loss on a per-sample basis, i.e., <code class="docutils literal notranslate"><span class="pre">mean(sum(sample_i)</span> <span class="pre">/</span> <span class="pre">len(sample_i))</span></code>. Enable this flag to calculate loss on a per-token basis, i.e., <code class="docutils literal notranslate"><span class="pre">sum(sum(sample_i))</span> <span class="pre">/</span> <span class="pre">sum(len(sample_i))</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--use-tis</span></code>: Enable this setting to use TIS (Truncated Importance Sampling) (https://fengyao.notion.site/off-policy-rl).</p></li>
+</ul>
+<section id="grpo-algorithm">
+<h4>GRPO Algorithm<a class="headerlink" href="#grpo-algorithm" title="Link to this heading">#</a></h4>
+<p>GRPO (Group Relative Policy Optimization) is an RL algorithm proposed in DeepSeek-Math. Its core idea is to compute advantage through intra-group relative comparisons, eliminating the need for a separate critic model.</p>
+<p>To use GRPO, set:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--advantage-estimator<span class="w"> </span>grpo
+</pre></div>
+</div>
+<p>Key features of GRPO:</p>
+<ul class="simple">
+<li><p><strong>No Critic Model Required</strong>: GRPO samples multiple responses for the same prompt and estimates advantage by computing relative rewards within the group, avoiding the overhead of training and maintaining a critic model.</p></li>
+<li><p><strong>Resource Efficient</strong>: Since no critic model is needed, GPU resources can be fully utilized for actor training and inference.</p></li>
+<li><p><strong>Simple to Use</strong>: Easy configuration - just set <code class="docutils literal notranslate"><span class="pre">--advantage-estimator</span> <span class="pre">grpo</span></code>.</p></li>
+</ul>
+<p>Related parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--n-samples-per-prompt</span></code>: Number of responses sampled per prompt for intra-group comparison.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--normalize-advantages</span></code>: Whether to normalize advantages.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--eps-clip</span></code>: PPO-style clip range.</p></li>
+</ul>
+</section>
+<section id="ppo-algorithm">
+<h4>PPO Algorithm<a class="headerlink" href="#ppo-algorithm" title="Link to this heading">#</a></h4>
+<p>PPO (Proximal Policy Optimization) is a classic RL algorithm that uses a critic model to estimate the value function for computing advantages.</p>
+<p>To use PPO, set:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--advantage-estimator<span class="w"> </span>ppo
+</pre></div>
+</div>
+<p><strong>Note: In PPO, the Critic and Actor request GPUs in parallel</strong>, which should be considered when allocating resources. Specifically:</p>
+<ul class="simple">
+<li><p>The critic model occupies a separate set of GPUs, independent from the actor’s GPU resources.</p></li>
+<li><p>You can configure critic resources using <code class="docutils literal notranslate"><span class="pre">--critic-num-nodes</span></code> and <code class="docutils literal notranslate"><span class="pre">--critic-num-gpus-per-node</span></code>.</p></li>
+<li><p>If critic resource parameters are not configured, the same resource configuration as the actor will be used by default.</p></li>
+</ul>
+<p>Cluster resource allocation example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Actor uses 1 node, 4 GPUs</span>
+--actor-num-nodes<span class="w"> </span><span class="m">1</span>
+--actor-num-gpus-per-node<span class="w"> </span><span class="m">4</span>
+
+<span class="c1"># Critic uses 1 node, 4 GPUs (parallel to Actor)</span>
+--critic-num-nodes<span class="w"> </span><span class="m">1</span>
+--critic-num-gpus-per-node<span class="w"> </span><span class="m">4</span>
+
+<span class="c1"># Rollout uses 8 GPUs</span>
+--rollout-num-gpus<span class="w"> </span><span class="m">8</span>
+</pre></div>
+</div>
+<p>With the above configuration, a total of <code class="docutils literal notranslate"><span class="pre">4</span> <span class="pre">(actor)</span> <span class="pre">+</span> <span class="pre">4</span> <span class="pre">(critic)</span> <span class="pre">+</span> <span class="pre">8</span> <span class="pre">(rollout)</span> <span class="pre">=</span> <span class="pre">16</span></code> GPUs are required.</p>
+<p>PPO-related parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--critic-load</span></code>: Checkpoint path for the critic model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--critic-save</span></code>: Save path for the critic model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--critic-lr</span></code>: Learning rate for the critic model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--critic-lr-warmup-iters</span></code>: Number of warmup steps for the critic model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--num-critic-only-steps</span></code>: Number of steps to train only the critic at the beginning of training.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--eps-clip</span></code>: PPO clip range.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--value-clip</span></code>: Clip range for value loss.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--kl-coef</span></code>: KL penalty coefficient for reward shaping.</p></li>
+</ul>
+</section>
+</section>
+<section id="advanced-megatron-configuration-megatron-config-path">
+<h3>Advanced Megatron Configuration (–megatron-config-path)<a class="headerlink" href="#advanced-megatron-configuration-megatron-config-path" title="Link to this heading">#</a></h3>
+<p>For PPO workflows, you can use <code class="docutils literal notranslate"><span class="pre">--megatron-config-path</span></code> with a YAML file to override Megatron arguments separately for actor and critic. Common use cases include setting a different critic <code class="docutils literal notranslate"><span class="pre">lr</span></code>, or giving actor and critic different <code class="docutils literal notranslate"><span class="pre">load</span></code> / <code class="docutils literal notranslate"><span class="pre">save</span></code> paths.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">megatron</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actor</span>
+<span class="w">    </span><span class="nt">overrides</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">lr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">critic</span>
+<span class="w">    </span><span class="nt">overrides</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">lr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-5</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>Note:</strong> This configuration currently only supports PPO, and in current PPO the actor and critic must use the same Megatron parallel topology. The recommended pattern is to keep parallelism-related settings in the shared CLI arguments and put only role-specific differences in YAML. See <a class="reference internal" href="../advanced/megatron-config.html"><span class="std std-doc">Megatron Config: Role-Based Training Overrides</span></a> for details.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="custom-rollout-function">
+<h2>Custom Rollout Function<a class="headerlink" href="#custom-rollout-function" title="Link to this heading">#</a></h2>
+<p>vime supports customizing data generation (rollout) to various degrees.</p>
+<ul>
+<li><p>By default, it uses the <code class="docutils literal notranslate"><span class="pre">generate_rollout</span></code> function from <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/vime/rollout/vllm_rollout.py">vime/rollout/vllm_rollout.py</a> for data generation. This file implements an asynchronous (asyncio) data generation flow based on vLLM and supports features like dynamic sampling and partial rollout.</p></li>
+<li><p>You can completely replace the default <code class="docutils literal notranslate"><span class="pre">generate_rollout</span></code> by using the <code class="docutils literal notranslate"><span class="pre">--rollout-function-path</span></code> parameter. You just need to ensure that the function signature passed via <code class="docutils literal notranslate"><span class="pre">--rollout-function-path</span></code> is as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">generate_rollout</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">rollout_id</span><span class="p">,</span> <span class="n">data_source</span><span class="p">,</span> <span class="n">evaluation</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RolloutFnTrainOutput</span> <span class="o">|</span> <span class="n">RolloutFnEvalOutput</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        args: the whole args</span>
+<span class="sd">        rollout_id: int, the id of the rollout, used for deterministic data generation</span>
+<span class="sd">        data_source: the data source to get and store samples</span>
+<span class="sd">        evaluation: bool, whether the rollout is for evaluation or not</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        RolloutFnTrainOutput | RolloutFnEvalOutput: the output of the rollout</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+        <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: The complete arguments used for the vime run.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rollout_id</span></code>: The ID of the current data generation round, used to ensure data order when resuming training.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_source</span></code>: A globally unique data source in vime, which can be used to get initial prompts, data IDs, and store partially generated samples for later use.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">evaluation</span></code>: A boolean indicating if the rollout is for evaluation. You can configure a separate evaluation function using <code class="docutils literal notranslate"><span class="pre">--eval-function-path</span></code>.</p></li>
+<li><p>The returned <code class="docutils literal notranslate"><span class="pre">Sample</span></code> type is defined in <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/vime/utils/types.py">vime/utils/types.py</a>. When implementing, you need to ensure the following fields are correctly set:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">tokens</span></code>: The tokens for the prompt + response.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response_length</span></code>: The total length of the response. For multi-turn tasks, this is the length of the tokens remaining after the first-turn prompt.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reward</span></code>: The reward for this data sample.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: The status of this data sample (e.g., <code class="docutils literal notranslate"><span class="pre">Sample.Status.COMPLETED</span></code>, <code class="docutils literal notranslate"><span class="pre">Sample.Status.TRUNCATED</span></code>, <code class="docutils literal notranslate"><span class="pre">Sample.Status.ABORTED</span></code>, <code class="docutils literal notranslate"><span class="pre">Sample.Status.FAILED</span></code>).</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">loss_mask</span></code> should be the same length as <code class="docutils literal notranslate"><span class="pre">response_length</span></code>, with <code class="docutils literal notranslate"><span class="pre">1</span></code> for tokens that should be included in the loss calculation and <code class="docutils literal notranslate"><span class="pre">0</span></code> for those that should be masked out.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>In some cases, you may only need to replace the data generation logic. You can do this using <code class="docutils literal notranslate"><span class="pre">--custom-generate-function-path</span></code>. A simplified implementation of this function is as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">sample</span><span class="p">:</span> <span class="n">Sample</span><span class="p">,</span> <span class="n">sampling_params</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sample</span><span class="p">:</span>
+    <span class="k">global</span> <span class="n">TOKENIZER</span>
+    <span class="k">if</span> <span class="n">TOKENIZER</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">TOKENIZER</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">hf_checkpoint</span><span class="p">,</span> <span class="n">trust_remote_code</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># send request to router</span>
+    <span class="n">prompt_token_ids</span> <span class="o">=</span> <span class="n">TOKENIZER</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">prompt</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="k">await</span> <span class="n">post</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;http://</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">vllm_router_ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">vllm_router_port</span><span class="si">}</span><span class="s2">/inference/v1/generate&quot;</span><span class="p">,</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">hf_checkpoint</span><span class="p">,</span>
+            <span class="s2">&quot;token_ids&quot;</span><span class="p">:</span> <span class="n">prompt_token_ids</span><span class="p">,</span>
+            <span class="s2">&quot;sampling_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;max_tokens&quot;</span><span class="p">:</span> <span class="n">sampling_params</span><span class="p">[</span><span class="s2">&quot;max_new_tokens&quot;</span><span class="p">]},</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="n">choice</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="s2">&quot;choices&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">response_token_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">choice</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;token_ids&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[])</span>
+
+    <span class="c1"># set sample</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="n">prompt_token_ids</span> <span class="o">+</span> <span class="n">response_token_ids</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">response_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response_token_ids</span><span class="p">)</span>
+    <span class="n">finish_reason</span> <span class="o">=</span> <span class="n">choice</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;finish_reason&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;stop&quot;</span>
+    <span class="k">if</span> <span class="n">finish_reason</span> <span class="o">==</span> <span class="s2">&quot;length&quot;</span><span class="p">:</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Sample</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">TRUNCATED</span>
+    <span class="k">elif</span> <span class="n">finish_reason</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;abort&quot;</span><span class="p">,</span> <span class="s2">&quot;cancelled&quot;</span><span class="p">):</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Sample</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">ABORTED</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sample</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Sample</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">COMPLETED</span>
+    <span class="n">sample</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="n">TOKENIZER</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">response_token_ids</span><span class="p">)</span> <span class="k">if</span> <span class="n">response_token_ids</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">sample</span>
+</pre></div>
+</div>
+<p>For a more complete version, please refer to <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/vime/rollout/vllm_rollout.py">vime/rollout/vllm_rollout.py</a>.</p>
+</li>
+<li><p>Sometimes, you may also need to support a custom reward model. This can be configured by setting <code class="docutils literal notranslate"><span class="pre">--custom-rm-path</span></code>.</p></li>
+</ul>
+</section>
+<section id="how-to-use-vllm">
+<h2>How to Use vLLM<a class="headerlink" href="#how-to-use-vllm" title="Link to this heading">#</a></h2>
+<p>vime runs vLLM in server mode and talks to it over HTTP.</p>
+<section id="parameter-configuration">
+<h3>Parameter Configuration<a class="headerlink" href="#parameter-configuration" title="Link to this heading">#</a></h3>
+<p>vime incorporates almost all vLLM parameters by forwarding vLLM’s <code class="docutils literal notranslate"><span class="pre">EngineArgs</span></code> CLI flags. When setting a vLLM parameter, you need to add the <code class="docutils literal notranslate"><span class="pre">--vllm-</span></code> prefix. For example:</p>
+<ul class="simple">
+<li><p>In co-located training and inference, you often need to limit GPU memory utilization. Pass it as <code class="docutils literal notranslate"><span class="pre">--vllm-gpu-memory-utilization</span></code>.</p></li>
+<li><p>During training, if you want vLLM to infer beyond the maximum context length specified in the Hugging Face checkpoint’s <code class="docutils literal notranslate"><span class="pre">config.json</span></code>, you need to use <code class="docutils literal notranslate"><span class="pre">--max-model-len</span></code>, which becomes <code class="docutils literal notranslate"><span class="pre">--vllm-max-model-len</span></code> in vime.</p></li>
+<li><p>For multi-node large EP inference, you might need <code class="docutils literal notranslate"><span class="pre">--enable-expert-parallel</span></code>, <code class="docutils literal notranslate"><span class="pre">--data-parallel-size</span></code>, etc. These can be passed as <code class="docutils literal notranslate"><span class="pre">--vllm-enable-expert-parallel</span></code> and <code class="docutils literal notranslate"><span class="pre">--vllm-data-parallel-size</span></code> respectively.</p></li>
+</ul>
+<p>Some parameters related to vime’s resource scheduling are configured by vime itself, for example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--tensor-parallel-size</span></code> in vime is set using <code class="docutils literal notranslate"><span class="pre">--rollout-num-gpus-per-engine</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model</span></code> in vime is set using <code class="docutils literal notranslate"><span class="pre">--hf-checkpoint</span></code>.</p></li>
+</ul>
+<p>The way vLLM parameters are integrated into vime can be found in <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/vime/backends/vllm_utils/arguments.py">vime/backends/vllm_utils/arguments.py</a>.</p>
+</section>
+<section id="how-to-use-the-router">
+<h3>How to Use the Router<a class="headerlink" href="#how-to-use-the-router" title="Link to this heading">#</a></h3>
+<p>vime uses <a class="reference external" href="https://github.com/vllm-project/router">vllm-router</a> to manage the vLLM engines during the training process. You can configure the address of the router using <code class="docutils literal notranslate"><span class="pre">--vllm-router-ip</span></code> and <code class="docutils literal notranslate"><span class="pre">--vllm-router-port</span></code>. If not configured, a router will be started by default within the cluster.</p>
+<p>After starting, all vLLM engines will register with the router. When actually generating data, you only need to send HTTP requests to the router, which will perform load balancing and forward the requests to the engines.</p>
+<p>When you configure an external router using <code class="docutils literal notranslate"><span class="pre">--vllm-router-ip</span></code> and <code class="docutils literal notranslate"><span class="pre">--vllm-router-port</span></code>, vime will not start an internal router. Instead, it will register all its engines with this external router. You can then use this external router’s address to implement more complex data generation workflows. Note that the router supports OpenAI-compatible APIs.</p>
+</section>
+<section id="advanced-engine-configuration-vllm-config">
+<h3>Advanced Engine Configuration (–vllm-config)<a class="headerlink" href="#advanced-engine-configuration-vllm-config" title="Link to this heading">#</a></h3>
+<p>For advanced deployments, you can use <code class="docutils literal notranslate"><span class="pre">--vllm-config</span></code> with a YAML file to configure server groups, multi-model serving, and selective weight updates.</p>
+<p><strong>Multi-model deployment</strong> allows serving multiple models simultaneously (e.g., an actor model that receives weight updates and a frozen reference/reward model):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">vllm</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actor</span>
+<span class="w">    </span><span class="nt">update_weights</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">          </span><span class="c1"># receives weight updates from training (default)</span>
+<span class="w">    </span><span class="nt">server_groups</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">worker_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regular</span>
+<span class="w">        </span><span class="nt">num_gpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">        </span><span class="nt">num_gpus_per_engine</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ref</span>
+<span class="w">    </span><span class="nt">model_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/path/to/ref_model</span>
+<span class="w">    </span><span class="nt">update_weights</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">          </span><span class="c1"># frozen, no weight updates</span>
+<span class="w">    </span><span class="nt">server_groups</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">worker_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regular</span>
+<span class="w">        </span><span class="nt">num_gpus</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">        </span><span class="nt">num_gpus_per_engine</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+</pre></div>
+</div>
+<p>Each model gets its own router. The per-model router info is accessible via <code class="docutils literal notranslate"><span class="pre">args.vllm_model_routers</span></code> (a dict mapping model name to <code class="docutils literal notranslate"><span class="pre">(ip,</span> <span class="pre">port)</span></code> tuples). Custom rollout functions can use <code class="docutils literal notranslate"><span class="pre">get_model_url(args,</span> <span class="pre">&quot;ref&quot;)</span></code> from <code class="docutils literal notranslate"><span class="pre">vime.rollout.vllm_rollout</span></code> to route requests to a specific model.</p>
+<p><strong>Server group features:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">worker_type</span></code>: <code class="docutils literal notranslate"><span class="pre">regular</span></code>, <code class="docutils literal notranslate"><span class="pre">prefill</span></code>, <code class="docutils literal notranslate"><span class="pre">decode</span></code>, or <code class="docutils literal notranslate"><span class="pre">placeholder</span></code> (reserves GPU slots without creating engines)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">overrides</span></code>: Dict of vLLM <code class="docutils literal notranslate"><span class="pre">EngineArgs</span></code> field overrides applied on top of <code class="docutils literal notranslate"><span class="pre">--vllm-*</span></code> CLI args</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_gpus_per_engine</span></code>: Per-group TP size override</p></li>
+</ul>
+</section>
+</section>
+<section id="how-to-use-megatron">
+<h2>How to Use Megatron<a class="headerlink" href="#how-to-use-megatron" title="Link to this heading">#</a></h2>
+<p>vime supports different and lightly modified versions of Megatron by reusing common functions from the <code class="docutils literal notranslate"><span class="pre">megatron.training</span></code> directory, such as <code class="docutils literal notranslate"><span class="pre">parse_args</span></code>, <code class="docutils literal notranslate"><span class="pre">save_checkpoint</span></code>, and <code class="docutils literal notranslate"><span class="pre">load_checkpoint</span></code>. Therefore, when using it, you must ensure that Megatron is accessible in the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>, for example, by adding <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=/root/Megatron-LM</span></code> at runtime.</p>
+<section id="id1">
+<h3>Parameter Configuration<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>vime directly imports all parameters of the Megatron in the current environment by using <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">megatron.training.arguments</span> <span class="pre">import</span> <span class="pre">parse_args</span></code>. If the version of Megatron you are using has parameters defined outside of <code class="docutils literal notranslate"><span class="pre">parse_args</span></code>, you can configure them by passing them in, similar to how it’s done in <a class="reference external" href="https://github.com/vllm-project/vime/blob/main/train.py">train.py</a>, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">pretrain_gpt</span><span class="w"> </span><span class="kn">import</span> <span class="n">extra_args_provider</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">extra_args_provider</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">(</span><span class="n">extra_args_provider</span><span class="p">)</span>
+    <span class="n">train</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="custom-parameters">
+<h3>Custom Parameters<a class="headerlink" href="#custom-parameters" title="Link to this heading">#</a></h3>
+<p>In some customized Megatron implementations, special operations need to be performed during initialization or before/after a training step. We have added the following plugins for this purpose:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--custom-megatron-init-path</span></code>: Adds some initialization calls.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--custom-megatron-before-log-prob-hook-path</span></code>: Is called before calculating the log probability.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--custom-megatron-before-train-step-hook-path</span></code>: Is called before each training step. You could use this to mix in special training losses, for example.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="quick_start.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quick Start</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="customization.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Customization Guide</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-vime-parameters">Introduction to vime Parameters</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-resource-allocation">Cluster Resource Allocation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-training-backend">Choosing Training Backend</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-megatron">Loading Megatron</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-model-parameters">Configuring Model Parameters</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-parallelism-and-recomputation">Setting Up Parallelism and Recomputation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-megatron-checkpoints">Loading Megatron Checkpoints</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-vllm">Loading vLLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-format">Data Format</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameters-for-rl-training">Hyperparameters for RL Training</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#grpo-algorithm">GRPO Algorithm</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ppo-algorithm">PPO Algorithm</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-megatron-configuration-megatron-config-path">Advanced Megatron Configuration (–megatron-config-path)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-rollout-function">Custom Rollout Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-vllm">How to Use vLLM</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-configuration">Parameter Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-the-router">How to Use the Router</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-engine-configuration-vllm-config">Advanced Engine Configuration (–vllm-config)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-megatron">How to Use Megatron</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Parameter Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-parameters">Custom Parameters</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Vime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2026, Vime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Jun 09, 2026.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

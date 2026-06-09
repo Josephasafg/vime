@@ -1,0 +1,672 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Debugging &#8212; Vime</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom_log.css?v=ad20845f" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=ccdb6887"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'developer_guide/debug';</script>
+    <script src="../_static/js/lang-toggle.js?v=4693e039"></script>
+    <link rel="icon" href="../_static/logo.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Trace Viewer" href="trace.html" />
+    <link rel="prev" title="CI (Continuous Integration)" href="ci.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="Jun 09, 2026"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="Vime - Home"/>
+    <img src="../_static/logo.jpg" class="logo__image only-dark pst-js-only" alt="Vime - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Get Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../get_started/quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/customization.html">Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../get_started/qa.html">FAQ</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dense</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-4B.html">Qwen3-4B with 8xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MoE</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../examples/qwen3-30B-A3B.html">Qwen3-30B-A3B with 8xH100</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../advanced/speculative-decoding.html">Speculative Decoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/reproducibility.html">Reproducibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/fault-tolerance.html">Fault Tolerance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/pd-disaggregation.html">PD Disaggregation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/vllm-config.html">vLLM Config: Advanced Engine Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/megatron-config.html">Megatron Config: Role-Based Training Overrides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/arch-support-beyond-megatron.html">Supporting Model Architectures Beyond Megatron-LM</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Other Usage</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/fully_async/README.html">Fully-Async Rollout Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples_synced/multi_agent/README.html">Multi-Agent RL</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ci.html">CI (Continuous Integration)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trace.html">Trace Viewer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profiling.html">Profiling</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/blob/main/developer_guide/debug.md?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/edit/main/developer_guide/debug.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/vllm-project/vime/issues/new?title=Issue%20on%20page%20%2Fdeveloper_guide/debug.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/developer_guide/debug.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Debugging</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aligning-precision">Aligning Precision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#separate-debugging-for-training-and-inference">Separate Debugging for Training and Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debug-vllm-illegal-memory-access-ima">Debug vllm illegal memory access (IMA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-debugging-with-ray-distributed-debugger">Step-by-Step Debugging with Ray Distributed Debugger</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="debugging">
+<h1>Debugging<a class="headerlink" href="#debugging" title="Link to this heading">#</a></h1>
+<section id="aligning-precision">
+<h2>Aligning Precision<a class="headerlink" href="#aligning-precision" title="Link to this heading">#</a></h2>
+<p>During the development of vime, it is often necessary to check if the model’s precision is correct. This can be verified in the following ways:</p>
+<ol class="arabic simple">
+<li><p><strong>First Training Step</strong></p>
+<ol class="arabic simple">
+<li><p>Check if the generated <code class="docutils literal notranslate"><span class="pre">rollout</span></code> is coherent. If not, there are two possible reasons:</p>
+<ul class="simple">
+<li><p>Parameters were not loaded correctly. You need to check the logs for a confirmation that Megatron successfully loaded the checkpoint (ckpt).</p></li>
+<li><p>There was an error in updating the parameters. You can check if all parameters were converted and mapped correctly, or if the parameter names were converted according to the parallelization strategy (e.g., when <code class="docutils literal notranslate"><span class="pre">pp_size</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>, check if the layer IDs for the parameters provided by the second stage are correct). A thorough method is to save all parameters in the <code class="docutils literal notranslate"><span class="pre">load_weights</span></code> implementation of the corresponding model in vLLM and verify that they are consistent with the loaded checkpoint.</p></li>
+<li><p>If all parameters are updated correctly and the problem persists, it’s possible that some special buffers in vLLM were released during the release process.</p></li>
+<li><p>If you are testing with a pretrained model, you can switch to an instruct version of a model with the same architecture to see if this garbled output is specific to the pretrained model.</p></li>
+</ul>
+</li>
+<li><p>Check the printed rollout stats to see if <code class="docutils literal notranslate"><span class="pre">log_probs</span></code> and <code class="docutils literal notranslate"><span class="pre">ref_log_probs</span></code> are exactly equal (meaning KL divergence is 0 in the first step) and their values are small.</p>
+<ul class="simple">
+<li><p>If they are not exactly equal, it is usually caused by certain non-deterministic kernels in the Transformer Engine, for example:</p>
+<ul>
+<li><p>In some versions of Transformer Engine (TE), Megatron requires <code class="docutils literal notranslate"><span class="pre">--attention-backend</span> <span class="pre">flash</span></code> to enforce the use of Flash Attention, thereby avoiding numerical instability from the fused attention under Context Parallelism (CP).</p></li>
+</ul>
+</li>
+<li><p>If the values are large (e.g., &gt; 1), there are generally two possibilities:</p>
+<ul>
+<li><p>If the value is extremely large, there is likely a problem with the training configuration.</p></li>
+<li><p>If the value is only slightly larger than the SFT loss, for example, if the log probability of an instruct model reaches 0.8, it might be because the data does not conform to the trained chat template or does not match the cold-start distribution.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>When running one inference step per training step (<code class="docutils literal notranslate"><span class="pre">num_steps_per_rollout</span> <span class="pre">==</span> <span class="pre">1</span></code>), check if the KL divergence is 0 and if the <code class="docutils literal notranslate"><span class="pre">grad_norm</span></code> is small.</p>
+<ul class="simple">
+<li><p>This is basically due to some Megatron / TE related bugs, for example:</p>
+<ul>
+<li><p>Mixture of Experts (MoE) requires enabling <code class="docutils literal notranslate"><span class="pre">--moe-permute-fusion</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p><strong>Second Training Step</strong></p>
+<ol class="arabic simple">
+<li><p>For integrated training and inference, check if the second step can be loaded correctly and whether it results in an Out of Memory (OOM) error.</p></li>
+</ol>
+</li>
+</ol>
+</section>
+<section id="separate-debugging-for-training-and-inference">
+<h2>Separate Debugging for Training and Inference<a class="headerlink" href="#separate-debugging-for-training-and-inference" title="Link to this heading">#</a></h2>
+<p>vime supports debugging the training and inference parts separately, which allows for the following:</p>
+<ul class="simple">
+<li><p>When tuning/debugging the inference part, you can start the task with only a few GPUs.</p></li>
+<li><p>When tuning/debugging the training part, you can ensure the model input is fixed, removing the randomness of rollouts.</p></li>
+</ul>
+<p>Specifically, vime currently provides the following parameters for separate debugging:</p>
+<ol class="arabic">
+<li><p><code class="docutils literal notranslate"><span class="pre">--debug-rollout-only</span></code></p>
+<p>When enabled, vime will not load Megatron and will only initialize vLLM. You can use this method to debug the inference part.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--debug-train-only</span></code></p>
+<p>When enabled, vime will not load vLLM and will only initialize Megatron. You can use this method to debug the training part.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--save-debug-rollout-data</span> <span class="pre">/your/saved/debug/data_{rollout_id}.pt</span></code></p>
+<p>When enabled, the results of each rollout will be saved. This can be used in conjunction with <code class="docutils literal notranslate"><span class="pre">--debug-rollout-only</span></code>. Note that the data is saved using the format: <code class="docutils literal notranslate"><span class="pre">args.save_debug_rollout_data.format(rollout_id=rollout_id)</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--load-debug-rollout-data</span> <span class="pre">/your/saved/debug/data_{rollout_id}.pt</span></code></p>
+<p>When enabled, data will be loaded from <code class="docutils literal notranslate"><span class="pre">args.load_debug_rollout_data.format(rollout_id=rollout_id)</span></code>, and vLLM will not be initialized (automatically setting <code class="docutils literal notranslate"><span class="pre">debug_train_only=True</span></code>). This method allows you to fix the input for the training part to tune it, for example, by switching between different parallelization strategies.</p>
+</li>
+</ol>
+</section>
+<section id="debug-vllm-illegal-memory-access-ima">
+<h2>Debug vllm illegal memory access (IMA)<a class="headerlink" href="#debug-vllm-illegal-memory-access-ima" title="Link to this heading">#</a></h2>
+<p>When running large scale RL, we will occationally meet the IMA in vLLM, there are some debug suggestions based on our experience:</p>
+<ol class="arabic">
+<li><p>Enable <code class="docutils literal notranslate"><span class="pre">CUDA_LAUNCH_BLOCKING=1</span></code></p></li>
+<li><p>Enable or disable speculative decoding and cuda graph to see if anything changed</p>
+<p>IMA always appears in the padding in cuda graph replay, or the difference between draft model and main model. We can minimize the scope by tuning them.</p>
+</li>
+<li><p>Turn off deepep</p>
+<p>If you are using deepep during training or inference, you can try turn it off.</p>
+</li>
+<li><p>Try CUDA Core Dump to find the error kernel</p>
+<p>We recommend reading the blog from the vLLM team: <a class="reference external" href="https://blog.vllm.ai/2025/08/11/cuda-debugging.html">CUDA Core Dump: An Effective Tool to Debug Memory Access Issues and Beyond</a></p>
+</li>
+</ol>
+</section>
+<section id="step-by-step-debugging-with-ray-distributed-debugger">
+<h2>Step-by-Step Debugging with Ray Distributed Debugger<a class="headerlink" href="#step-by-step-debugging-with-ray-distributed-debugger" title="Link to this heading">#</a></h2>
+<p>Ray provides a <a class="reference external" href="https://docs.ray.io/en/latest/ray-observability/ray-distributed-debugger.html">distributed debugger</a> based on debugpy that lets you set breakpoints in the driver process and step through code interactively.</p>
+<ol class="arabic">
+<li><p>Install debugpy:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">debugpy</span><span class="o">==</span><span class="m">1</span>.8.0
+</pre></div>
+</div>
+</li>
+<li><p>Enable <code class="docutils literal notranslate"><span class="pre">RAY_DEBUG_POSTMORTEM</span></code> in your launch script:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">RAY_DEBUG_POSTMORTEM</span><span class="o">=</span><span class="m">1</span>
+
+<span class="nv">RUNTIME_ENV_JSON</span><span class="o">=</span><span class="s2">&quot;{</span>
+<span class="s2">  \&quot;env_vars\&quot;: {</span>
+<span class="s2">    ...</span>
+<span class="s2">    \&quot;RAY_DEBUG_POSTMORTEM\&quot;: \&quot;</span><span class="si">${</span><span class="nv">RAY_DEBUG_POSTMORTEM</span><span class="k">:-</span><span class="nv">0</span><span class="si">}</span><span class="s2">\&quot;</span>
+<span class="s2">  }</span>
+<span class="s2">}&quot;</span>
+
+ray<span class="w"> </span>job<span class="w"> </span>submit<span class="w"> </span>--address<span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8265&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--runtime-env-json<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">RUNTIME_ENV_JSON</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--<span class="w"> </span>python3<span class="w"> </span>train.py<span class="w"> </span><span class="o">[</span>args...<span class="o">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">ray.init()</span></code> before <code class="docutils literal notranslate"><span class="pre">breakpoint()</span></code> in <code class="docutils literal notranslate"><span class="pre">train.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="nb">breakpoint</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">train</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ray.init()</span></code> is required because the distributed debugger depends on <code class="docutils literal notranslate"><span class="pre">core_worker</span></code>, which is only available after Ray initialization. Without it, <code class="docutils literal notranslate"><span class="pre">breakpoint()</span></code> raises <code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">'Worker'</span> <span class="pre">object</span> <span class="pre">has</span> <span class="pre">no</span> <span class="pre">attribute</span> <span class="pre">'core_worker'</span></code>.</p>
+</li>
+<li><p>Connect via VS Code:</p>
+<p>Install the <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ray-project.ray-distributed-debugger">Ray Distributed Debugger</a> extension in VS Code. Run your launch script to submit the job. Once the job hits <code class="docutils literal notranslate"><span class="pre">breakpoint()</span></code>, open the Ray Dashboard panel in VS Code and click the active breakpoint to attach the debugger. You can then step through code, inspect variables, and set additional breakpoints directly in the editor.</p>
+</li>
+</ol>
+<blockquote>
+<div><p><strong>Note</strong>: Remove <code class="docutils literal notranslate"><span class="pre">ray.init()</span></code> and <code class="docutils literal notranslate"><span class="pre">breakpoint()</span></code> after debugging. An explicit <code class="docutils literal notranslate"><span class="pre">ray.init()</span></code> without arguments may cause issues in multi-node training where Ray injects specific namespace and runtime environment configurations via <code class="docutils literal notranslate"><span class="pre">ray</span> <span class="pre">job</span> <span class="pre">submit</span></code>.</p>
+</div></blockquote>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="ci.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">CI (Continuous Integration)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="trace.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Trace Viewer</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aligning-precision">Aligning Precision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#separate-debugging-for-training-and-inference">Separate Debugging for Training and Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debug-vllm-illegal-memory-access-ima">Debug vllm illegal memory access (IMA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-debugging-with-ray-distributed-debugger">Step-by-Step Debugging with Ray Distributed Debugger</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Vime Team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025-2026, Vime.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Jun 09, 2026.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
