@@ -16,7 +16,27 @@ DEFAULT_PATCH_SIZE = 14
 
 
 def load_tokenizer(name_or_path: str, **kwargs):
-    return AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+    # Wrap with vLLM's cached-tokenizer proxy so properties like get_vocab()
+    # are precomputed once instead of rebuilt on every access. vLLM's own
+    # engine does this to every tokenizer; the agent adapter, however, hands
+    # this tokenizer to vLLM tool/reasoning parsers that call get_vocab() in
+    # their constructor. On a large vocab (Qwen3.6: 248K) an unwrapped
+    # tokenizer costs ~150 ms per parser construction — paid every model turn
+    # on the adapter event loop, which at high rollout concurrency pushes long
+    # agent trajectories past their time budget (measured -5pt on SWE-bench
+    # Verified). Wrapping makes get_vocab() effectively free.
+    try:
+        from vllm.tokenizers.hf import get_cached_tokenizer
+
+        tokenizer = get_cached_tokenizer(tokenizer)
+    except Exception:  # pragma: no cover - vLLM-internal API, tolerate drift
+        logger.warning(
+            "vllm.tokenizers.hf.get_cached_tokenizer unavailable; "
+            "tokenizer properties will not be cached",
+            exc_info=True,
+        )
+    return tokenizer
 
 
 def build_processor_kwargs(multimodal_inputs: dict | None = None) -> dict:

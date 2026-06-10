@@ -849,5 +849,68 @@ def test_openai_generate_posts_token_ids_and_extracts_logprobs():
     asyncio.run(run_case())
 
 
+def test_load_tokenizer_wraps_with_vllm_cache(monkeypatch):
+    """load_tokenizer must wrap the tokenizer so get_vocab() is precomputed.
+
+    The agent adapter hands this tokenizer to vLLM tool/reasoning parsers,
+    whose constructors call get_vocab() — on a raw 248K-vocab tokenizer that
+    is ~150 ms, paid every model turn on the adapter event loop. vLLM's
+    get_cached_tokenizer proxy makes get_vocab() a precomputed dict lookup;
+    wrapping at load time keeps every downstream parser construction cheap
+    without any per-call caching. (Measured -5pt on SWE-bench Verified when
+    unwrapped.)
+    """
+    import vime.utils.processing_utils as pu
+
+    sentinel_vocab = {"<tool_call>": 100, "</tool_call>": 101}
+
+    class RawTokenizer:
+        def get_vocab(self):
+            return dict(sentinel_vocab)
+
+    raw = RawTokenizer()
+
+    def fake_from_pretrained(name_or_path, **kwargs):
+        return raw
+
+    wrapped_inputs = []
+
+    def fake_get_cached(tok):
+        wrapped_inputs.append(tok)
+        tok.cached = True  # marker proving the proxy was applied
+        return tok
+
+    monkeypatch.setattr(pu.AutoTokenizer, "from_pretrained", staticmethod(fake_from_pretrained))
+    monkeypatch.setattr(
+        "vllm.tokenizers.hf.get_cached_tokenizer", fake_get_cached, raising=False
+    )
+
+    out = pu.load_tokenizer("dummy/path")
+
+    assert wrapped_inputs == [raw], "load_tokenizer must pass the tokenizer through get_cached_tokenizer"
+    assert getattr(out, "cached", False) is True
+
+
+def test_load_tokenizer_tolerates_missing_cache_helper(monkeypatch):
+    """If vLLM's internal get_cached_tokenizer is unavailable (API drift),
+    load_tokenizer must still return a working tokenizer rather than crash."""
+    import vime.utils.processing_utils as pu
+
+    class RawTokenizer:
+        def get_vocab(self):
+            return {"<tool_call>": 100}
+
+    raw = RawTokenizer()
+    monkeypatch.setattr(pu.AutoTokenizer, "from_pretrained", staticmethod(lambda *a, **k: raw))
+
+    def boom(tok):
+        raise ImportError("simulated vLLM API drift")
+
+    monkeypatch.setattr("vllm.tokenizers.hf.get_cached_tokenizer", boom, raising=False)
+
+    out = pu.load_tokenizer("dummy/path")
+    assert out is raw  # falls back to the unwrapped tokenizer, no crash
+
+
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__]))
