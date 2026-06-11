@@ -7,27 +7,20 @@ WORKDIR /home/ma-user
 
 COPY docker/patch/${PATCH_VERSION}/megatron-all-changes.patch /tmp/megatron-all-changes.patch
 RUN cd Megatron-LM && \
-    git update-index --refresh || true && \
-    git apply --3way /tmp/megatron-all-changes.patch || true && \
-    if grep -R -n '^<<<<<<< ' megatron/; then \
-      echo "Patch conflicts detected. Please resolve." && exit 1; \
-    fi && \
+    patch -p1 < /tmp/megatron-all-changes.patch && \
     pip install -e . --no-build-isolation --no-deps
 
 COPY docker/patch/${PATCH_VERSION}/vllm.patch /tmp/vllm.patch
 RUN cd vllm && \
-    git apply /tmp/vllm.patch
+    patch -p1 < /tmp/vllm.patch
 
 COPY docker/patch/${PATCH_VERSION}/vllm-ascend.patch /tmp/vllm-ascend.patch
 RUN cd vllm-ascend && \
-    git apply /tmp/vllm-ascend.patch
+    patch -p1 < /tmp/vllm-ascend.patch
 
 COPY docker/patch/${PATCH_VERSION}/mindspeed.patch /tmp/mindspeed.patch
 RUN cd MindSpeed && \
-    git apply --3way /tmp/mindspeed.patch || true && \
-    if grep -R -n '^<<<<<<< ' mindspeed/; then \
-      echo "MindSpeed patch conflicts detected." && exit 1; \
-    fi
+    patch -p1 < /tmp/mindspeed.patch
 
 COPY docker/patch/${PATCH_VERSION}/torch_npu.patch /tmp/torch_npu.patch
 RUN TORCH_NPU_DIR=$(python3 -c "import importlib.util; print(importlib.util.find_spec('torch_npu').submodule_search_locations[0])") && \
