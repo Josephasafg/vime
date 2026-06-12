@@ -32,14 +32,14 @@ def npu_dot_product_attention_forward(
             query.shape[0], query.shape[1], query.shape[2]
         )
 
-    sparse_mode = getattr(self.config, "sparse_mode", 2)
+    sparse_mode = getattr(self.config, "sparse_mode", 0)
     if attn_mask_type == AttnMaskType.no_mask:
         sparse_mode = 0
 
     scale = self.softmax_scale
 
     pre_tockens = getattr(self.config, "pre_tockens", 65536)
-    next_tockens = getattr(self.config, "next_tockens", 65536)
+    next_tockens = getattr(self.config, "next_tockens", 0)
 
     if packed_seq_params is not None:
         if isinstance(packed_seq_params.cu_seqlens_q, list):
