@@ -289,9 +289,9 @@ def test_send_via_ipc_dispatches_update_weights_from_tensor_coordinator_multi_gp
         "ipc_handles": [{"uuid-gpu1": ("f", ())}],
     }
 
-    def fake_all_gather_object(gathered_payloads, payload, group=None):
-        gathered_payloads[0] = "payload0"
-        gathered_payloads[1] = "payload1"
+    def fake_gather_object(payload, object_gather_list=None, dst=0, group=None):
+        object_gather_list[0] = "payload0"
+        object_gather_list[1] = "payload1"
 
     with patch(
         f"{MODULE_PATH}._build_ipc_update_info_from_named_tensors",
@@ -299,7 +299,7 @@ def test_send_via_ipc_dispatches_update_weights_from_tensor_coordinator_multi_gp
     ), patch(
         f"{MODULE_PATH}._serialize_ipc_update_info", return_value="payload0"
     ), patch(f"{MODULE_PATH}._deserialize_ipc_update_info", side_effect=[dummy_info_0, dummy_info_1] * 2), patch(
-        "torch.distributed.all_gather_object", side_effect=fake_all_gather_object
+        "torch.distributed.gather_object", side_effect=fake_gather_object
     ):
         _run_update(obj, chunks=_chunks(2), rank=0, slot_size=2)
 
@@ -380,10 +380,10 @@ def test_non_leader_skips_start_finish_and_merged_rpc(upw_vllm):
         return_value=(dummy_info, []),
     ), patch(
         f"{MODULE_PATH}._serialize_ipc_update_info", return_value="payload"
-    ), patch("torch.distributed.all_gather_object") as all_gather_obj:
+    ), patch("torch.distributed.gather_object") as gather_obj:
         _run_update(obj, chunks=_chunks(1), rank=1, slot_size=2)
 
-    all_gather_obj.assert_called_once()
+    gather_obj.assert_called_once()
     # non-leader: no start/finish, and no merged update_weights_from_tensor RPC
     assert len(engine.start_weight_update.calls) == 0
     assert len(engine.finish_weight_update.calls) == 0
