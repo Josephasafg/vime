@@ -186,7 +186,8 @@ class MegatronTrainRayActor(TrainRayActor):
             self.weight_updater.disconnect_rollout_engines()
         destroy_process_groups()
 
-        if torch_memory_saver is not None: torch_memory_saver.pause()
+        if torch_memory_saver is not None:
+            torch_memory_saver.pause()
 
         print_memory("after offload model")
 
@@ -195,7 +196,8 @@ class MegatronTrainRayActor(TrainRayActor):
         assert self.args.offload_train
         print_memory("before wake_up model")
 
-        if torch_memory_saver is not None: torch_memory_saver.resume()
+        if torch_memory_saver is not None:
+            torch_memory_saver.resume()
 
         clear_memory()
         reload_process_groups()
