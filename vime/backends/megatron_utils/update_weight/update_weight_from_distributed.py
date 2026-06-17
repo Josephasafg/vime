@@ -185,6 +185,7 @@ class UpdateWeightFromDistributed:
             for hf_chunk in self._iter_expert_chunks():
                 self._update_bucket_weights_from_distributed(hf_chunk, pbar=pbar, packed=False)
             dist.barrier(group=get_gloo_group())
+
     def _sync_bridge_weights_to_rollout_engines(self, pbar: tqdm | None, *, use_vllm_packed: bool) -> None:
         """
         Export HF weights through Megatron-Bridge, then send each exported chunk
@@ -201,9 +202,6 @@ class UpdateWeightFromDistributed:
 
         dist.barrier(group=get_gloo_group())
 
-        if self._is_pp_src_rank:
-            torch.npu.synchronize()
-
     def _use_vllm_packed(self) -> bool:
         """Use vLLM packed weight transfer (one-shot metadata + trainer_send_weights)."""
         if not getattr(self.args, "vllm_weight_sync_packed", True):
@@ -211,9 +209,6 @@ class UpdateWeightFromDistributed:
         if any(".experts." in name for name, _ in named_params_and_buffers(self.args, self.model)):
             return False
         if self.quantization_config and self.quantization_config.get("quant_method") == "compressed-tensors":
-            return False
-        from vime.utils.common import is_npu
-        if is_npu():
             return False
         return True
 
@@ -291,7 +286,7 @@ class UpdateWeightFromDistributed:
         handles = []
         for i, (_name, param) in enumerate(named_tensors):
             params = [
-                torch.empty_like(param.data, device=torch.npu.current_device())
+                torch.empty_like(param.data, device=torch.cuda.current_device())
                 for _ in range(mpu.get_expert_model_parallel_world_size())
             ]
             handle = dist.all_gather(params, param.data, group=mpu.get_expert_model_parallel_group(), async_op=True)
@@ -395,6 +390,7 @@ def connect_rollout_engines_from_distributed(
             device,
             os.environ.get("ASCEND_RT_VISIBLE_DEVICES", ""),
         )
+        # 使用HCCLWeightTransferEngine
         from vllm_ascend.distributed.weight_transfer.hccl_engine import HCCLWeightTransferEngine
         model_update_groups = HCCLWeightTransferEngine.trainer_init(
             {
