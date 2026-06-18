@@ -289,9 +289,11 @@ def test_send_via_ipc_dispatches_update_weights_from_tensor_coordinator_multi_gp
         "ipc_handles": [{"uuid-gpu1": ("f", ())}],
     }
 
-    def fake_gather_object(payload, object_gather_list=None, dst=0, group=None):
-        object_gather_list[0] = "payload0"
-        object_gather_list[1] = "payload1"
+    def fake_gather_object(payload, object_gather_list=None, dst=None, group=None):
+        del payload, dst, group
+        gathered_payloads = object_gather_list
+        gathered_payloads[0] = "payload0"
+        gathered_payloads[1] = "payload1"
 
     with patch(
         f"{MODULE_PATH}._build_ipc_update_info_from_named_tensors",
