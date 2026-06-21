@@ -4,15 +4,23 @@
 # Model: openai/gpt-oss-20b (20B MoE, 32 experts top-4)
 #
 # Prerequisites:
-#   1. Preprocess: python tools/preprocess_gpt_oss.py --input /path/to/gpt-oss-20b --output /path/to/gpt-oss-20b-bf16
-#   2. Convert:    torchrun --nproc_per_node 8 tools/convert_hf_to_torch_dist.py \
-#                    --hf-checkpoint /path/to/gpt-oss-20b-bf16 \
+#   1. Convert MXFP4 → BF16 fused:
+#        python tools/preprocess_gpt_oss.py --input /path/to/gpt-oss-20b --output /path/to/gpt-oss-20b-bf16
+#      If the MXFP4 model was previously preprocessed to per-expert BF16 format, convert it:
+#        python tools/convert_gpt_oss_to_fused.py --input /path/to/gpt-oss-20b-bf16 --output /path/to/gpt-oss-20b-bf16-fused
+#   2. Convert to Megatron torch_dist:
+#        torchrun --nproc_per_node 8 tools/convert_hf_to_torch_dist.py \
+#                    --hf-checkpoint /path/to/gpt-oss-20b-bf16-fused \
 #                    --save /path/to/gpt-oss-20b_torch_dist \
 #                    --megatron-to-hf-mode bridge \
 #                    $(cat scripts/models/gpt-oss-20B.sh | grep -oP "'[^']*'|--[^ ]+( [^ -][^ ]*)?")
+#
+# Note: --hf-checkpoint must point to the fused BF16 format (gate_up_proj [E, hidden, 2*ffn]).
+#   vLLM's _load_weights_other cannot load per-expert split format for GPT-OSS.
+#   Use tools/convert_gpt_oss_to_fused.py to convert if needed.
 
 # for rerun the task
-pkill -9 vllm
+pkill -9 -f "vllm serve"
 sleep 3
 ray stop --force
 pkill -9 ray
@@ -37,15 +45,15 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 source "${SCRIPT_DIR}/models/gpt-oss-20B.sh"
 
 CKPT_ARGS=(
-   --hf-checkpoint /root/gpt-oss-20b-bf16
-   --ref-load /root/gpt-oss-20b_torch_dist
-   --load /root/gpt-oss-20b_vime/
-   --save /root/gpt-oss-20b_vime/
+   --hf-checkpoint /root/models/gpt-oss-20b-bf16-fused
+   --ref-load /root/models/gpt-oss-20b_torch_dist
+   --load /root/models/gpt-oss-20b_torch_dist
+   --save /root/localckpt/gpt-oss-20b_vime/
    --save-interval 20
 )
 
 ROLLOUT_ARGS=(
-   --prompt-data /root/dapo-math-17k/dapo-math-17k.jsonl
+   --prompt-data /root/datasets/dapo-math-17k/dapo-math-17k.jsonl
    --input-key prompt
    --label-key label
    --apply-chat-template
@@ -63,7 +71,7 @@ ROLLOUT_ARGS=(
 
 EVAL_ARGS=(
    --eval-interval 20
-   --eval-prompt-data aime /root/aime-2024/aime-2024.jsonl
+   --eval-prompt-data aime /root/datasets/aime-2024/aime-2024.jsonl
    --n-samples-per-eval-prompt 16
    --eval-max-response-len 16384
    --eval-top-p 1
@@ -80,11 +88,11 @@ PERF_ARGS=(
    --recompute-method uniform
    --recompute-num-layers 1
 
-   --use-dynamic-batch-size
-   --max-tokens-per-gpu 1536
-   # PP>1 requires seq-length override (PP recv buffer is sized by seq-length).
-   # Must be >= max-tokens-per-gpu. Smaller = less memory for FP32 logits.
-   --seq-length 1536
+   # GPT-OSS uses learnable softmax which requires qkv_format=bshd (see MISC_ARGS).
+   # bshd does not support dynamic batch size; use fixed MBS=1 with a seq-length
+   # that covers prompt + max response (8192) with headroom.
+   # logits cost = seq * vocab(201088) * 2 bytes; 10240 ≈ 4.1 GB/microbatch.
+   --seq-length 10240
    # Reduce memory margin to avoid excessive CPU↔GPU swapping in colocate mode.
    --train-memory-margin-bytes 268435456
 )
@@ -128,6 +136,9 @@ MISC_ARGS=(
    --attention-softmax-in-fp32
    --moe-token-dispatcher-type alltoall
    --megatron-to-hf-mode bridge
+   # GPT-OSS uses learnable softmax (sink attention). TransformerEngine disables all
+   # attention backends for learnable + thd (packed) format. Use bshd to avoid this.
+   --qkv-format bshd
 )
 
 # launch the master node of ray in container
@@ -136,9 +147,8 @@ ray start --head --node-ip-address ${MASTER_ADDR} --num-gpus 8 --disable-usage-s
 
 RUNTIME_ENV_JSON="{
   \"env_vars\": {
-    \"PYTHONPATH\": \"/root/Megatron-LM/\",
-    \"CUDA_DEVICE_MAX_CONNECTIONS\": \"1\",
-    \"NCCL_NVLS_ENABLE\": \"${HAS_NVLINK}\"
+    \"PYTHONPATH\": \"/root/Megatron-LM/:/root/vime\",
+    \"CUDA_DEVICE_MAX_CONNECTIONS\": \"1\"
   }
 }"
 
