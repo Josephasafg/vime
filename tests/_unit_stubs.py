@@ -216,6 +216,7 @@ def install_vllm_cli_stubs() -> None:
     vllm_mod.__path__ = []
 
     utils_mod = types.ModuleType("vllm.utils")
+    utils_mod.__path__ = []
     argparse_utils = types.ModuleType("vllm.utils.argparse_utils")
 
     import argparse
@@ -225,6 +226,10 @@ def install_vllm_cli_stubs() -> None:
 
     argparse_utils.FlexibleArgumentParser = FlexibleArgumentParser
     utils_mod.argparse_utils = argparse_utils
+
+    system_utils = types.ModuleType("vllm.utils.system_utils")
+    system_utils.kill_process_tree = lambda *args, **kwargs: None
+    utils_mod.system_utils = system_utils
 
     engine_mod = types.ModuleType("vllm.engine")
     engine_mod.__path__ = []
@@ -243,6 +248,7 @@ def install_vllm_cli_stubs() -> None:
     sys.modules["vllm"] = vllm_mod
     sys.modules["vllm.utils"] = utils_mod
     sys.modules["vllm.utils.argparse_utils"] = argparse_utils
+    sys.modules["vllm.utils.system_utils"] = system_utils
     sys.modules["vllm.engine"] = engine_mod
     sys.modules["vllm.engine.arg_utils"] = arg_utils
 
