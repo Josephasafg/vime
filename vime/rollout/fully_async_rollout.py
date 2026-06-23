@@ -11,8 +11,13 @@ per-sample reward via ``--custom-rm-path`` — the worker calls vime's stock
 :func:`generate_and_rm_group` which dispatches to those.
 
 Concurrency is sourced from ``args.vllm_server_concurrency`` and scaled by
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 the number of vLLM engines (``rollout_num_gpus // rollout_num_gpus_per_engine``)
 to match the per-sample semaphore cap in :mod:`vime.rollout.vllm_rollout`.
+=======
+the number of vllm engines to match the per-sample semaphore cap in
+:mod:`slime.rollout.vllm_rollout`.
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 The worker is intentionally oblivious to vime's higher-level pause /
 weight-update signalling (e.g. ``GenerateState.aborted``). Each in-flight
@@ -32,9 +37,16 @@ import queue
 import threading
 import time
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 from vime.rollout.vllm_rollout import GenerateState, generate_and_rm_group
 from vime.utils.async_utils import run
 from vime.utils.types import Sample
+=======
+from slime.rollout.vllm_rollout import GenerateState, generate_and_rm_group
+from slime.utils.async_utils import run
+from slime.utils.http_utils import get_rollout_num_engines
+from slime.utils.types import Sample
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 __all__ = [
     "AsyncRolloutWorker",
@@ -54,9 +66,8 @@ def _get_global_worker(args, data_buffer) -> AsyncRolloutWorker:
     with _worker_lock:
         if _global_worker is None or not _global_worker.worker_thread.is_alive():
             logger.info("starting fully-async rollout worker")
-            num_engines = max(1, args.rollout_num_gpus // args.rollout_num_gpus_per_engine)
             _global_worker = AsyncRolloutWorker(
-                args, data_buffer, concurrency=args.vllm_server_concurrency * num_engines
+                args, data_buffer, concurrency=args.vllm_server_concurrency * get_rollout_num_engines(args)
             )
             _global_worker.start()
         return _global_worker

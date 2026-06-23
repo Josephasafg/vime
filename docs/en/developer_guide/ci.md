@@ -30,7 +30,20 @@ All labels also run when triggered via `workflow_dispatch` (manual run from the 
 
 ## Key Labels Explained
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 ### `run-ci-changed` — Run Only New or Modified Tests
+=======
+| Trigger | Job | Type | Description |
+|---|---|---|---|
+| Automatic | `cpu-unittest` | CPU | Always-on unit and contract tests for argument validation, schedules, rewards, samples, rollout validation, checkpoint utilities, and plugin contracts. |
+| Automatic | `agent-adapter-test` | CPU | Always-on agent adapter tests with optional provider SDK dependencies. |
+| `run-ci-vllm-config` | `e2e-test-vllm-config` | GPU | VLlm config tests for advanced rollout engine deployment and mixed/offload scenarios. |
+| `run-ci-megatron` | `e2e-test-megatron` | GPU | Core Megatron training tests covering dense, MoE, PPO, MTP, OPD, async rollout, PD/Mooncake, and debug replay paths. |
+| `run-ci-precision` | `e2e-test-precision` | GPU | Numerical precision validation and parallel consistency checks. |
+| `run-ci-ckpt` | `e2e-test-ckpt` | GPU | Checkpoint save/load correctness, including CPU/GPU optimizer states and async save. |
+| `run-ci-image` | `e2e-test-image` | GPU | Runs the `run-ci-megatron` matrix on `slimerl/slime-test:latest`. |
+| `run-ci-changed` | `e2e-test-changed` | Mixed | Runs only changed tests, using each file's `NUM_GPUS` value. |
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 This is the most useful label for development. When you add a new test file or modify an existing one, just add `run-ci-changed` to your PR and CI will:
 
@@ -55,9 +68,17 @@ Since this includes every test, it consumes significant GPU time — use it spar
 
 This is the primary label for validating Megatron-backend changes. It covers:
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 - Dense models: GLM4-9B, Qwen3-4B (PPO)
 - MoE models: Qwen3-30B-A3B (with DeepEP), Qwen3.6-35B-A3B PD + Mooncake, Moonlight-16B-A3B
 - Specialized: MiMo-7B MTP, Qwen2.5-0.5B debug rollout-then-train
+=======
+- `run-ci-vllm-config`: advanced VLlm deployment paths, including config-based engine layouts.
+- `run-ci-megatron`: main Megatron backend coverage for dense/MoE recipes, async rollout, OPD, PPO-style paths, PD/Mooncake, and debug rollout-then-train replay.
+- `run-ci-precision`: numerical consistency across parallel settings.
+- `run-ci-ckpt`: checkpoint save/load combinations and async save.
+- `run-ci-image`: the same matrix as `run-ci-megatron`, but on the release/test image.
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 All tests use 8 GPUs. If you are modifying Megatron training logic, loss computation, or checkpoint conversion, this is the label to use.
 

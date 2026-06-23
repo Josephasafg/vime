@@ -32,6 +32,7 @@ import logging
 from argparse import Namespace
 from typing import Any
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 import numpy as np
 
 from vime.rollout.vllm_rollout import (
@@ -46,6 +47,13 @@ from vime.utils import http_utils
 from vime.utils.processing_utils import build_processor_kwargs, encode_image_for_rollout_engine
 from vime.utils.trace_utils import build_vllm_meta_trace_attrs, trace_span
 from vime.utils.types import Sample
+=======
+from slime.rollout.vllm_rollout import GenerateState, _prepare_prompt_ids
+from slime.utils import http_utils
+from slime.utils.processing_utils import encode_image_for_rollout_engine
+from slime.utils.trace_utils import build_vllm_meta_trace_attrs, trace_span
+from slime.utils.types import Sample
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 __all__ = ["generate_streaming"]
 
@@ -159,7 +167,9 @@ async def generate_streaming(args: Namespace, sample: Sample, sampling_params: d
     base_tokens = list(sample.tokens)
     base_response = sample.response or ""
     base_response_length = sample.response_length
-    base_log_probs = list(sample.rollout_log_probs or [])
+    base_log_probs = None if sample.rollout_log_probs is None else list(sample.rollout_log_probs)
+    base_top_p_token_ids = sample.rollout_top_p_token_ids
+    base_top_p_token_offsets = sample.rollout_top_p_token_offsets
     base_loss_mask = list(sample.loss_mask) if sample.loss_mask is not None else None
 
     skip_sp = params.get("skip_special_tokens")
@@ -191,6 +201,7 @@ async def generate_streaming(args: Namespace, sample: Sample, sampling_params: d
                     logger.warning("vllm_streaming: skipping non-JSON chunk: %r", data_str[:120])
                     continue
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
                 choices = chunk.get("choices") or []
                 if not choices:
                     # usage-only / keepalive chunk
@@ -235,10 +246,40 @@ async def generate_streaming(args: Namespace, sample: Sample, sampling_params: d
                 if base_loss_mask is not None:
                     assert args.partial_rollout and args.mask_offpolicy_in_partial_rollout
                     sample.loss_mask = base_loss_mask + [1] * len(call_tokens)
+=======
+                meta = chunk.get("meta_info") or {}
+                last_meta_info = meta
+
+                call_text = chunk.get("text", call_text)
+                if "output_token_logprobs" in meta:
+                    call_tokens = [item[1] for item in meta["output_token_logprobs"]]
+                    call_log_probs = [item[0] for item in meta["output_token_logprobs"]]
+
+                # Surface partial state on the sample immediately. If the
+                # outer abort path cuts us, whatever we've written so far is
+                # what survives — no /abort_request round-trip needed.
+                sample.tokens = list(base_tokens)
+                sample.response = base_response
+                sample.response_length = base_response_length
+                sample.rollout_log_probs = None if base_log_probs is None else list(base_log_probs)
+                sample.rollout_top_p_token_ids = base_top_p_token_ids
+                sample.rollout_top_p_token_offsets = base_top_p_token_offsets
+                sample.loss_mask = None if base_loss_mask is None else list(base_loss_mask)
+                sample.append_response_tokens(
+                    args,
+                    tokens=call_tokens,
+                    log_probs=call_log_probs,
+                    trainable=True,
+                    meta_info=meta,
+                    text=call_text,
+                    update_terminal_info=bool(meta.get("finish_reason")),
+                )
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
                 if state.aborted:
                     break
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
         if finish_reason and last_choice is not None:
             span.update(build_vllm_meta_trace_attrs({"choices": [last_choice], "usage": last_usage}))
 
@@ -285,6 +326,12 @@ async def generate_streaming(args: Namespace, sample: Sample, sampling_params: d
                 args.moe_router_topk,
             )
     elif state.aborted:
+=======
+        if last_meta_info.get("finish_reason"):
+            span.update(build_vllm_meta_trace_attrs(last_meta_info))
+
+    if state.aborted and not last_meta_info.get("finish_reason"):
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
         sample.status = Sample.Status.ABORTED
 
     return sample

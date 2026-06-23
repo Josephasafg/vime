@@ -1,9 +1,16 @@
 import ray
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 from vime.ray.placement_group import create_placement_groups, create_rollout_manager, create_training_models
 from vime.utils.arguments import parse_args
 from vime.utils.logging_utils import configure_logger, finish_tracking, init_tracking, update_tracking_open_metrics
 from vime.utils.misc import should_run_periodic_action
+=======
+from slime.ray.placement_group import create_placement_groups, create_rollout_manager, create_training_models
+from slime.utils.arguments import parse_args
+from slime.utils.logging_utils import configure_logger, finish_tracking, init_tracking
+from slime.utils.misc import should_run_periodic_action
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 
 # The framework supports other asynchronous approaches such as fully async (which is shown in examples/full_async).
@@ -18,10 +25,13 @@ def train(args):
     # need to initialize rollout manager first to calculate num_rollout
     rollout_manager, num_rollout_per_epoch = create_rollout_manager(args, pgs["rollout"])
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
     # Update primary W&B with vLLM metrics endpoint now that servers are up.
     router_addr = ray.get(rollout_manager.get_metrics_router_addr.remote())
     update_tracking_open_metrics(args, router_addr)
 
+=======
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
     # create the actor and critic models
     actor_model, critic_model = create_training_models(args, pgs, rollout_manager)
 

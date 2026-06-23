@@ -92,9 +92,16 @@ def execute():
 
     vllm_args = (
         "--rollout-num-gpus-per-engine 8 "
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
         "--vllm-gpu-memory-utilization 0.8 "
         "--vllm-max-num-seqs 512 "
         "--vllm-max-cudagraph-capture-size 16 "
+=======
+        "--vllm-mem-fraction-static 0.8 "
+        "--vllm-cuda-graph-max-bs 32 "
+        "--vllm-max-running-requests 512 "
+        "--vllm-enable-metrics "
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
     )
 
     if USE_DEEPEP:

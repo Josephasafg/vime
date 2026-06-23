@@ -4,7 +4,11 @@ import ray
 from ray.util.placement_group import PlacementGroup
 from ray.util.scheduling_strategies import PlacementGroupSchedulingStrategy
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 from vime.ray.utils import NOSET_VISIBLE_DEVICES_ENV_VARS_LIST
+=======
+from slime.ray.utils import NOSET_VISIBLE_DEVICES_ENV_VARS_LIST, add_default_ray_env_vars
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 
 class RayTrainGroup:
@@ -34,11 +38,13 @@ class RayTrainGroup:
         pg: tuple[PlacementGroup, list[int], list[int]],
         num_gpus_per_actor: float = 1,
         role: str = "actor",
+        actor_cls=None,
     ) -> None:
         self.args = args
         self._num_nodes = num_nodes
         self._num_gpus_per_node = num_gpus_per_node
         self.role = role
+        self._actor_cls = actor_cls
 
         # Allocate the GPUs for actors w/o instantiating them
         self._allocate_gpus_for_actor(pg, num_gpus_per_actor)
@@ -85,11 +91,24 @@ class RayTrainGroup:
         if self.args.use_routing_replay and self.role == "actor":
             env_vars["ENABLE_ROUTING_REPLAY"] = "1"
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
         from vime.backends.megatron_utils.actor import MegatronTrainRayActor
+=======
+        if self._actor_cls is None:
+            from slime.backends.megatron_utils.actor import MegatronTrainRayActor
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
-        actor_impl = MegatronTrainRayActor
+            actor_impl = MegatronTrainRayActor
+        else:
+            actor_impl = self._actor_cls
 
-        TrainRayActor = ray.remote(num_gpus=1, runtime_env={"env_vars": env_vars})(actor_impl)
+        actor_options = {
+            "num_gpus": 1,
+            "runtime_env": {"env_vars": add_default_ray_env_vars(env_vars)},
+        }
+        if getattr(self.args, "rollout_data_transport", "object-store") == "nixl":
+            actor_options["enable_tensor_transport"] = True
+        TrainRayActor = ray.remote(**actor_options)(actor_impl)
 
         # Create worker actors
         self._actor_handlers = []

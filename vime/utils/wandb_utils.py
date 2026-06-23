@@ -79,6 +79,7 @@ def init_wandb_primary(args):
     args.wandb_run_id = wandb.run.id
 
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 def reinit_wandb_primary_with_open_metrics(args, router_addr):
     """Re-initialize the primary W&B run with open metrics endpoints.
 
@@ -129,6 +130,8 @@ def reinit_wandb_primary_with_open_metrics(args, router_addr):
     _init_wandb_common()
 
 
+=======
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 def _compute_config_for_logging(args):
     output = _args_to_config_dict(args)
 

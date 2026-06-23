@@ -1,9 +1,15 @@
 import argparse
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 from vllm.engine.arg_utils import AsyncEngineArgs
 from vllm.utils.argparse_utils import FlexibleArgumentParser
 
 from vime.utils.http_utils import _wrap_ipv6
+=======
+from vllm.srt.server_args import ServerArgs
+from vllm_router.launch_router import RouterArgs
+from slime.utils.http_utils import _wrap_ipv6
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 
 def add_vllm_router_arguments(parser):
@@ -36,6 +42,7 @@ def add_vllm_router_arguments(parser):
             "session-affinity routing replay via the x-session-id header."
         ),
     )
+    RouterArgs.add_cli_args(parser, use_router_prefix=True, exclude_host_port=True)
     return parser
 
 

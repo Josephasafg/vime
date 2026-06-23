@@ -164,8 +164,6 @@ BACKEND_ARGS=(
    --attention-softmax-in-fp32
    --attention-backend flash
 
-   # Packing is not supported for GDN currently
-   --qkv-format bshd
    --micro-batch-size 1
 )
 

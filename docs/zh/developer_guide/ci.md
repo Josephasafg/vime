@@ -30,7 +30,20 @@ vime 使用 GitHub Actions 进行 CI。测试通过 **PR label** 触发——给
 
 ## 重点 Label 说明
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 ### `run-ci-changed` — 仅运行新增或修改的测试
+=======
+| Trigger | Job | 类型 | 说明 |
+|---|---|---|---|
+| 自动运行 | `cpu-unittest` | CPU | 默认运行的 unit/contract tests，覆盖 argument validation、schedule、reward、sample、rollout validation、checkpoint utilities 和 plugin contracts。 |
+| 自动运行 | `agent-adapter-test` | CPU | 默认运行的 agent adapter tests，包含额外 provider SDK 依赖。 |
+| `run-ci-vllm-config` | `e2e-test-vllm-config` | GPU | VLlm config 测试，覆盖高级 rollout engine deployment 和 mixed/offload 场景。 |
+| `run-ci-megatron` | `e2e-test-megatron` | GPU | 核心 Megatron 训练测试，覆盖 dense、MoE、PPO、MTP、OPD、async rollout、PD/Mooncake 和 debug replay 路径。 |
+| `run-ci-precision` | `e2e-test-precision` | GPU | 数值精度和并行一致性检查。 |
+| `run-ci-ckpt` | `e2e-test-ckpt` | GPU | Checkpoint save/load 正确性，包括 CPU/GPU optimizer state 和 async save。 |
+| `run-ci-image` | `e2e-test-image` | GPU | 在 `slimerl/slime-test:latest` 上运行与 `run-ci-megatron` 相同的 matrix。 |
+| `run-ci-changed` | `e2e-test-changed` | Mixed | 只运行 changed tests，并使用每个文件中的 `NUM_GPUS`。 |
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 这是开发中最常用的 label。当你新增或修改了测试文件时，只需给 PR 添加 `run-ci-changed`，CI 会自动：
 
@@ -55,9 +68,17 @@ vime 使用 GitHub Actions 进行 CI。测试通过 **PR label** 触发——给
 
 这是验证 Megatron 后端改动的主要 label，覆盖：
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 - Dense 模型：GLM4-9B、Qwen3-4B（PPO）
 - MoE 模型：Qwen3-30B-A3B（DeepEP）、Qwen3.6-35B-A3B PD + Mooncake、Moonlight-16B-A3B
 - 特殊场景：MiMo-7B MTP、Qwen2.5-0.5B debug rollout-then-train
+=======
+- `run-ci-vllm-config`：高级 VLlm deployment path，包括 config-based engine layouts。
+- `run-ci-megatron`：主要 Megatron backend coverage，包括 dense/MoE recipe、async rollout、OPD、PPO-style path、PD/Mooncake 和 debug rollout-then-train replay。
+- `run-ci-precision`：不同并行设置下的数值一致性。
+- `run-ci-ckpt`：checkpoint save/load 组合和 async save。
+- `run-ci-image`：与 `run-ci-megatron` 相同的 matrix，但运行在 release/test image 上。
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 所有测试使用 8 张 GPU。如果你正在修改 Megatron 训练逻辑、loss 计算或 checkpoint 转换，应该使用这个 label。
 

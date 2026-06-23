@@ -1,5 +1,10 @@
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 ARG BASE_IMAGE=vllm/vllm-openai:v0.23.0-cu129-ubuntu2404
 FROM ${BASE_IMAGE}
+=======
+ARG VLLM_IMAGE_TAG=v0.5.13-cu129
+FROM slimerl/vllm:${VLLM_IMAGE_TAG} AS vllm
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 # ======================================== Arguments =============================================
 
@@ -12,6 +17,7 @@ WORKDIR /root/
 
 # ======================================== Apt dependencies =============================================
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 # vllm/vllm-openai base is an inference image — add cu12 dev headers + cmake/git
 # so TE / apex / flash-attn source builds find cusparse.h etc.
 RUN apt-get update && apt-get install -y \
@@ -23,6 +29,10 @@ RUN apt-get update && apt-get install -y \
 
 # vllm/vllm-openai base only ships python3; subsequent source builds invoke `python`.
 RUN ln -sf /usr/bin/python3 /usr/local/bin/python
+=======
+RUN apt update
+RUN apt install -y nvtop rsync dnsutils prometheus
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 # ====================================== Python dependencies ============================================
 
@@ -78,11 +88,16 @@ RUN pip install nvidia-cudnn-cu12==9.16.0.29
 # reinstall numpy 1.x for megatron
 RUN pip install "numpy<2"
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 RUN pip install IPython
 
 # Pin vllm-router explicitly so the vllm rollout routing layer is a visible build step
 # (also in requirements.txt; pulling it here makes the layer cache-able and fail-fast).
 RUN pip install "vllm-router>=0.1.14"
+=======
+RUN pip install https://github.com/zhuzilin/sgl-router/releases/download/v0.3.2-1117d05/vllm_router-0.3.2-cp38-abi3-manylinux_2_28_x86_64.whl --force-reinstall
+RUN python -c "import vllm_router; assert 'slime' in vllm_router.__version__"
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 RUN rm -rf /root/.cache/pip
 
@@ -111,6 +126,18 @@ RUN VLLM_SITE="$(python3 -c 'import os, vllm; print(os.path.dirname(os.path.dirn
     cd "$VLLM_SITE" && \
     git apply -v /tmp/vllm.patch && \
     rm /tmp/vllm.patch
+
+COPY docker/patch/${PATCH_VERSION}/vllm-top_p.patch /sgl-workspace/vllm/
+RUN if [ "$ENABLE_VLLM_PATCH" = "1" ]; then \
+  cd /sgl-workspace/vllm && \
+  git update-index --refresh && \
+  git apply vllm-top_p.patch --3way && \
+  if grep -R -n '^<<<<<<< ' .; then \
+    echo "Patch failed to apply cleanly. Please resolve conflicts." && \
+    exit 1; \
+  fi && \
+  rm vllm-top_p.patch; \
+fi
 
 # ====================================== Install main package ============================================
 

@@ -257,7 +257,11 @@ vllm:
 
 ### 7. 独立 vLLM 启动器
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 虽然 `--vllm-config` 是为 vime 的训练流水线设计的，但它也可以作为纯推理场景的强大启动器，通过 `--rollout-external` 模式或配置 vime 仅关注推理服务。
+=======
+虽然 `--vllm-config` 是为 slime 的训练流水线设计的，但它也可以作为纯推理场景的强大启动器，通过外部 engine 地址或配置 slime 仅关注推理服务。
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 **使用预启动的外部引擎：**
 
@@ -270,12 +274,22 @@ vllm serve /path/to/model --port 10091 ...
 
 # 步骤 2：将 vime 连接到外部引擎
 python train.py \
-  --rollout-external \
   --rollout-external-engine-addrs host1:10090 host2:10091 \
   ...
 ```
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 > **注意：** `--vllm-config` 和 `--rollout-external` 互斥。当你希望 vime 管理完整的引擎生命周期时，使用 `--vllm-config`；当引擎已预部署时，使用 `--rollout-external`。
+=======
+slime 会请求每个外部引擎的 `/server_info`，自动推断
+`rollout_num_gpus`、单个 engine 的 GPU 数、VLlm 并行参数，以及
+prefill/decode worker 类型。如果没有提供 `--vllm-router-ip/--vllm-router-port`，
+slime 会自己启动 router，并把这些外部引擎注册进去。
+
+> **注意：** `--vllm-config` 和 `--rollout-external-engine-addrs` 互斥。当你希望 slime 管理完整的引擎生命周期时，使用 `--vllm-config`；当引擎已预部署时，使用 `--rollout-external-engine-addrs`。
+
+关于 external engine 的选择、update from disk 和 delta disk transport，见 [External Rollout Engines 配置路线图](external-rollout-engines.md)。
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 ---
 
@@ -332,7 +346,7 @@ vime 自动为每个 sample 分配一个唯一的 `session_id`（存储在 `samp
 | 选项 | 冲突原因 |
 |------|----------|
 | `--prefill-num-servers` | PD 分离通过 YAML 中的 `server_groups` 配置 |
-| `--rollout-external` | 外部引擎有自己的拓扑；config 在内部管理生命周期 |
+| `--rollout-external-engine-addrs` | 外部引擎有自己的拓扑；config 在内部管理生命周期 |
 
 ---
 
@@ -446,7 +460,11 @@ async def generate_with_models(args, sample, sampling_params):
 
 ### Q: 可以不训练，只用 `--vllm-config` 做推理吗？
 
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
 虽然 `--vllm-config` 是为 vime 的训练循环设计的，但你可以通过配置仅 rollout 的运行来实现纯推理场景。对于完全独立的 vLLM 推理服务，建议直接使用 vLLM 原生的 `launch_server`，或使用 `--rollout-external` 模式连接预部署的引擎。
+=======
+虽然 `--vllm-config` 是为 slime 的训练循环设计的，但你可以通过配置仅 rollout 的运行来实现纯推理场景。对于完全独立的 VLlm 推理服务，建议直接使用 VLlm 原生的 `launch_server`，或使用 `--rollout-external-engine-addrs` 连接预部署的引擎。
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
 
 ### Q: `--vllm-config` 和 `--prefill-num-servers` 是什么关系？
 

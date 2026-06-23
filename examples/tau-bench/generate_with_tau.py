@@ -22,11 +22,16 @@ _inflight_sem: asyncio.Semaphore | None = None
 # Agent rollout uses vLLM; only user_model / user_model_provider affect the user simulator here.
 TAU_CONFIGS = {
     "env": "retail",  # Select between ["retail", "airline"]
+<<<<<<< /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_ours.txt
     "agent": "tool-calling",  # Select between ["tool-calling", "act", "react", "few-shot"]
     # Default: local vLLM user sim (no external API). For Gemini API user sim, switch to:
     # "user_model": "gemini-2.5-flash-lite", "user_model_provider": "gemini",
     "user_model": "openai/local-qwen3-4b",
     "user_model_provider": "openai",
+=======
+    "agent_strategy": "tool-calling",  # Select between ["tool-calling", "act", "react", "few-shot"]
+    "user_model": "gemini-2.5-flash-lite",  # Cheap Model for user simulator
+>>>>>>> /home/aoshen/vime/projects/slime-sync-2118/agent_run/results/build_3way/tmp_theirs.txt
     "task_split": "train",  # Select between ["train", "test", "dev"] for retail
     "user_strategy": "llm",  # Select between ["llm", "react", "verify", "reflection"]
     "model_provider": "auto_router",  # Unused, required
