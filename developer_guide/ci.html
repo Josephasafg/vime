@@ -58,7 +58,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.0.1" />
-    <meta name="docbuild:last-update" content="Jun 21, 2026"/>
+    <meta name="docbuild:last-update" content="Jun 23, 2026"/>
   </head>
   
   
@@ -442,7 +442,7 @@
 <h2>How It Works<a class="headerlink" href="#how-it-works" title="Link to this heading">#</a></h2>
 <p>The workflow is defined in <code class="docutils literal notranslate"><span class="pre">.github/workflows/pr-test.yml</span></code> (auto-generated from <code class="docutils literal notranslate"><span class="pre">pr-test.yml.j2</span></code>). Each CI job:</p>
 <ol class="arabic simple">
-<li><p>Runs on a self-hosted GPU runner via <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>; most tests use <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-latest</span></code>, while image validation uses <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-test-latest</span></code>.</p></li>
+<li><p>Runs on a self-hosted GPU runner via <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>; most tests use <code class="docutils literal notranslate"><span class="pre">vllm/vime:latest</span></code>, while image validation uses <code class="docutils literal notranslate"><span class="pre">vllm/vime:test-latest</span></code>.</p></li>
 <li><p>Installs vime with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span> <span class="pre">--no-deps</span></code>.</p></li>
 <li><p>Acquires the required GPUs via <code class="docutils literal notranslate"><span class="pre">tests/ci/gpu_lock_exec.py</span> <span class="pre">--count</span> <span class="pre">&lt;num_gpus&gt;</span></code>.</p></li>
 <li><p>Executes the test file: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">&lt;test_path&gt;.py</span></code> or <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tests/&lt;test_file&gt;.py</span></code>, depending on whether the test lives under <code class="docutils literal notranslate"><span class="pre">tests/</span></code> or a subdirectory such as <code class="docutils literal notranslate"><span class="pre">tests/plugin_contracts/</span></code>.</p></li>
@@ -478,7 +478,7 @@
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-image</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-image</span></code></p></td>
-<td><p>Full test suite run on <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-test-latest</span></code> image (for image validation).</p></td>
+<td><p>Full test suite run on <code class="docutils literal notranslate"><span class="pre">vllm/vime:test-latest</span></code> image (for image validation).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-changed</span></code></p></td>
@@ -504,7 +504,7 @@
 </section>
 <section id="run-ci-image-full-suite-on-test-image">
 <h3><code class="docutils literal notranslate"><span class="pre">run-ci-image</span></code> — Full Suite on Test Image<a class="headerlink" href="#run-ci-image-full-suite-on-test-image" title="Link to this heading">#</a></h3>
-<p>This runs <strong>all</strong> registered tests on the <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-test-latest</span></code> Docker image. Use this label to:</p>
+<p>This runs <strong>all</strong> registered tests on the <code class="docutils literal notranslate"><span class="pre">vllm/vime:test-latest</span></code> Docker image. Use this label to:</p>
 <ul class="simple">
 <li><p>Validate a newly built Docker image before release.</p></li>
 <li><p>Run the entire test suite for a comprehensive pre-merge check.</p></li>
@@ -673,7 +673,7 @@ By Vime Team
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Jun 21, 2026.
+  Last updated on Jun 23, 2026.
   <br/>
 </p>
   </div>

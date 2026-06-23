@@ -58,7 +58,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh"/>
   <meta name="docsearch:version" content="0.0.1" />
-    <meta name="docbuild:last-update" content="2026 年 06 月 21 日"/>
+    <meta name="docbuild:last-update" content="2026 年 06 月 23 日"/>
   </head>
   
   
@@ -442,7 +442,7 @@
 <h2>工作原理<a class="headerlink" href="#id1" title="链接到此标题。">#</a></h2>
 <p>工作流定义在 <code class="docutils literal notranslate"><span class="pre">.github/workflows/pr-test.yml</span></code>（由 <code class="docutils literal notranslate"><span class="pre">pr-test.yml.j2</span></code> 自动生成）。每个 CI 任务会：</p>
 <ol class="arabic simple">
-<li><p>在自托管 GPU runner 上通过 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> 运行；大多数测试使用 <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-latest</span></code>，镜像验证使用 <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-test-latest</span></code>。</p></li>
+<li><p>在自托管 GPU runner 上通过 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> 运行；大多数测试使用 <code class="docutils literal notranslate"><span class="pre">vllm/vime:latest</span></code>，镜像验证使用 <code class="docutils literal notranslate"><span class="pre">vllm/vime:test-latest</span></code>。</p></li>
 <li><p>通过 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span> <span class="pre">--no-deps</span></code> 安装 vime。</p></li>
 <li><p>通过 <code class="docutils literal notranslate"><span class="pre">tests/ci/gpu_lock_exec.py</span> <span class="pre">--count</span> <span class="pre">&lt;num_gpus&gt;</span></code> 获取所需数量的 GPU。</p></li>
 <li><p>执行测试文件：<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">&lt;test_path&gt;.py</span></code> 或 <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tests/&lt;test_file&gt;.py</span></code>。如果测试位于 <code class="docutils literal notranslate"><span class="pre">tests/plugin_contracts/</span></code> 这样的子目录，CI 也会自动处理。</p></li>
@@ -478,7 +478,7 @@
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-image</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-image</span></code></p></td>
-<td><p>在 <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-test-latest</span></code> 镜像上运行<strong>全部</strong>测试（用于镜像验证）。</p></td>
+<td><p>在 <code class="docutils literal notranslate"><span class="pre">vllm/vime:test-latest</span></code> 镜像上运行<strong>全部</strong>测试（用于镜像验证）。</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">run-ci-changed</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">e2e-test-changed</span></code></p></td>
@@ -504,7 +504,7 @@
 </section>
 <section id="run-ci-image">
 <h3><code class="docutils literal notranslate"><span class="pre">run-ci-image</span></code> — 在测试镜像上运行全部测试<a class="headerlink" href="#run-ci-image" title="链接到此标题。">#</a></h3>
-<p>这会在 <code class="docutils literal notranslate"><span class="pre">inferactinc/public:vime-test-latest</span></code> Docker 镜像上运行<strong>所有</strong>已注册的测试。适用于：</p>
+<p>这会在 <code class="docutils literal notranslate"><span class="pre">vllm/vime:test-latest</span></code> Docker 镜像上运行<strong>所有</strong>已注册的测试。适用于：</p>
 <ul class="simple">
 <li><p>验证新构建的 Docker 镜像是否可用。</p></li>
 <li><p>在合并前做全面的测试检查。</p></li>
@@ -673,7 +673,7 @@
   
   <div class="footer-item">
     <p class="last-updated">
-  最后更新于 2026 年 06 月 21 日.
+  最后更新于 2026 年 06 月 23 日.
   <br/>
 </p>
   </div>
