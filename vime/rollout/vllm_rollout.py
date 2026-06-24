@@ -518,11 +518,12 @@ async def generate_and_rm_group(
 
 async def _broadcast_to_workers(urls: list[str], endpoint: str, action: str) -> None:
     """POST a no-body control endpoint to every worker, logging (not raising) failures."""
+    logger.info(f"rollout: {action} workers: {urls}")
     tasks = [post(f"{url.rstrip('/')}/{endpoint}", {}, max_retries=3) for url in urls]
     results = await asyncio.gather(*tasks, return_exceptions=True)
     for url, result in zip(urls, results, strict=False):
         if isinstance(result, Exception):
-            logger.warning("Failed to %s worker at %s: %s", action, url, result)
+            logger.warning(f"Failed to {action} worker at {url}: {result}")
 
 
 async def abort(args: Namespace, rollout_id: int) -> list[list[Sample]]:
@@ -545,19 +546,8 @@ async def abort(args: Namespace, rollout_id: int) -> list[list[Sample]]:
         # the scheduler stops promoting the waiting queue until /resume. A /generate POST that
         # races in after the pause parks in `waiting` and never returns (client timeout is
         # None), so resume before draining — otherwise `while state.pendings` hangs on it.
-        logger.info(f"Abort request for {urls}")
-        pause_tasks = [post(f"{url.rstrip('/')}/pause?mode=abort", {}, max_retries=3) for url in urls]
-        pause_results = await asyncio.gather(*pause_tasks, return_exceptions=True)
-        for url, result in zip(urls, pause_results, strict=False):
-            if isinstance(result, Exception):
-                logger.warning(f"Failed to abort worker at {url}: {result}")
-
-        logger.info("rollout: resuming workers before abort drain: %s", urls)
-        resume_tasks = [post(f"{url.rstrip('/')}/resume", {}, max_retries=3) for url in urls]
-        resume_results = await asyncio.gather(*resume_tasks, return_exceptions=True)
-        for url, result in zip(urls, resume_results, strict=False):
-            if isinstance(result, Exception):
-                logger.warning("Failed to resume worker at %s: %s", url, result)
+        await _broadcast_to_workers(urls, "pause?mode=abort", "abort")
+        await _broadcast_to_workers(urls, "resume", "resume")
 
     count = 0
     while state.pendings:
