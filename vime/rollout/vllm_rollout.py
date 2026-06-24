@@ -523,8 +523,6 @@ async def abort(args: Namespace, rollout_id: int) -> list[list[Sample]]:
     assert not state.aborted
     state.aborted = True
 
-    urls: list[str] = []
-    paused_workers = False
     if state.pendings:
         base = f"http://{args.vllm_router_ip}:{args.vllm_router_port}"
         try:
@@ -534,13 +532,21 @@ async def abort(args: Namespace, rollout_id: int) -> list[list[Sample]]:
             response = await get(f"{base}/list_workers")
             urls = list(response["urls"])
 
+        # mode=abort aborts the running request but leaves the worker paused; resume here,
+        # before draining, so the aborted requests return and the drain below can progress.
         logger.info(f"Abort request for {urls}")
         pause_tasks = [post(f"{url.rstrip('/')}/pause?mode=abort", {}, max_retries=3) for url in urls]
         pause_results = await asyncio.gather(*pause_tasks, return_exceptions=True)
         for url, result in zip(urls, pause_results, strict=False):
             if isinstance(result, Exception):
                 logger.warning(f"Failed to abort worker at {url}: {result}")
-        paused_workers = True
+
+        logger.info("rollout: resuming workers before abort drain: %s", urls)
+        resume_tasks = [post(f"{url.rstrip('/')}/resume", {}, max_retries=3) for url in urls]
+        resume_results = await asyncio.gather(*resume_tasks, return_exceptions=True)
+        for url, result in zip(urls, resume_results, strict=False):
+            if isinstance(result, Exception):
+                logger.warning("Failed to resume worker at %s: %s", url, result)
 
     count = 0
     while state.pendings:
@@ -561,13 +567,6 @@ async def abort(args: Namespace, rollout_id: int) -> list[list[Sample]]:
         logger.info(f"Collected {count} partial samples into the data buffer")
 
     state.pendings = set()
-    if paused_workers:
-        logger.info("rollout: resuming workers after abort drain: %s", urls)
-        resume_tasks = [post(f"{url.rstrip('/')}/resume", {}, max_retries=3) for url in urls]
-        resume_results = await asyncio.gather(*resume_tasks, return_exceptions=True)
-        for url, result in zip(urls, resume_results, strict=False):
-            if isinstance(result, Exception):
-                logger.warning("Failed to resume worker at %s: %s", url, result)
 
     return aborted_samples
 

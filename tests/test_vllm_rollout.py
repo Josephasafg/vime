@@ -542,5 +542,84 @@ def test_eval_rollout_passk_requests_do_not_share_session_ids(patch_generate_sta
     assert result[dataset_cfg.name]["samples"][0].session_id != result[dataset_cfg.name]["samples"][1].session_id
 
 
+@pytest.mark.unit
+def test_abort_resumes_workers_before_draining(patch_generate_state, monkeypatch):
+    state = _PatchedGenerateState(_rollout_args())
+    monkeypatch.setattr(mod, "GenerateState", lambda args: state)
+
+    resumed = asyncio.Event()
+    call_order: list[str] = []
+
+    async def fake_get(url):
+        return {"workers": [{"url": "http://w0:9000"}]}
+
+    async def fake_post(url, payload, max_retries=60, headers=None):
+        if url.endswith("/resume"):
+            call_order.append("resume")
+            resumed.set()
+        else:
+            call_order.append("pause")
+        return {}
+
+    monkeypatch.setattr(mod, "get", fake_get)
+    monkeypatch.setattr(mod, "post", fake_post)
+
+    sample = Sample(index=0, prompt="p")
+
+    async def pending_group():
+        # Mirrors an in-flight generate POST wedged on the paused worker: it only
+        # returns once the worker is resumed.
+        await resumed.wait()
+        sample.status = Sample.Status.ABORTED
+        return [sample]
+
+    async def run_abort():
+        state.pendings = {asyncio.create_task(pending_group())}
+        return await asyncio.wait_for(mod.abort(_rollout_args(), rollout_id=0), timeout=5.0)
+
+    aborted_samples = asyncio.run(run_abort())
+
+    assert call_order == ["pause", "resume"]
+    assert state.pendings == set()
+    # partial_rollout is off by default, so drained groups are discarded, not returned.
+    assert aborted_samples == []
+
+
+@pytest.mark.unit
+def test_abort_collects_partial_samples_when_partial_rollout(patch_generate_state, monkeypatch):
+    args = _rollout_args(partial_rollout=True)
+    state = _PatchedGenerateState(args)
+    monkeypatch.setattr(mod, "GenerateState", lambda a: state)
+
+    resumed = asyncio.Event()
+
+    async def fake_get(url):
+        return {"workers": [{"url": "http://w0:9000"}]}
+
+    async def fake_post(url, payload, max_retries=60, headers=None):
+        if url.endswith("/resume"):
+            resumed.set()
+        return {}
+
+    monkeypatch.setattr(mod, "get", fake_get)
+    monkeypatch.setattr(mod, "post", fake_post)
+
+    sample = Sample(index=0, prompt="p")
+    sample.response = "partial"
+
+    async def pending_group():
+        await resumed.wait()
+        return [sample]
+
+    async def run_abort():
+        state.pendings = {asyncio.create_task(pending_group())}
+        return await asyncio.wait_for(mod.abort(args, rollout_id=7), timeout=5.0)
+
+    aborted_samples = asyncio.run(run_abort())
+
+    assert aborted_samples == [[sample]]
+    assert sample.metadata["start_rollout_id"] == 7
+
+
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__]))
