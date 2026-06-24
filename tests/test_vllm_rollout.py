@@ -567,8 +567,8 @@ def test_abort_resumes_workers_before_draining(patch_generate_state, monkeypatch
     sample = Sample(index=0, prompt="p")
 
     async def pending_group():
-        # Mirrors an in-flight generate POST wedged on the paused worker: it only
-        # returns once the worker is resumed.
+        # Models a generate POST that raced in after mode=abort: under PAUSED_NEW it
+        # parks in the scheduler's waiting queue and only returns once /resume reopens it.
         await resumed.wait()
         sample.status = Sample.Status.ABORTED
         return [sample]

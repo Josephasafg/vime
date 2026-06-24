@@ -516,6 +516,15 @@ async def generate_and_rm_group(
     return group
 
 
+async def _broadcast_to_workers(urls: list[str], endpoint: str, action: str) -> None:
+    """POST a no-body control endpoint to every worker, logging (not raising) failures."""
+    tasks = [post(f"{url.rstrip('/')}/{endpoint}", {}, max_retries=3) for url in urls]
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    for url, result in zip(urls, results, strict=False):
+        if isinstance(result, Exception):
+            logger.warning("Failed to %s worker at %s: %s", action, url, result)
+
+
 async def abort(args: Namespace, rollout_id: int) -> list[list[Sample]]:
     aborted_samples: list[list[Sample]] = []
 
@@ -532,8 +541,10 @@ async def abort(args: Namespace, rollout_id: int) -> list[list[Sample]]:
             response = await get(f"{base}/list_workers")
             urls = list(response["urls"])
 
-        # mode=abort aborts the running request but leaves the worker paused; resume here,
-        # before draining, so the aborted requests return and the drain below can progress.
+        # mode=abort answers all requests the worker already knows about but sets PAUSED_NEW:
+        # the scheduler stops promoting the waiting queue until /resume. A /generate POST that
+        # races in after the pause parks in `waiting` and never returns (client timeout is
+        # None), so resume before draining — otherwise `while state.pendings` hangs on it.
         logger.info(f"Abort request for {urls}")
         pause_tasks = [post(f"{url.rstrip('/')}/pause?mode=abort", {}, max_retries=3) for url in urls]
         pause_results = await asyncio.gather(*pause_tasks, return_exceptions=True)
